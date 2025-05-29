@@ -7,6 +7,7 @@ import type {
   InsertProduct, 
   InsertCartItem, 
   InsertOrder,
+  InsertCategory,
   ProductWithCategory,
   CartItemWithProduct 
 } from "@shared/schema";
@@ -20,6 +21,20 @@ export const getCategories = async (): Promise<Category[]> => {
 export const getCategoryBySlug = async (slug: string): Promise<Category> => {
   const res = await fetch(`/api/categories/${slug}`);
   return res.json();
+};
+
+export const createCategory = async (category: InsertCategory): Promise<Category> => {
+  const res = await apiRequest("POST", "/api/categories", category);
+  return res.json();
+};
+
+export const updateCategory = async (id: number, category: Partial<InsertCategory>): Promise<Category> => {
+  const res = await apiRequest("PUT", `/api/categories/${id}`, category);
+  return res.json();
+};
+
+export const deleteCategory = async (id: number): Promise<void> => {
+  await apiRequest("DELETE", `/api/categories/${id}`);
 };
 
 // Products

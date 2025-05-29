@@ -113,9 +113,9 @@ export default function Products() {
 
               {/* Category Filter */}
               <Select
-                value={selectedCategory}
+                value={selectedCategory || "all"}
                 onValueChange={(value) => {
-                  setSelectedCategory(value);
+                  setSelectedCategory(value === "all" ? "" : value);
                   setTimeout(updateURL, 0);
                 }}
               >
@@ -123,7 +123,7 @@ export default function Products() {
                   <SelectValue placeholder="All Categories" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Categories</SelectItem>
+                  <SelectItem value="all">All Categories</SelectItem>
                   {categories.map((category) => (
                     <SelectItem key={category.id} value={category.slug}>
                       {category.name}
@@ -148,9 +148,9 @@ export default function Products() {
                     <div>
                       <label className="text-sm font-medium">Category</label>
                       <Select
-                        value={selectedCategory}
+                        value={selectedCategory || "all"}
                         onValueChange={(value) => {
-                          setSelectedCategory(value);
+                          setSelectedCategory(value === "all" ? "" : value);
                           setTimeout(updateURL, 0);
                         }}
                       >
@@ -158,7 +158,7 @@ export default function Products() {
                           <SelectValue placeholder="All Categories" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="">All Categories</SelectItem>
+                          <SelectItem value="all">All Categories</SelectItem>
                           {categories.map((category) => (
                             <SelectItem key={category.id} value={category.slug}>
                               {category.name}

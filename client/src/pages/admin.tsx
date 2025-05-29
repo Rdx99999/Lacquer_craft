@@ -49,15 +49,17 @@ import {
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { AdminLayout } from "@/components/admin/admin-layout";
 import { ProductForm } from "@/components/admin/product-form";
+import { CategoryForm } from "@/components/admin/category-form";
 import { useToast } from "@/hooks/use-toast";
 import { 
   getProductsWithCategory, 
   getOrders, 
   getCategories,
   deleteProduct,
+  deleteCategory,
   updateOrderStatus 
 } from "@/lib/api";
-import type { ProductWithCategory, Order } from "@shared/schema";
+import type { ProductWithCategory, Order, Category } from "@shared/schema";
 
 const navigation = [
   { name: "Products", tab: "products", icon: Package },
