@@ -129,7 +129,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           fs.mkdirSync(uploadPath, { recursive: true });
           cb(null, uploadPath);
         } catch (error) {
-          cb(error as Error, '');
+          cb(error as any, '');
         }
       },
       filename: (req, file, cb) => {
