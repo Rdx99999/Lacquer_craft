@@ -21,6 +21,7 @@ export default function ProductDetail() {
   const [isFullscreenOpen, setIsFullscreenOpen] = useState(false);
   const [fullscreenImageIndex, setFullscreenImageIndex] = useState(0);
   const [isZooming, setIsZooming] = useState(false);
+  const [zoomMode, setZoomMode] = useState(false);
   const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
   const imageRef = useRef<HTMLImageElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -92,7 +93,7 @@ export default function ProductDetail() {
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!containerRef.current || !imageRef.current) return;
+    if (!containerRef.current || !imageRef.current || !zoomMode) return;
     
     const container = containerRef.current;
     const rect = container.getBoundingClientRect();
@@ -103,11 +104,22 @@ export default function ProductDetail() {
   };
 
   const handleMouseEnter = () => {
-    setIsZooming(true);
+    if (zoomMode) {
+      setIsZooming(true);
+    }
   };
 
   const handleMouseLeave = () => {
-    setIsZooming(false);
+    if (zoomMode) {
+      setIsZooming(false);
+    }
+  };
+
+  const toggleZoomMode = () => {
+    setZoomMode(!zoomMode);
+    if (zoomMode) {
+      setIsZooming(false);
+    }
   };
 
   if (isLoading) {
@@ -211,7 +223,9 @@ export default function ProductDetail() {
               {/* Main Image */}
               <div 
                 ref={containerRef}
-                className="relative aspect-[4/5] bg-gradient-to-br from-white via-gray-50 to-gray-100 cursor-crosshair group overflow-hidden" 
+                className={`relative aspect-[4/5] bg-gradient-to-br from-white via-gray-50 to-gray-100 group overflow-hidden ${
+                  zoomMode ? 'cursor-crosshair' : 'cursor-pointer'
+                }`}
                 onDoubleClick={handleImageDoubleClick}
                 onMouseMove={handleMouseMove}
                 onMouseEnter={handleMouseEnter}
@@ -248,12 +262,24 @@ export default function ProductDetail() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 
                 {/* Zoom indicator */}
-                <div className="absolute bottom-4 right-4 bg-black/60 text-white text-xs px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center z-20">
-                  <svg className="h-3 w-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-                  </svg>
-                  Hover to zoom
-                </div>
+                {zoomMode && (
+                  <div className="absolute bottom-4 right-4 bg-black/60 text-white text-xs px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center z-20">
+                    <svg className="h-3 w-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                    </svg>
+                    Hover to zoom
+                  </div>
+                )}
+                
+                {/* Zoom mode indicator */}
+                {zoomMode && (
+                  <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-terracotta/90 text-white text-xs px-3 py-1 rounded-full z-20 flex items-center">
+                    <svg className="h-3 w-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                    </svg>
+                    Zoom Mode Active
+                  </div>
+                )}
 
                 {/* Navigation Arrows */}
                 {product.images.length > 1 && (
@@ -307,11 +333,20 @@ export default function ProductDetail() {
             {/* Action Buttons */}
             <div className="flex items-center justify-between bg-gradient-to-r from-white to-gray-50 rounded-xl p-4 border border-gray-100">
               <div className="flex items-center space-x-3">
-                <Button variant="outline" size="sm" className="hover:bg-terracotta hover:text-white transition-all duration-200 hover:scale-105">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={toggleZoomMode}
+                  className={`transition-all duration-200 hover:scale-105 ${
+                    zoomMode 
+                      ? 'bg-terracotta text-white border-terracotta hover:bg-terracotta/90' 
+                      : 'hover:bg-terracotta hover:text-white'
+                  }`}
+                >
                   <svg className="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
                   </svg>
-                  Zoom View
+                  {zoomMode ? 'Exit Zoom' : 'Zoom View'}
                 </Button>
                 <Button variant="outline" size="sm" className="hover:bg-saffron hover:text-white transition-all duration-200 hover:scale-105">
                   <Heart className="h-4 w-4 mr-2" />
@@ -326,7 +361,7 @@ export default function ProductDetail() {
                 <svg className="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                Double-click for fullscreen
+                {zoomMode ? 'Hover to zoom • Double-click for fullscreen' : 'Double-click for fullscreen'}
               </div>
             </div>
 
