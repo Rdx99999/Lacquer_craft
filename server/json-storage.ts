@@ -437,26 +437,44 @@ export class JsonStorage implements IStorage {
 
   // Settings
   async getSettings(): Promise<Setting[]> {
-    return [...this.data.settings];
+    if (!this.data.settings) {
+      this.data.settings = [];
+    }
+    return this.data.settings;
   }
 
   async getSetting(key: string): Promise<Setting | undefined> {
-    return this.data.settings.find(setting => setting.key === key);
+    const settings = await this.getSettings();
+    return settings.find(s => s.key === key) || null;
   }
 
   async createSetting(setting: InsertSetting): Promise<Setting> {
+    if (!this.data.settings) {
+      this.data.settings = [];
+    }
+
+    const existingSetting = this.data.settings.find(s => s.key === setting.key);
+    if (existingSetting) {
+      throw new Error(`Setting with key '${setting.key}' already exists`);
+    }
+
     const newSetting: Setting = {
       id: this.data.counters.orderId++,
       ...setting,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
+
     this.data.settings.push(newSetting);
     await this.saveData();
     return newSetting;
   }
 
   async updateSetting(key: string, value: string): Promise<Setting | undefined> {
+    if (!this.data.settings) {
+      this.data.settings = [];
+    }
+
     const index = this.data.settings.findIndex(setting => setting.key === key);
     if (index === -1) return undefined;
 
@@ -467,11 +485,32 @@ export class JsonStorage implements IStorage {
   }
 
   async deleteSetting(key: string): Promise<boolean> {
-    const index = this.data.settings.findIndex(setting => setting.key === key);
-    if (index === -1) return false;
+    if (!this.data.settings) {
+      return false;
+    }
 
-    this.data.settings.splice(index, 1);
-    await this.saveData();
-    return true;
+    const initialLength = this.data.settings.length;
+    this.data.settings = this.data.settings.filter(setting => setting.key !== key);
+
+    if (this.data.settings.length < initialLength) {
+      await this.saveData();
+      return true;
+    }
+    return false;
+  }
+
+  private getNextId(table: 'products' | 'categories' | 'cartItems' | 'orders' | 'settings'): number {
+    if (table === 'products') {
+      return this.data.counters.productId++;
+    } else if (table === 'categories') {
+      return this.data.counters.categoryId++;
+    } else if (table === 'cartItems') {
+      return this.data.counters.cartItemId++;
+    } else if (table === 'orders') {
+      return this.data.counters.orderId++;
+    } else if (table === 'settings') {
+        return this.data.counters.orderId++; //Using orderId as settings id.
+    }
+    throw new Error(`Invalid table name: ${table}`);
   }
 }
