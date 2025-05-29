@@ -97,12 +97,43 @@ export default function Profile() {
     );
   }
 
-  // Calculate user stats
-  const totalSpent = userOrders.reduce((sum, order) => sum + parseFloat(order.total), 0);
+  // Calculate user stats from real order data
+  const totalSpent = userOrders.reduce((sum, order) => {
+    // Only count completed/delivered orders for loyalty calculation
+    if (order.status === "delivered" || order.status === "confirmed") {
+      return sum + parseFloat(order.total);
+    }
+    return sum;
+  }, 0);
+  
   const completedOrders = userOrders.filter(order => order.status === "delivered").length;
-  const loyaltyLevel = totalSpent > 10000 ? "Gold" : totalSpent > 5000 ? "Silver" : "Bronze";
-  const nextLevelAmount = loyaltyLevel === "Bronze" ? 5000 - totalSpent : loyaltyLevel === "Silver" ? 10000 - totalSpent : 0;
-  const loyaltyProgress = loyaltyLevel === "Bronze" ? (totalSpent / 5000) * 100 : loyaltyLevel === "Silver" ? ((totalSpent - 5000) / 5000) * 100 : 100;
+  const totalOrders = userOrders.length;
+  
+  // Realistic loyalty thresholds based on Indian market
+  const bronzeThreshold = 2000; // ₹2,000
+  const silverThreshold = 5000; // ₹5,000  
+  const goldThreshold = 15000;  // ₹15,000
+  
+  let loyaltyLevel = "Bronze";
+  let nextLevelAmount = 0;
+  let loyaltyProgress = 0;
+  
+  if (totalSpent >= goldThreshold) {
+    loyaltyLevel = "Gold";
+    loyaltyProgress = 100;
+  } else if (totalSpent >= silverThreshold) {
+    loyaltyLevel = "Silver";
+    nextLevelAmount = goldThreshold - totalSpent;
+    loyaltyProgress = ((totalSpent - silverThreshold) / (goldThreshold - silverThreshold)) * 100;
+  } else if (totalSpent >= bronzeThreshold) {
+    loyaltyLevel = "Bronze";
+    nextLevelAmount = silverThreshold - totalSpent;
+    loyaltyProgress = ((totalSpent - bronzeThreshold) / (silverThreshold - bronzeThreshold)) * 100;
+  } else {
+    loyaltyLevel = "New Member";
+    nextLevelAmount = bronzeThreshold - totalSpent;
+    loyaltyProgress = (totalSpent / bronzeThreshold) * 100;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-warm-cream to-sage/20">
@@ -229,20 +260,69 @@ export default function Profile() {
               <CardContent className="p-6">
                 <div className="text-center mb-4">
                   <div className="text-3xl font-bold text-warm-gold mb-2">{loyaltyLevel}</div>
-                  <div className="text-sm text-gray-600">Member Level</div>
+                  <div className="text-sm text-gray-600">
+                    {loyaltyLevel === "New Member" ? "Welcome! Start your journey" : "Member Level"}
+                  </div>
+                  <div className="text-xs text-gray-500 mt-1">
+                    Based on {completedOrders} completed orders (₹{totalSpent.toLocaleString()} spent)
+                  </div>
                 </div>
                 {loyaltyLevel !== "Gold" && (
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm text-gray-700">
-                      <span>Progress to {loyaltyLevel === "Bronze" ? "Silver" : "Gold"}</span>
+                      <span>Progress to {
+                        loyaltyLevel === "New Member" ? "Bronze" : 
+                        loyaltyLevel === "Bronze" ? "Silver" : "Gold"
+                      }</span>
                       <span className="font-medium">{Math.round(loyaltyProgress)}%</span>
                     </div>
                     <Progress value={loyaltyProgress} className="h-3 bg-gray-200" />
                     <p className="text-xs text-gray-600 text-center bg-soft-beige p-2 rounded">
-                      Spend ₹{nextLevelAmount.toLocaleString()} more to reach {loyaltyLevel === "Bronze" ? "Silver" : "Gold"} level
+                      {nextLevelAmount > 0 ? (
+                        <>Spend ₹{nextLevelAmount.toLocaleString()} more to reach {
+                          loyaltyLevel === "New Member" ? "Bronze" : 
+                          loyaltyLevel === "Bronze" ? "Silver" : "Gold"
+                        } level</>
+                      ) : (
+                        "Congratulations! You've reached the highest level!"
+                      )}
                     </p>
                   </div>
                 )}
+                
+                {/* Loyalty Benefits */}
+                <div className="mt-4 p-3 bg-gradient-to-r from-warm-gold/10 to-saffron/10 rounded-lg border border-warm-gold/20">
+                  <div className="text-xs font-medium text-warm-gold mb-2">Your Benefits:</div>
+                  <div className="space-y-1 text-xs text-gray-600">
+                    {loyaltyLevel === "Gold" && (
+                      <>
+                        <div>• Free shipping on all orders</div>
+                        <div>• 15% discount on premium items</div>
+                        <div>• Early access to new collections</div>
+                        <div>• Priority customer support</div>
+                      </>
+                    )}
+                    {loyaltyLevel === "Silver" && (
+                      <>
+                        <div>• Free shipping on orders above ₹1,500</div>
+                        <div>• 10% discount on select items</div>
+                        <div>• Priority customer support</div>
+                      </>
+                    )}
+                    {loyaltyLevel === "Bronze" && (
+                      <>
+                        <div>• Free shipping on orders above ₹2,000</div>
+                        <div>• 5% discount on select items</div>
+                      </>
+                    )}
+                    {loyaltyLevel === "New Member" && (
+                      <>
+                        <div>• Welcome discount on first order</div>
+                        <div>• Access to monthly newsletters</div>
+                      </>
+                    )}
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </div>
