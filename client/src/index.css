@@ -71,39 +71,39 @@
   .text-terracotta {
     color: hsl(var(--terracotta));
   }
-  
+
   .bg-terracotta {
     background-color: hsl(var(--terracotta));
   }
-  
+
   .border-terracotta {
     border-color: hsl(var(--terracotta));
   }
-  
+
   .text-saffron {
     color: hsl(var(--saffron));
   }
-  
+
   .bg-saffron {
     background-color: hsl(var(--saffron));
   }
-  
+
   .text-warm-gold {
     color: hsl(var(--warm-gold));
   }
-  
+
   .bg-warm-gold {
     background-color: hsl(var(--warm-gold));
   }
-  
+
   .bg-warm-cream {
     background-color: hsl(var(--warm-cream));
   }
-  
+
   .bg-soft-beige {
     background-color: hsl(var(--soft-beige));
   }
-  
+
   .font-display {
     font-family: 'Playfair Display', serif;
   }
@@ -111,3 +111,18 @@
 
 /* Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+/* Apply the warm cream background to the body by default */
+body {
+  background-color: hsl(var(--warm-cream));
+}
+
+/* Hide scrollbar utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}

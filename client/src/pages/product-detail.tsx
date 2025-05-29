@@ -111,18 +111,17 @@ export default function ProductDetail() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Product Images */}
           <div className="space-y-4">
-            {/* Main Image */}
-            <div className="relative overflow-hidden rounded-xl bg-white shadow-lg">
-              <div className="aspect-square">
-                <img
-                  src={product.images[selectedImageIndex] || "/placeholder-image.jpg"}
-                  alt={product.name}
-                  className="w-full h-full object-cover cursor-zoom-in hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              
+            {/* Main Image Container */}
+            <div className="relative bg-gray-50 rounded-xl overflow-hidden">
+              {/* Image Counter */}
+              {product.images.length > 1 && (
+                <div className="absolute top-4 right-4 bg-black/60 text-white text-sm px-3 py-1 rounded-full z-10">
+                  {selectedImageIndex + 1} / {product.images.length}
+                </div>
+              )}
+
               {/* Badges */}
-              <div className="absolute top-4 left-4 flex flex-col space-y-2">
+              <div className="absolute top-4 left-4 flex flex-col space-y-2 z-10">
                 {product.featured && (
                   <Badge className="bg-saffron text-white">
                     Featured
@@ -140,67 +139,83 @@ export default function ProductDetail() {
                 )}
               </div>
 
-              {/* Image Navigation */}
-              {product.images.length > 1 && (
-                <>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white"
-                    onClick={() => setSelectedImageIndex(prev => 
-                      prev === 0 ? product.images.length - 1 : prev - 1
-                    )}
-                  >
-                    &#8249;
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white"
-                    onClick={() => setSelectedImageIndex(prev => 
-                      prev === product.images.length - 1 ? 0 : prev + 1
-                    )}
-                  >
-                    &#8250;
-                  </Button>
-                </>
-              )}
+              {/* Main Image */}
+              <div className="relative aspect-[4/5] bg-white">
+                <img
+                  src={product.images[selectedImageIndex] || "/placeholder-image.jpg"}
+                  alt={product.name}
+                  className="w-full h-full object-cover"
+                />
+                
+                {/* Navigation Arrows */}
+                {product.images.length > 1 && (
+                  <>
+                    <button
+                      onClick={() => setSelectedImageIndex(prev => 
+                        prev === 0 ? product.images.length - 1 : prev - 1
+                      )}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/20 hover:bg-black/40 text-white rounded-full flex items-center justify-center transition-colors duration-200 z-10"
+                    >
+                      <ArrowLeft className="h-5 w-5" />
+                    </button>
+                    <button
+                      onClick={() => setSelectedImageIndex(prev => 
+                        prev === product.images.length - 1 ? 0 : prev + 1
+                      )}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/20 hover:bg-black/40 text-white rounded-full flex items-center justify-center transition-colors duration-200 z-10"
+                    >
+                      &#8250;
+                    </button>
+                  </>
+                )}
+              </div>
 
-              {/* Image Counter */}
+              {/* Thumbnail Navigation */}
               {product.images.length > 1 && (
-                <div className="absolute bottom-4 right-4 bg-black/60 text-white text-sm px-3 py-1 rounded-full">
-                  {selectedImageIndex + 1} / {product.images.length}
+                <div className="bg-white border-t p-4">
+                  <div className="flex space-x-2 overflow-x-auto scrollbar-hide">
+                    {product.images.map((image, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setSelectedImageIndex(index)}
+                        className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all duration-200 ${
+                          selectedImageIndex === index
+                            ? "border-terracotta"
+                            : "border-gray-200 hover:border-gray-300"
+                        }`}
+                      >
+                        <img
+                          src={image}
+                          alt={`${product.name} ${index + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+                      </button>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
 
-            {/* Image Thumbnails */}
-            {product.images.length > 1 && (
-              <div className="grid grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3">
-                {product.images.map((image, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setSelectedImageIndex(index)}
-                    className={`relative overflow-hidden rounded-lg border-2 transition-all duration-200 ${
-                      selectedImageIndex === index
-                        ? "border-terracotta ring-2 ring-terracotta/20"
-                        : "border-gray-200 hover:border-gray-300 hover:shadow-md"
-                    }`}
-                  >
-                    <div className="aspect-square">
-                      <img
-                        src={image}
-                        alt={`${product.name} ${index + 1}`}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    {selectedImageIndex === index && (
-                      <div className="absolute inset-0 bg-terracotta/10" />
-                    )}
-                  </button>
-                ))}
+            {/* Zoom and Share Actions */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Button variant="outline" size="sm">
+                  <svg className="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                  </svg>
+                  Zoom
+                </Button>
+                <Button variant="outline" size="sm">
+                  <svg className="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+                  </svg>
+                  Share
+                </Button>
               </div>
-            )}
+              <span className="text-sm text-gray-500">
+                Click image to zoom
+              </span>
+            </div>
 
             {/* Product Features */}
             <div className="bg-gray-50 rounded-lg p-4">
