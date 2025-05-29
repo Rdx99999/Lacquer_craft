@@ -1,10 +1,15 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
+import { join } from "path";
+import express from "express";
 import { storage } from "./storage";
 import { insertProductSchema, insertOrderSchema, insertCartItemSchema, insertCategorySchema } from "@shared/schema";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Serve static images
+  app.use('/images', express.static(join(process.cwd(), 'data', 'images')));
+
   // Categories
   app.get("/api/categories", async (req, res) => {
     try {

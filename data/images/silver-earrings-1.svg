@@ -1,0 +1,62 @@
+<svg width="200" height="300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="silverGradient" cx="50%" cy="30%">
+      <stop offset="0%" style="stop-color:#F8F9FA;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#E9ECEF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ADB5BD;stop-opacity:1" />
+    </radialGradient>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Left Earring -->
+  <g transform="translate(50,50)">
+    <!-- Hook -->
+    <path d="M20 10 Q15 5 10 10 Q5 15 10 20" stroke="url(#silverGradient)" stroke-width="3" fill="none"/>
+    
+    <!-- Main body -->
+    <ellipse cx="15" cy="40" rx="12" ry="25" fill="url(#silverGradient)" stroke="#6C757D" stroke-width="1" filter="url(#shadow)"/>
+    
+    <!-- Filigree pattern -->
+    <path d="M8 30 Q15 25 22 30 Q15 35 8 30" fill="none" stroke="#495057" stroke-width="1"/>
+    <path d="M8 40 Q15 35 22 40 Q15 45 8 40" fill="none" stroke="#495057" stroke-width="1"/>
+    <path d="M8 50 Q15 45 22 50 Q15 55 8 50" fill="none" stroke="#495057" stroke-width="1"/>
+    
+    <!-- Decorative elements -->
+    <circle cx="15" cy="30" r="2" fill="#6C757D"/>
+    <circle cx="15" cy="40" r="2" fill="#6C757D"/>
+    <circle cx="15" cy="50" r="2" fill="#6C757D"/>
+    
+    <!-- Small decorative swirls -->
+    <path d="M10 35 Q12 33 14 35" stroke="#495057" stroke-width="0.5" fill="none"/>
+    <path d="M16 35 Q18 33 20 35" stroke="#495057" stroke-width="0.5" fill="none"/>
+    <path d="M10 45 Q12 43 14 45" stroke="#495057" stroke-width="0.5" fill="none"/>
+    <path d="M16 45 Q18 43 20 45" stroke="#495057" stroke-width="0.5" fill="none"/>
+  </g>
+  
+  <!-- Right Earring -->
+  <g transform="translate(130,50)">
+    <!-- Hook -->
+    <path d="M20 10 Q15 5 10 10 Q5 15 10 20" stroke="url(#silverGradient)" stroke-width="3" fill="none"/>
+    
+    <!-- Main body -->
+    <ellipse cx="15" cy="40" rx="12" ry="25" fill="url(#silverGradient)" stroke="#6C757D" stroke-width="1" filter="url(#shadow)"/>
+    
+    <!-- Filigree pattern -->
+    <path d="M8 30 Q15 25 22 30 Q15 35 8 30" fill="none" stroke="#495057" stroke-width="1"/>
+    <path d="M8 40 Q15 35 22 40 Q15 45 8 40" fill="none" stroke="#495057" stroke-width="1"/>
+    <path d="M8 50 Q15 45 22 50 Q15 55 8 50" fill="none" stroke="#495057" stroke-width="1"/>
+    
+    <!-- Decorative elements -->
+    <circle cx="15" cy="30" r="2" fill="#6C757D"/>
+    <circle cx="15" cy="40" r="2" fill="#6C757D"/>
+    <circle cx="15" cy="50" r="2" fill="#6C757D"/>
+    
+    <!-- Small decorative swirls -->
+    <path d="M10 35 Q12 33 14 35" stroke="#495057" stroke-width="0.5" fill="none"/>
+    <path d="M16 35 Q18 33 20 35" stroke="#495057" stroke-width="0.5" fill="none"/>
+    <path d="M10 45 Q12 43 14 45" stroke="#495057" stroke-width="0.5" fill="none"/>
+    <path d="M16 45 Q18 43 20 45" stroke="#495057" stroke-width="0.5" fill="none"/>
+  </g>
+</svg>
