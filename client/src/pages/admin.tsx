@@ -76,6 +76,8 @@ export default function Admin() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedProduct, setSelectedProduct] = useState<ProductWithCategory | null>(null);
   const [isProductFormOpen, setIsProductFormOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+  const [isCategoryFormOpen, setIsCategoryFormOpen] = useState(false);
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -110,6 +112,24 @@ export default function Admin() {
       toast({
         title: "Error",
         description: error.message || "Failed to delete product",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const deleteCategoryMutation = useMutation({
+    mutationFn: deleteCategory,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/categories"] });
+      toast({
+        title: "Category deleted",
+        description: "Category has been successfully deleted.",
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to delete category",
         variant: "destructive",
       });
     },
@@ -152,6 +172,20 @@ export default function Admin() {
   const handleAddProduct = () => {
     setSelectedProduct(null);
     setIsProductFormOpen(true);
+  };
+
+  const handleDeleteCategory = (categoryId: number) => {
+    deleteCategoryMutation.mutate(categoryId);
+  };
+
+  const handleEditCategory = (category: Category) => {
+    setSelectedCategory(category);
+    setIsCategoryFormOpen(true);
+  };
+
+  const handleAddCategory = () => {
+    setSelectedCategory(null);
+    setIsCategoryFormOpen(true);
   };
 
   const getStatusColor = (status: string) => {
@@ -389,7 +423,7 @@ export default function Admin() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold">Categories</h2>
-        <Button className="bg-terracotta hover:bg-terracotta/90">
+        <Button onClick={handleAddCategory} className="bg-terracotta hover:bg-terracotta/90">
           <Plus className="h-4 w-4 mr-2" />
           Add Category
         </Button>
@@ -414,14 +448,47 @@ export default function Admin() {
                     <h3 className="font-semibold text-lg">{category.name}</h3>
                     <Badge variant="secondary">{productCount} products</Badge>
                   </div>
-                  <p className="text-gray-600 text-sm mb-4">{category.description}</p>
+                  <p className="text-gray-600 text-sm mb-2">
+                    <strong>Slug:</strong> {category.slug}
+                  </p>
+                  <p className="text-gray-600 text-sm mb-4">{category.description || "No description"}</p>
                   <div className="flex space-x-2">
-                    <Button variant="ghost" size="sm">
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      onClick={() => handleEditCategory(category)}
+                    >
                       <Edit className="h-4 w-4" />
                     </Button>
-                    <Button variant="ghost" size="sm" className="text-red-600 hover:text-red-700">
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button variant="ghost" size="sm" className="text-red-600 hover:text-red-700">
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Delete Category</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            Are you sure you want to delete "{category.name}"? This action cannot be undone.
+                            {productCount > 0 && (
+                              <span className="block mt-2 text-orange-600 font-medium">
+                                Warning: This category has {productCount} product(s). Deleting it may affect those products.
+                              </span>
+                            )}
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction
+                            onClick={() => handleDeleteCategory(category.id)}
+                            className="bg-red-600 hover:bg-red-700"
+                          >
+                            Delete
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   </div>
                 </CardContent>
               </Card>
@@ -655,6 +722,24 @@ export default function Admin() {
           <ProductForm 
             product={selectedProduct || undefined}
             onSuccess={() => setIsProductFormOpen(false)}
+          />
+        </DialogContent>
+      </Dialog>
+
+      {/* Category Form Dialog */}
+      <Dialog open={isCategoryFormOpen} onOpenChange={setIsCategoryFormOpen}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>
+              {selectedCategory ? "Edit Category" : "Add New Category"}
+            </DialogTitle>
+            <DialogDescription>
+              {selectedCategory ? "Update category information" : "Create a new category for organizing products"}
+            </DialogDescription>
+          </DialogHeader>
+          <CategoryForm 
+            category={selectedCategory || undefined}
+            onSuccess={() => setIsCategoryFormOpen(false)}
           />
         </DialogContent>
       </Dialog>
