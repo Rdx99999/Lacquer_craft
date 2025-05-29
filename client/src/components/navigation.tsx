@@ -118,13 +118,11 @@ export function Navigation() {
                 )}
               </Button>
 
-              {/* Admin */}
-              <Link href="/admin">
-                <Button variant="outline" size="sm" className="bg-terracotta text-white border-terracotta hover:bg-terracotta/90">
-                  <Settings className="h-4 w-4 mr-2" />
-                  Admin
-                </Button>
-              </Link>
+              {/* Login */}
+              <Button variant="outline" size="sm" className="bg-terracotta text-white border-terracotta hover:bg-terracotta/90">
+                <Settings className="h-4 w-4 mr-2" />
+                Login
+              </Button>
 
               {/* Mobile Menu */}
               <Sheet>
