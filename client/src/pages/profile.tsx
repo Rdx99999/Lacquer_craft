@@ -108,10 +108,10 @@ export default function Profile() {
     <div className="min-h-screen bg-gradient-to-br from-warm-cream to-sage/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Hero Header */}
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-terracotta to-saffron p-8 mb-8 text-white">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-terracotta to-saffron p-8 mb-8 text-white shadow-lg">
           <div className="relative z-10">
             <div className="flex items-center space-x-4 mb-4">
-              <div className="h-16 w-16 rounded-full bg-white/20 flex items-center justify-center">
+              <div className="h-16 w-16 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
                 <User className="h-8 w-8" />
               </div>
               <div>
@@ -140,50 +140,50 @@ export default function Profile() {
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
           {/* Stats Cards */}
-          <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
+          <Card className="bg-gradient-to-br from-terracotta/10 to-terracotta/20 border-terracotta/30 shadow-lg">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-blue-600 text-sm font-medium">Total Orders</p>
-                  <p className="text-3xl font-bold text-blue-900">{userOrders.length}</p>
+                  <p className="text-terracotta text-sm font-medium">Total Orders</p>
+                  <p className="text-3xl font-bold text-gray-900">{userOrders.length}</p>
                 </div>
-                <ShoppingBag className="h-8 w-8 text-blue-500" />
+                <ShoppingBag className="h-8 w-8 text-terracotta" />
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200">
+          <Card className="bg-gradient-to-br from-saffron/10 to-saffron/20 border-saffron/30 shadow-lg">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-green-600 text-sm font-medium">Total Spent</p>
-                  <p className="text-3xl font-bold text-green-900">₹{totalSpent.toLocaleString()}</p>
+                  <p className="text-saffron text-sm font-medium">Total Spent</p>
+                  <p className="text-3xl font-bold text-gray-900">₹{totalSpent.toLocaleString()}</p>
                 </div>
-                <TrendingUp className="h-8 w-8 text-green-500" />
+                <TrendingUp className="h-8 w-8 text-saffron" />
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
+          <Card className="bg-gradient-to-br from-warm-gold/20 to-warm-gold/30 border-warm-gold/40 shadow-lg">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-purple-600 text-sm font-medium">Completed</p>
-                  <p className="text-3xl font-bold text-purple-900">{completedOrders}</p>
+                  <p className="text-warm-gold text-sm font-medium">Completed</p>
+                  <p className="text-3xl font-bold text-gray-900">{completedOrders}</p>
                 </div>
-                <CheckCircle className="h-8 w-8 text-purple-500" />
+                <CheckCircle className="h-8 w-8 text-warm-gold" />
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-amber-50 to-amber-100 border-amber-200">
+          <Card className="bg-gradient-to-br from-terracotta/15 to-saffron/15 border-terracotta/25 shadow-lg">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-amber-600 text-sm font-medium">Loyalty Level</p>
-                  <p className="text-2xl font-bold text-amber-900">{loyaltyLevel}</p>
+                  <p className="text-terracotta text-sm font-medium">Loyalty Level</p>
+                  <p className="text-2xl font-bold text-gray-900">{loyaltyLevel}</p>
                 </div>
-                <Star className="h-8 w-8 text-amber-500" />
+                <Star className="h-8 w-8 text-saffron" />
               </div>
             </CardContent>
           </Card>
@@ -192,53 +192,53 @@ export default function Profile() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Profile Information */}
           <div className="lg:col-span-1 space-y-6">
-            <Card className="border-0 shadow-lg">
-              <CardHeader className="bg-gradient-to-r from-terracotta/10 to-saffron/10 rounded-t-lg">
-                <CardTitle className="flex items-center space-x-2 text-terracotta">
+            <Card className="border-terracotta/20 shadow-lg bg-white">
+              <CardHeader className="bg-gradient-to-r from-terracotta/10 to-saffron/10 rounded-t-lg border-b border-terracotta/20">
+                <CardTitle className="flex items-center space-x-2 text-terracotta font-display">
                   <User className="h-5 w-5" />
                   <span>Profile Information</span>
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-6 space-y-4">
                 <div className="space-y-3">
-                  <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-                    <User className="h-5 w-5 text-gray-500" />
+                  <div className="flex items-center space-x-3 p-3 bg-soft-beige rounded-lg border border-terracotta/10">
+                    <User className="h-5 w-5 text-terracotta" />
                     <div>
-                      <Label className="text-sm font-medium text-gray-500">Name</Label>
-                      <p className="text-lg font-semibold">{user?.name}</p>
+                      <Label className="text-sm font-medium text-gray-600">Name</Label>
+                      <p className="text-lg font-semibold text-gray-900">{user?.name}</p>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-                    <Mail className="h-5 w-5 text-gray-500" />
+                  <div className="flex items-center space-x-3 p-3 bg-soft-beige rounded-lg border border-terracotta/10">
+                    <Mail className="h-5 w-5 text-terracotta" />
                     <div>
-                      <Label className="text-sm font-medium text-gray-500">Email</Label>
-                      <p className="text-lg font-semibold">{user?.email}</p>
+                      <Label className="text-sm font-medium text-gray-600">Email</Label>
+                      <p className="text-lg font-semibold text-gray-900">{user?.email}</p>
                     </div>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="border-0 shadow-lg">
-              <CardHeader className="bg-gradient-to-r from-amber-50 to-amber-100">
-                <CardTitle className="flex items-center space-x-2 text-amber-700">
+            <Card className="border-saffron/20 shadow-lg bg-white">
+              <CardHeader className="bg-gradient-to-r from-warm-gold/15 to-saffron/15 border-b border-saffron/20">
+                <CardTitle className="flex items-center space-x-2 text-warm-gold font-display">
                   <Award className="h-5 w-5" />
                   <span>Loyalty Status</span>
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-6">
                 <div className="text-center mb-4">
-                  <div className="text-3xl font-bold text-amber-600 mb-2">{loyaltyLevel}</div>
+                  <div className="text-3xl font-bold text-warm-gold mb-2">{loyaltyLevel}</div>
                   <div className="text-sm text-gray-600">Member Level</div>
                 </div>
                 {loyaltyLevel !== "Gold" && (
                   <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
+                    <div className="flex justify-between text-sm text-gray-700">
                       <span>Progress to {loyaltyLevel === "Bronze" ? "Silver" : "Gold"}</span>
-                      <span>{Math.round(loyaltyProgress)}%</span>
+                      <span className="font-medium">{Math.round(loyaltyProgress)}%</span>
                     </div>
-                    <Progress value={loyaltyProgress} className="h-2" />
-                    <p className="text-xs text-gray-500 text-center">
+                    <Progress value={loyaltyProgress} className="h-3 bg-gray-200" />
+                    <p className="text-xs text-gray-600 text-center bg-soft-beige p-2 rounded">
                       Spend ₹{nextLevelAmount.toLocaleString()} more to reach {loyaltyLevel === "Bronze" ? "Silver" : "Gold"} level
                     </p>
                   </div>
@@ -249,9 +249,9 @@ export default function Profile() {
 
           {/* Orders List */}
           <div className="lg:col-span-2">
-            <Card className="border-0 shadow-lg">
-              <CardHeader className="bg-gradient-to-r from-terracotta/10 to-saffron/10 rounded-t-lg">
-                <CardTitle className="flex items-center justify-between text-terracotta">
+            <Card className="border-terracotta/20 shadow-lg bg-white">
+              <CardHeader className="bg-gradient-to-r from-terracotta/10 to-saffron/10 rounded-t-lg border-b border-terracotta/20">
+                <CardTitle className="flex items-center justify-between text-terracotta font-display">
                   <div className="flex items-center space-x-2">
                     <Package className="h-5 w-5" />
                     <span>My Orders ({userOrders.length})</span>
@@ -266,15 +266,15 @@ export default function Profile() {
                   </div>
                 ) : userOrders.length === 0 ? (
                   <div className="text-center py-12">
-                    <div className="bg-gradient-to-br from-gray-100 to-gray-200 rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-6">
-                      <Package className="w-12 h-12 text-gray-400" />
+                    <div className="bg-gradient-to-br from-terracotta/10 to-saffron/10 rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-6 border border-terracotta/20">
+                      <Package className="w-12 h-12 text-terracotta" />
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-3">No orders yet</h3>
-                    <p className="text-gray-500 mb-8 max-w-sm mx-auto">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-3 font-display">No orders yet</h3>
+                    <p className="text-gray-600 mb-8 max-w-sm mx-auto">
                       Start your journey with authentic Indian crafts. Explore our beautiful collection of handmade products.
                     </p>
                     <Link href="/products">
-                      <Button className="bg-gradient-to-r from-terracotta to-saffron hover:from-terracotta/90 hover:to-saffron/90 text-white px-8 py-3 rounded-lg font-medium shadow-lg">
+                      <Button className="bg-gradient-to-r from-terracotta to-saffron hover:from-terracotta/90 hover:to-saffron/90 text-white px-8 py-3 rounded-lg font-medium shadow-lg transition-all duration-200 hover:shadow-xl">
                         Start Shopping
                       </Button>
                     </Link>
@@ -282,23 +282,23 @@ export default function Profile() {
                 ) : (
                   <div className="space-y-6">
                     {userOrders.map((order, index) => (
-                      <div key={order.id} className="relative overflow-hidden rounded-xl border border-gray-200 bg-white hover:shadow-lg transition-all duration-300 group">
+                      <div key={order.id} className="relative overflow-hidden rounded-xl border border-terracotta/20 bg-white hover:shadow-xl transition-all duration-300 group hover:border-terracotta/40">
                         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-terracotta to-saffron"></div>
                         <div className="p-6">
                           <div className="flex items-center justify-between mb-4">
                             <div className="flex items-center space-x-4">
                               <div className="flex items-center space-x-2">
                                 <div className={`p-2 rounded-full ${
-                                  order.status === "delivered" ? "bg-green-100" :
-                                  order.status === "shipped" ? "bg-blue-100" :
-                                  order.status === "confirmed" ? "bg-purple-100" :
-                                  order.status === "cancelled" ? "bg-red-100" : "bg-yellow-100"
+                                  order.status === "delivered" ? "bg-green-100 text-green-600" :
+                                  order.status === "shipped" ? "bg-blue-100 text-blue-600" :
+                                  order.status === "confirmed" ? "bg-purple-100 text-purple-600" :
+                                  order.status === "cancelled" ? "bg-red-100 text-red-600" : "bg-yellow-100 text-yellow-600"
                                 }`}>
                                   {getStatusIcon(order.status)}
                                 </div>
                                 <div>
-                                  <h3 className="font-semibold text-gray-900">Order #{order.id}</h3>
-                                  <p className="text-sm text-gray-500">
+                                  <h3 className="font-semibold text-gray-900 font-display">Order #{order.id}</h3>
+                                  <p className="text-sm text-gray-600">
                                     Placed on {new Date(order.createdAt).toLocaleDateString()}
                                   </p>
                                 </div>
@@ -312,7 +312,7 @@ export default function Profile() {
                                 <Button 
                                   variant="outline" 
                                   size="sm"
-                                  className="hover:bg-terracotta hover:text-white transition-colors"
+                                  className="border-terracotta text-terracotta hover:bg-terracotta hover:text-white transition-all duration-200 hover:shadow-md"
                                   onClick={() => setSelectedOrder(order)}
                                 >
                                   <Eye className="h-4 w-4 mr-2" />
@@ -404,17 +404,17 @@ export default function Profile() {
                           </div>
                           
                           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div className="bg-gray-50 rounded-lg p-4">
-                              <p className="text-sm font-medium text-gray-500 mb-1">Tracking Number</p>
-                              <p className="font-mono text-sm bg-white px-2 py-1 rounded border">{order.trackingNumber}</p>
+                            <div className="bg-soft-beige rounded-lg p-4 border border-terracotta/10">
+                              <p className="text-sm font-medium text-gray-600 mb-1">Tracking Number</p>
+                              <p className="font-mono text-sm bg-white px-2 py-1 rounded border border-terracotta/20 text-terracotta">{order.trackingNumber}</p>
                             </div>
-                            <div className="bg-gray-50 rounded-lg p-4">
-                              <p className="text-sm font-medium text-gray-500 mb-1">Total Amount</p>
+                            <div className="bg-soft-beige rounded-lg p-4 border border-terracotta/10">
+                              <p className="text-sm font-medium text-gray-600 mb-1">Total Amount</p>
                               <p className="text-xl font-bold text-terracotta">₹{parseFloat(order.total).toLocaleString()}</p>
                             </div>
-                            <div className="bg-gray-50 rounded-lg p-4">
-                              <p className="text-sm font-medium text-gray-500 mb-1">Order Date</p>
-                              <p className="font-medium">{new Date(order.createdAt).toLocaleDateString()}</p>
+                            <div className="bg-soft-beige rounded-lg p-4 border border-terracotta/10">
+                              <p className="text-sm font-medium text-gray-600 mb-1">Order Date</p>
+                              <p className="font-medium text-gray-900">{new Date(order.createdAt).toLocaleDateString()}</p>
                             </div>
                           </div>
                         </div>
