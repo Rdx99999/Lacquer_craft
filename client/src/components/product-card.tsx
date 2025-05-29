@@ -47,7 +47,7 @@ export function ProductCard({ product, showCategory = true, highlightFeatures = 
     : productFeatures.slice(0, 2);
 
   return (
-    <Link href={`/product/${product.id}`}>
+    <Link href={`/products/${product.id}`}>
       <Card className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-white h-full flex flex-col">
         <div className="relative aspect-[4/5] overflow-hidden rounded-t-lg">
           {/* Product Image */}
