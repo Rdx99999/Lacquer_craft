@@ -1,3 +1,10 @@
+import { useQuery } from "@tanstack/react-query";
+import { useParams, Link } from "wouter";
+import { useState } from "react";
+import { Star, ArrowLeft, ArrowRight, Plus, Minus, Heart, Share2, Package, Truck, Shield, Award } from "lucide-react";
+```
+
+```typescript
 import { useState } from "react";
 import { useParams } from "wouter";
 import { useQuery } from "@tanstack/react-query";

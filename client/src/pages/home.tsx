@@ -18,7 +18,8 @@ export default function Home() {
     queryFn: getCategories,
   });
 
-  const categoryImages = {
+  // Fallback images for categories without thumbnails
+  const fallbackCategoryImages = {
     pottery: "https://pixabay.com/get/gb570087a032ff2f3d571d2c0ea66b8c0c1922cc79890f4e40b065b584a8583a3764759c6653e0465c9a4aa8d5483d8363957d0cf25a46d507171428ac91144ee_1280.jpg",
     textiles: "https://pixabay.com/get/g0c2883f32546fb1194e48ed2f9534dc76209e24104a2c2aaaee63cf584261f94432f323f9597e3aeae98ef54273a39acd39e829f6b2773296e831d0cd6eb2ecc_1280.jpg",
     jewelry: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300",
@@ -184,7 +185,7 @@ export default function Home() {
                 <Card className="group cursor-pointer h-full overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
                   <div className="relative overflow-hidden">
                     <img
-                      src={categoryImages[category.slug as keyof typeof categoryImages]}
+                      src={category.thumbnail || fallbackCategoryImages[category.slug as keyof typeof fallbackCategoryImages] || "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300"}
                       alt={`${category.name} Collection`}
                       className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"
                     />
