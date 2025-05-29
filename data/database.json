@@ -140,16 +140,21 @@
       "createdAt": "2025-05-29T22:05:15.358Z"
     }
   ],
-  "cartItems": [
+  "cartItems": [],
+  "orders": [
     {
-      "id": 3,
-      "sessionId": "session-1748553571473-4pe3dwcge",
-      "productId": 10,
-      "quantity": 2,
-      "createdAt": "2025-05-29T22:11:42.783Z"
+      "id": 7,
+      "userId": 1,
+      "customerName": "aman",
+      "customerEmail": "aman@gmail.com",
+      "customerPhone": "9650982544",
+      "shippingAddress": "faridabad",
+      "total": "2360",
+      "status": "pending",
+      "items": "[{\"productId\":10,\"quantity\":2,\"price\":\"1000\",\"name\":\"Elephant Shaped Wooden Stool\",\"sku\":\"HAND001\"}]",
+      "createdAt": "2025-05-29T22:43:07.009Z"
     }
   ],
-  "orders": [],
   "settings": [
     {
       "id": 1,
@@ -225,13 +230,23 @@
       "sessionId": "scpbvtmb9yiuw4",
       "userId": 1,
       "expiresAt": "2025-06-28T22:39:58.180Z"
+    },
+    {
+      "sessionId": "zqreemb9yls12",
+      "userId": 1,
+      "expiresAt": "2025-06-28T22:42:14.438Z"
+    },
+    {
+      "sessionId": "acrx48mb9ympzl",
+      "userId": 1,
+      "expiresAt": "2025-06-28T22:42:58.449Z"
     }
   ],
   "counters": {
     "categoryId": 12,
     "productId": 14,
     "cartItemId": 4,
-    "orderId": 7,
+    "orderId": 8,
     "userId": 2
   }
 }
