@@ -76,7 +76,25 @@ export class JsonStorage implements IStorage {
 
       if (fileExists) {
         const fileContent = await fs.readFile(this.dbFile, 'utf-8');
-        this.data = JSON.parse(fileContent);
+        const loadedData = JSON.parse(fileContent);
+        
+        // Ensure all required arrays exist
+        this.data = {
+          categories: loadedData.categories || [],
+          products: loadedData.products || [],
+          cartItems: loadedData.cartItems || [],
+          orders: loadedData.orders || [],
+          settings: loadedData.settings || [],
+          users: loadedData.users || [],
+          sessions: loadedData.sessions || [],
+          counters: {
+            categoryId: loadedData.counters?.categoryId || 1,
+            productId: loadedData.counters?.productId || 1,
+            cartItemId: loadedData.counters?.cartItemId || 1,
+            orderId: loadedData.counters?.orderId || 1,
+            userId: loadedData.counters?.userId || 1
+          }
+        };
       } else {
         // Initialize with sample data
         await this.initializeData();
@@ -509,6 +527,11 @@ export class JsonStorage implements IStorage {
 
   // User management
   async createUser(userData: InsertUser): Promise<User> {
+    // Ensure users array exists
+    if (!this.data.users) {
+      this.data.users = [];
+    }
+
     // Check if user already exists
     const existingUser = this.data.users.find(user => user.email === userData.email);
     if (existingUser) {
@@ -527,10 +550,16 @@ export class JsonStorage implements IStorage {
   }
 
   async getUserByEmail(email: string): Promise<User | undefined> {
+    if (!this.data.users) {
+      this.data.users = [];
+    }
     return this.data.users.find(user => user.email === email);
   }
 
   async getUserById(id: number): Promise<User | undefined> {
+    if (!this.data.users) {
+      this.data.users = [];
+    }
     return this.data.users.find(user => user.id === id);
   }
 
@@ -543,6 +572,10 @@ export class JsonStorage implements IStorage {
   }
 
   async createSession(userId: number): Promise<string> {
+    if (!this.data.sessions) {
+      this.data.sessions = [];
+    }
+
     const sessionId = Math.random().toString(36).substring(7) + Date.now().toString(36);
     const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(); // 30 days
 
@@ -552,6 +585,10 @@ export class JsonStorage implements IStorage {
   }
 
   async getSessionUser(sessionId: string): Promise<User | null> {
+    if (!this.data.sessions) {
+      this.data.sessions = [];
+    }
+
     const session = this.data.sessions.find(s => s.sessionId === sessionId);
     if (!session || new Date(session.expiresAt) < new Date()) {
       return null;
@@ -561,6 +598,10 @@ export class JsonStorage implements IStorage {
   }
 
   async deleteSession(sessionId: string): Promise<void> {
+    if (!this.data.sessions) {
+      this.data.sessions = [];
+    }
+
     this.data.sessions = this.data.sessions.filter(s => s.sessionId !== sessionId);
     await this.saveData();
   }
