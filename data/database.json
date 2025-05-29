@@ -1,89 +1,35 @@
 {
-  "categories": [],
+  "categories": [
+    {
+      "name": "wooden Craft",
+      "slug": "wooden-craft",
+      "description": null,
+      "thumbnail": "/images/products/2025/05/29/image15_1748551561077-583989758.png",
+      "id": 6
+    }
+  ],
   "products": [
     {
-      "name": "Handwoven Silk Scarf",
-      "description": "Beautiful silk scarf with intricate handwoven patterns. Made by skilled artisans.",
-      "price": "1899",
-      "categoryId": 2,
-      "sku": "TEX001",
-      "featured": true,
-      "stock": 25,
-      "images": [
-        "/images/products/2025/05/29/image10_1748550062249-986875633.png"
-      ],
-      "features": [
-        "100% pure silk material",
-        "Handwoven by skilled artisans",
-        "Intricate traditional patterns",
-        "Lightweight and comfortable"
-      ],
-      "createdAt": "2025-05-29T19:34:45.017Z",
-      "id": 2
-    },
-    {
-      "name": "Silver Filigree Earrings",
-      "description": "Exquisite silver filigree earrings showcasing traditional craftsmanship.",
-      "price": "3499",
-      "categoryId": 3,
-      "sku": "JEW001",
-      "featured": true,
-      "stock": 12,
-      "images": [
-        "/images/products/2025/05/29/pic1_1748549902589-113477623.png"
-      ],
-      "features": [
-        "Sterling silver construction",
-        "Traditional filigree technique",
-        "Hypoallergenic materials",
-        "Elegant design"
-      ],
-      "createdAt": "2025-05-29T19:34:45.017Z",
-      "id": 3
-    },
-    {
-      "name": "Wooden Rocking Horse",
-      "description": "Material: Wood\n\nDesign: Painted in red with white floral and yellow accent designs.",
-      "price": "5000",
-      "categoryId": 4,
-      "stock": 5,
-      "images": [
-        "/images/products/2025/05/29/pic_1748550244665-618966616.png"
-      ],
-      "sku": "WOD001",
-      "featured": true,
-      "features": [
-        "Toy piece or decorative showpiece.",
-        "Smooth finish, traditional handcrafted style.",
-        "Safe for kids (non-toxic paint, smooth edges)."
-      ],
-      "id": 7,
-      "createdAt": "2025-05-29T20:27:28.593Z"
-    },
-    {
       "name": "Wooden Bird with Movable Wings",
-      "description": "Material: Wood\n\nDesign: Bright yellow bird with painted wings and floral motifs, mounted on wheels.",
+      "description": "Material: Wood\n\nDesign: Bright yellow bird with painted wings and floral motifs, mounted on wheels.\n\n",
       "price": "5000",
-      "categoryId": 4,
-      "stock": 5,
+      "categoryId": 6,
+      "stock": 500,
       "images": [
-        "/images/products/2025/05/29/image6_1748550535428-523552340.png"
+        "/images/products/2025/05/29/image6_1748551609440-380216249.png"
       ],
       "sku": "WOD008",
       "featured": true,
-      "features": [
-        "Pull toy with flapping wings when pulled.",
-        "raditional toy design from Indian folk art."
-      ],
-      "id": 8,
-      "createdAt": "2025-05-29T20:29:11.062Z"
+      "features": [],
+      "id": 9,
+      "createdAt": "2025-05-29T20:47:04.597Z"
     }
   ],
   "cartItems": [],
   "orders": [],
   "counters": {
-    "categoryId": 6,
-    "productId": 9,
+    "categoryId": 7,
+    "productId": 10,
     "cartItemId": 2,
     "orderId": 1
   }
