@@ -111,46 +111,107 @@ export default function ProductDetail() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Product Images */}
           <div className="space-y-4">
-            <div className="relative overflow-hidden rounded-xl bg-white">
-              <img
-                src={product.images[selectedImageIndex] || "/placeholder-image.jpg"}
-                alt={product.name}
-                className="w-full h-96 object-cover"
-              />
-              {product.featured && (
-                <Badge className="absolute top-4 left-4 bg-saffron text-white">
-                  Featured
-                </Badge>
+            {/* Main Image */}
+            <div className="relative overflow-hidden rounded-xl bg-white shadow-lg">
+              <div className="aspect-square">
+                <img
+                  src={product.images[selectedImageIndex] || "/placeholder-image.jpg"}
+                  alt={product.name}
+                  className="w-full h-full object-cover cursor-zoom-in hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+              
+              {/* Badges */}
+              <div className="absolute top-4 left-4 flex flex-col space-y-2">
+                {product.featured && (
+                  <Badge className="bg-saffron text-white">
+                    Featured
+                  </Badge>
+                )}
+                {product.stock === 0 && (
+                  <Badge variant="destructive">
+                    Out of Stock
+                  </Badge>
+                )}
+                {product.stock > 0 && product.stock <= 5 && (
+                  <Badge variant="outline" className="text-orange-600 border-orange-600 bg-white">
+                    Limited Stock
+                  </Badge>
+                )}
+              </div>
+
+              {/* Image Navigation */}
+              {product.images.length > 1 && (
+                <>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white"
+                    onClick={() => setSelectedImageIndex(prev => 
+                      prev === 0 ? product.images.length - 1 : prev - 1
+                    )}
+                  >
+                    &#8249;
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white"
+                    onClick={() => setSelectedImageIndex(prev => 
+                      prev === product.images.length - 1 ? 0 : prev + 1
+                    )}
+                  >
+                    &#8250;
+                  </Button>
+                </>
               )}
-              {product.stock === 0 && (
-                <Badge className="absolute top-4 right-4 bg-destructive text-white">
-                  Out of Stock
-                </Badge>
+
+              {/* Image Counter */}
+              {product.images.length > 1 && (
+                <div className="absolute bottom-4 right-4 bg-black/60 text-white text-sm px-3 py-1 rounded-full">
+                  {selectedImageIndex + 1} / {product.images.length}
+                </div>
               )}
             </div>
 
             {/* Image Thumbnails */}
             {product.images.length > 1 && (
-              <div className="grid grid-cols-4 gap-2">
+              <div className="grid grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3">
                 {product.images.map((image, index) => (
                   <button
                     key={index}
                     onClick={() => setSelectedImageIndex(index)}
-                    className={`relative overflow-hidden rounded-lg border-2 transition-colors ${
+                    className={`relative overflow-hidden rounded-lg border-2 transition-all duration-200 ${
                       selectedImageIndex === index
-                        ? "border-terracotta"
-                        : "border-gray-200 hover:border-gray-300"
+                        ? "border-terracotta ring-2 ring-terracotta/20"
+                        : "border-gray-200 hover:border-gray-300 hover:shadow-md"
                     }`}
                   >
-                    <img
-                      src={image}
-                      alt={`${product.name} ${index + 1}`}
-                      className="w-full h-20 object-cover"
-                    />
+                    <div className="aspect-square">
+                      <img
+                        src={image}
+                        alt={`${product.name} ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    {selectedImageIndex === index && (
+                      <div className="absolute inset-0 bg-terracotta/10" />
+                    )}
                   </button>
                 ))}
               </div>
             )}
+
+            {/* Product Features */}
+            <div className="bg-gray-50 rounded-lg p-4">
+              <h4 className="font-medium text-gray-900 mb-2">Product Features</h4>
+              <ul className="text-sm text-gray-600 space-y-1">
+                <li>• Authentic handcrafted design</li>
+                <li>• Traditional Indian artistry</li>
+                <li>• Premium quality materials</li>
+                <li>• Unique piece with natural variations</li>
+              </ul>
+            </div>
           </div>
 
           {/* Product Info */}

@@ -103,43 +103,49 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
   };
 
   const uploadImage = async (file: File) => {
+    const formData = new FormData();
+    formData.append('image', file);
+
+    const response = await fetch('/api/upload-image', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to upload ${file.name}`);
+    }
+
+    const data = await response.json();
+    const currentImages = form.getValues("images");
+    form.setValue("images", [...currentImages, data.imageUrl]);
+    
+    return data;
+  };
+
+  const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (!files || files.length === 0) return;
+
     setUploading(true);
+    
     try {
-      const formData = new FormData();
-      formData.append('image', file);
-
-      const response = await fetch('/api/upload-image', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to upload image');
-      }
-
-      const data = await response.json();
-      const currentImages = form.getValues("images");
-      form.setValue("images", [...currentImages, data.imageUrl]);
+      const uploadPromises = Array.from(files).map(file => uploadImage(file));
+      await Promise.all(uploadPromises);
       
       toast({
         title: "Success",
-        description: "Image uploaded successfully",
+        description: `${files.length} image(s) uploaded successfully`,
       });
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to upload image",
+        description: "Some images failed to upload",
         variant: "destructive",
       });
     } finally {
       setUploading(false);
-    }
-  };
-
-  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      uploadImage(file);
+      // Clear the input
+      event.target.value = '';
     }
   };
 
@@ -261,40 +267,76 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
           {/* Images */}
           <div>
             <Label>Product Images</Label>
-            <div className="space-y-4">
-              <div className="flex space-x-2">
-                <Input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileSelect}
-                  className="flex-1"
-                  disabled={uploading}
-                />
-                <Button type="button" disabled={uploading}>
-                  {uploading ? "Uploading..." : "Upload Image"}
-                </Button>
+            <div className="space-y-6">
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6">
+                <div className="text-center">
+                  <div className="flex flex-col items-center space-y-2">
+                    <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                    <div className="text-sm text-gray-600">
+                      <label htmlFor="image-upload" className="cursor-pointer">
+                        <span className="text-terracotta font-medium hover:text-terracotta/80">Click to upload</span>
+                        <span> or drag and drop</span>
+                      </label>
+                      <Input
+                        id="image-upload"
+                        type="file"
+                        accept="image/jpeg,image/jpg,image/png,image/webp,image/gif"
+                        onChange={handleFileSelect}
+                        className="hidden"
+                        disabled={uploading}
+                        multiple
+                      />
+                    </div>
+                    <p className="text-xs text-gray-500">
+                      PNG, JPG, WebP or GIF up to 10MB each
+                    </p>
+                  </div>
+                </div>
               </div>
 
+              {uploading && (
+                <div className="flex items-center justify-center p-4 bg-gray-50 rounded-lg">
+                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-terracotta"></div>
+                  <span className="ml-2 text-sm text-gray-600">Uploading images...</span>
+                </div>
+              )}
+
               {form.watch("images").length > 0 && (
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {form.watch("images").map((url, index) => (
-                    <div key={index} className="relative">
-                      <img
-                        src={url}
-                        alt={`Product image ${index + 1}`}
-                        className="w-full h-24 object-cover rounded-lg border"
-                      />
-                      <Button
-                        type="button"
-                        size="sm"
-                        variant="destructive"
-                        className="absolute top-1 right-1 h-6 w-6 p-0"
-                        onClick={() => removeImage(index)}
-                      >
-                        ×
-                      </Button>
-                    </div>
-                  ))}
+                <div>
+                  <h4 className="text-sm font-medium text-gray-700 mb-3">
+                    Product Images ({form.watch("images").length})
+                  </h4>
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    {form.watch("images").map((url, index) => (
+                      <div key={index} className="relative group">
+                        <div className="aspect-square overflow-hidden rounded-lg border-2 border-gray-200 bg-gray-50">
+                          <img
+                            src={url}
+                            alt={`Product image ${index + 1}`}
+                            className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                          />
+                        </div>
+                        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all rounded-lg" />
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="destructive"
+                          className="absolute top-2 right-2 h-7 w-7 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                          onClick={() => removeImage(index)}
+                        >
+                          ×
+                        </Button>
+                        <div className="absolute bottom-2 left-2 bg-black bg-opacity-60 text-white text-xs px-2 py-1 rounded">
+                          {index === 0 ? 'Main' : index + 1}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-xs text-gray-500 mt-2">
+                    The first image will be used as the main product image
+                  </p>
                 </div>
               )}
             </div>

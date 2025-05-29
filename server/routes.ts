@@ -8,25 +8,41 @@ import { insertProductSchema, insertOrderSchema, insertCartItemSchema, insertCat
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Configure multer for image uploads
+  // Configure multer for image uploads with organized directory structure
   const upload = multer({
     storage: multer.diskStorage({
-      destination: join(process.cwd(), 'data', 'images'),
+      destination: (req, file, cb) => {
+        const date = new Date();
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        
+        const uploadPath = join(process.cwd(), 'data', 'images', 'products', `${year}`, `${month}`, `${day}`);
+        
+        // Create directory if it doesn't exist
+        import('fs').then(fs => {
+          fs.mkdirSync(uploadPath, { recursive: true });
+        });
+        
+        cb(null, uploadPath);
+      },
       filename: (req, file, cb) => {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
         const extension = file.originalname.split('.').pop();
-        cb(null, `upload-${uniqueSuffix}.${extension}`);
+        const sanitizedName = file.originalname.replace(/[^a-zA-Z0-9.-]/g, '_');
+        cb(null, `${sanitizedName.split('.')[0]}_${uniqueSuffix}.${extension}`);
       }
     }),
     fileFilter: (req, file, cb) => {
-      if (file.mimetype.startsWith('image/')) {
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif'];
+      if (allowedTypes.includes(file.mimetype)) {
         cb(null, true);
       } else {
-        cb(new Error('Only image files are allowed'), false);
+        cb(new Error('Only image files (JPEG, PNG, WebP, GIF) are allowed'), false);
       }
     },
     limits: {
-      fileSize: 5 * 1024 * 1024 // 5MB limit
+      fileSize: 10 * 1024 * 1024 // 10MB limit
     }
   });
 
@@ -40,9 +56,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "No image file uploaded" });
       }
       
-      const imageUrl = `/images/${req.file.filename}`;
-      res.json({ imageUrl });
+      // Get relative path from data/images
+      const relativePath = req.file.path.split('data/images/')[1];
+      const imageUrl = `/images/${relativePath}`;
+      
+      res.json({ 
+        imageUrl,
+        filename: req.file.filename,
+        originalName: req.file.originalname,
+        size: req.file.size,
+        mimetype: req.file.mimetype
+      });
     } catch (error) {
+      console.error('Image upload error:', error);
       res.status(500).json({ message: "Failed to upload image" });
     }
   });
