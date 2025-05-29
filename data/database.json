@@ -150,12 +150,6 @@
     }
   ],
   "orders": [],
-  "counters": {
-    "categoryId": 12,
-    "productId": 14,
-    "cartItemId": 4,
-    "orderId": 7
-  },
   "settings": [
     {
       "id": 1,
@@ -211,5 +205,22 @@
       "createdAt": "2025-05-29T21:24:37.105Z",
       "updatedAt": "2025-05-29T21:24:37.105Z"
     }
-  ]
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "aman",
+      "email": "aman@gmail.com",
+      "passwordHash": "$2b$10$ctPoqAWnWfaU/dmT3XnrVOFMWr8BqHRDMjnWvFwjMbzMJwN5lIuTm",
+      "createdAt": "2025-05-29T22:30:34.176Z"
+    }
+  ],
+  "sessions": [],
+  "counters": {
+    "categoryId": 12,
+    "productId": 14,
+    "cartItemId": 4,
+    "orderId": 7,
+    "userId": 2
+  }
 }
