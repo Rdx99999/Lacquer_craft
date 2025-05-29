@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { Search, ShoppingCart, Menu, X, Settings } from "lucide-react";
+import { Search, ShoppingCart, Menu, X, Settings, User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -13,7 +13,10 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { useCart } from "@/hooks/use-cart";
+import { useAuth } from "@/hooks/use-auth";
+import { useToast } from "@/hooks/use-toast";
 import { ShoppingCartSidebar } from "./shopping-cart";
+import { AuthDialog } from "./auth/auth-dialog";
 
 const categories = [
   { name: "Pottery", slug: "pottery" },
@@ -26,7 +29,10 @@ export function Navigation() {
   const [location] = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [showAuthDialog, setShowAuthDialog] = useState(false);
   const { itemCount } = useCart();
+  const { user, isAuthenticated, login, logout } = useAuth();
+  const { toast } = useToast();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -118,11 +124,31 @@ export function Navigation() {
                 )}
               </Button>
 
-              {/* Login */}
-              <Button variant="outline" size="sm" className="bg-terracotta text-white border-terracotta hover:bg-terracotta/90">
-                <Settings className="h-4 w-4 mr-2" />
-                Login
-              </Button>
+              {/* Authentication */}
+              {isAuthenticated ? (
+                <div className="flex items-center space-x-2">
+                  <span className="text-sm text-gray-700">Hello, {user?.name}</span>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="bg-terracotta text-white border-terracotta hover:bg-terracotta/90"
+                    onClick={logout}
+                  >
+                    <LogOut className="h-4 w-4 mr-2" />
+                    Logout
+                  </Button>
+                </div>
+              ) : (
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="bg-terracotta text-white border-terracotta hover:bg-terracotta/90"
+                  onClick={() => setShowAuthDialog(true)}
+                >
+                  <User className="h-4 w-4 mr-2" />
+                  Login
+                </Button>
+              )}
 
               {/* Mobile Menu */}
               <Sheet>
@@ -168,6 +194,32 @@ export function Navigation() {
                         <Search className="h-4 w-4" />
                       </Button>
                     </form>
+                    
+                    {/* Mobile Authentication */}
+                    {isAuthenticated ? (
+                      <div className="pt-4 border-t">
+                        <p className="text-sm text-gray-600 mb-2">Hello, {user?.name}</p>
+                        <Button 
+                          variant="outline" 
+                          className="w-full bg-terracotta text-white border-terracotta hover:bg-terracotta/90"
+                          onClick={logout}
+                        >
+                          <LogOut className="h-4 w-4 mr-2" />
+                          Logout
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="pt-4 border-t">
+                        <Button 
+                          variant="outline" 
+                          className="w-full bg-terracotta text-white border-terracotta hover:bg-terracotta/90"
+                          onClick={() => setShowAuthDialog(true)}
+                        >
+                          <User className="h-4 w-4 mr-2" />
+                          Login
+                        </Button>
+                      </div>
+                    )}
                   </div>
                 </SheetContent>
               </Sheet>
@@ -177,6 +229,18 @@ export function Navigation() {
       </nav>
 
       <ShoppingCartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+      
+      <AuthDialog
+        open={showAuthDialog}
+        onOpenChange={setShowAuthDialog}
+        onSuccess={(userData, sessionId) => {
+          login(userData, sessionId);
+          toast({
+            title: "Success!",
+            description: "You have been logged in successfully.",
+          });
+        }}
+      />
     </>
   );
 }
