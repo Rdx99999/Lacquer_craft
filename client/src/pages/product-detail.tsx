@@ -11,7 +11,6 @@ import { ChevronLeft, ChevronRight, Star, Plus, Minus, Heart, Share2, X, ArrowRi
 import { CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { useCart } from "@/hooks/use-cart";
 import { ProductCard } from "@/components/product-card";
 
 export default function ProductDetail() {
