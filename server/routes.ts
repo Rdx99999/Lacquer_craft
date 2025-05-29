@@ -233,12 +233,60 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ error: "Product not found" });
       }
 
-      // Get products from the same category, excluding the current product
-      const categoryProducts = await storage.getProducts(product.categoryId);
-      const recommendations = categoryProducts
-        .filter(p => p.id !== id)
-        .sort(() => Math.random() - 0.5) // Randomize order
-        .slice(0, 6); // Limit to 6 recommendations
+      const allProducts = await storage.getProducts();
+      const otherProducts = allProducts.filter(p => p.id !== id);
+
+      // Score products based on similarity
+      const scoredProducts = otherProducts.map(p => {
+        let score = 0;
+        
+        // Same category gets highest score
+        if (p.categoryId === product.categoryId) {
+          score += 50;
+        }
+        
+        // Calculate feature similarity
+        const productFeatures = product.features || [];
+        const otherFeatures = p.features || [];
+        
+        if (productFeatures.length > 0 && otherFeatures.length > 0) {
+          const commonFeatures = productFeatures.filter(feature => 
+            otherFeatures.some(otherFeature => 
+              otherFeature.toLowerCase().includes(feature.toLowerCase()) ||
+              feature.toLowerCase().includes(otherFeature.toLowerCase())
+            )
+          );
+          score += (commonFeatures.length / Math.max(productFeatures.length, otherFeatures.length)) * 30;
+        }
+        
+        // Similar price range (within 20% gets points)
+        const productPrice = parseFloat(product.price);
+        const otherPrice = parseFloat(p.price);
+        const priceDiff = Math.abs(productPrice - otherPrice) / productPrice;
+        if (priceDiff <= 0.2) {
+          score += 10;
+        } else if (priceDiff <= 0.5) {
+          score += 5;
+        }
+        
+        // Featured products get slight boost
+        if (p.featured) {
+          score += 5;
+        }
+        
+        // In stock products get slight boost
+        if (p.stock > 0) {
+          score += 3;
+        }
+
+        return { ...p, similarityScore: score };
+      });
+
+      // Sort by similarity score and return top 8
+      const recommendations = scoredProducts
+        .sort((a, b) => b.similarityScore - a.similarityScore)
+        .slice(0, 8)
+        .map(({ similarityScore, ...product }) => product); // Remove score from final result
 
       res.json(recommendations);
     } catch (error) {

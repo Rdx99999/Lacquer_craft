@@ -397,28 +397,68 @@ export default function ProductDetail() {
           <div className="mt-16 border-t pt-12">
             <div className="mb-8">
               <h2 className="font-display text-2xl font-bold text-gray-900 mb-2">
-                Recommended for you
+                You might also like
               </h2>
               <p className="text-gray-600">
-                Similar products from the same category
+                Products with similar features and from related categories
               </p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {recommendedProducts.map((recommendedProduct) => (
-                <ProductCard 
-                  key={recommendedProduct.id} 
-                  product={recommendedProduct} 
-                  showCategory={false}
-                />
-              ))}
-            </div>
+            {/* Same Category Products */}
+            {recommendedProducts.filter(p => p.categoryId === product.categoryId).length > 0 && (
+              <div className="mb-12">
+                <h3 className="font-semibold text-lg text-gray-900 mb-4 flex items-center">
+                  <Badge variant="outline" className="mr-2">{product.category.name}</Badge>
+                  More from this category
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {recommendedProducts
+                    .filter(p => p.categoryId === product.categoryId)
+                    .slice(0, 4)
+                    .map((recommendedProduct) => (
+                      <ProductCard 
+                        key={recommendedProduct.id} 
+                        product={recommendedProduct} 
+                        showCategory={false}
+                      />
+                    ))}
+                </div>
+              </div>
+            )}
 
-            {/* View More Link */}
-            <div className="text-center mt-8">
+            {/* Similar Features Products */}
+            {recommendedProducts.filter(p => p.categoryId !== product.categoryId).length > 0 && (
+              <div className="mb-8">
+                <h3 className="font-semibold text-lg text-gray-900 mb-4 flex items-center">
+                  <Badge variant="outline" className="mr-2 bg-saffron/10 text-saffron border-saffron">Similar Features</Badge>
+                  Products with similar characteristics
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {recommendedProducts
+                    .filter(p => p.categoryId !== product.categoryId)
+                    .slice(0, 4)
+                    .map((recommendedProduct) => (
+                      <ProductCard 
+                        key={recommendedProduct.id} 
+                        product={recommendedProduct} 
+                        showCategory={true}
+                      />
+                    ))}
+                </div>
+              </div>
+            )}
+
+            {/* View More Links */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href={`/products?category=${product?.category?.slug}`}>
                 <Button variant="outline" className="border-terracotta text-terracotta hover:bg-terracotta hover:text-white">
-                  View more in {product?.category?.name}
+                  View all {product?.category?.name}
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </Button>
+              </Link>
+              <Link href="/products">
+                <Button variant="outline" className="border-gray-300 text-gray-700 hover:bg-gray-50">
+                  Browse all products
                   <ArrowRight className="h-4 w-4 ml-2" />
                 </Button>
               </Link>

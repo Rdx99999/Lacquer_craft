@@ -6,19 +6,23 @@ import { Badge } from "@/components/ui/badge";
 import { useCart } from "@/hooks/use-cart";
 import { useToast } from "@/hooks/use-toast";
 import type { Product, ProductWithCategory } from "@shared/schema";
+import { Star } from "lucide-react";
 
 interface ProductCardProps {
   product: Product | ProductWithCategory;
   showCategory?: boolean;
+  highlightFeatures?: string[];
 }
 
-export function ProductCard({ product, showCategory = false }: ProductCardProps) {
+export function ProductCard({ product, showCategory = true, highlightFeatures = [] }: ProductCardProps) {
   const { addToCart, isAddingToCart } = useCart();
   const { toast } = useToast();
 
   const handleAddToCart = (e: React.MouseEvent) => {
-    e.preventDefault(); // Prevent navigation when clicking the button
+    e.preventDefault();
     e.stopPropagation();
+
+    if (product.stock <= 0) return;
 
     addToCart({
       productId: product.id,
@@ -27,93 +31,125 @@ export function ProductCard({ product, showCategory = false }: ProductCardProps)
 
     toast({
       title: "Added to cart",
-      description: `${product.name} has been added to your cart.`,
+      description: `${product.name} added to your cart.`,
     });
   };
 
-  const category = "category" in product ? product.category : null;
+  const category = 'category' in product ? product.category : null;
+  const productFeatures = product.features || [];
+  const matchingFeatures = highlightFeatures.length > 0 
+    ? productFeatures.filter(feature => 
+        highlightFeatures.some(highlight => 
+          feature.toLowerCase().includes(highlight.toLowerCase()) ||
+          highlight.toLowerCase().includes(feature.toLowerCase())
+        )
+      ).slice(0, 2)
+    : productFeatures.slice(0, 2);
 
   return (
-    <Link href={`/products/${product.id}`}>
-      <Card className="group cursor-pointer hover:shadow-xl transition-shadow duration-300 overflow-hidden">
-        <div className="relative overflow-hidden rounded-t-xl bg-white group">
-        <div className="aspect-square">
+    <Link href={`/product/${product.id}`}>
+      <Card className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-white h-full flex flex-col">
+        <div className="relative aspect-[4/5] overflow-hidden rounded-t-lg">
+          {/* Product Image */}
           <img
             src={product.images[0] || "/placeholder-image.jpg"}
             alt={product.name}
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
-        </div>
 
-        {/* Badges */}
-        <div className="absolute top-3 left-3 flex flex-col space-y-1">
-          {product.featured && (
-            <Badge className="bg-saffron text-white text-xs">
-              Featured
-            </Badge>
-          )}
-          {product.stock === 0 && (
-            <Badge variant="destructive" className="text-xs">
-              Out of Stock
-            </Badge>
-          )}
-          {product.stock > 0 && product.stock <= 5 && (
-            <Badge variant="outline" className="text-orange-600 border-orange-600 bg-white text-xs">
-              Few Left
-            </Badge>
-          )}
-        </div>
-
-        {/* Image count indicator */}
-        {product.images.length > 1 && (
-          <div className="absolute bottom-3 right-3 bg-black/60 text-white text-xs px-2 py-1 rounded-full">
-            +{product.images.length - 1}
-          </div>
-        )}
-
-        {/* Quick view overlay */}
-        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-          <span className="text-white text-sm font-medium">View Details</span>
-        </div>
-      </div>
-
-        <CardContent className="p-4">
-          <div className="flex justify-between items-start mb-2">
-            <h4 className="font-semibold text-gray-900 line-clamp-2 flex-1">
-              {product.name}
-            </h4>
-            {showCategory && category && (
-              <Badge variant="outline" className="ml-2 text-xs">
-                {category.name}
+          {/* Badges */}
+          <div className="absolute top-3 left-3 flex flex-col space-y-2">
+            {product.featured && (
+              <Badge className="bg-saffron text-white">
+                Featured
+              </Badge>
+            )}
+            {product.stock === 0 && (
+              <Badge variant="destructive">
+                Sold Out
+              </Badge>
+            )}
+            {product.stock > 0 && product.stock <= 5 && (
+              <Badge variant="outline" className="text-orange-600 border-orange-600 bg-white">
+                Limited
               </Badge>
             )}
           </div>
 
-          <p className="text-gray-600 text-sm mb-3 line-clamp-2">
-            {product.description}
-          </p>
+          {/* Add to Cart Button */}
+          {product.stock > 0 && (
+            <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <Button
+                size="sm"
+                onClick={handleAddToCart}
+                disabled={isAddingToCart}
+                className="bg-terracotta hover:bg-terracotta/90 text-white shadow-lg"
+              >
+                <ShoppingCart className="h-4 w-4" />
+              </Button>
+            </div>
+          )}
+        </div>
 
-          <div className="flex items-center justify-between">
-            <span className="font-bold text-terracotta text-lg">
+        <CardContent className="p-4 flex-1 flex flex-col">
+          <div className="space-y-2 flex-1">
+            <div className="flex items-center justify-between">
+              {showCategory && category && (
+                <Badge variant="outline" className="text-xs">
+                  {category.name}
+                </Badge>
+              )}
+              <div className="flex items-center space-x-1">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="h-3 w-3 fill-saffron text-saffron" />
+                ))}
+                <span className="text-xs text-gray-500 ml-1">4.8</span>
+              </div>
+            </div>
+
+            <h3 className="font-semibold text-gray-900 line-clamp-2 min-h-[2.5rem]">
+              {product.name}
+            </h3>
+
+            <p className="text-sm text-gray-600 line-clamp-2 min-h-[2.5rem]">
+              {product.description}
+            </p>
+
+            {/* Features */}
+            {matchingFeatures.length > 0 && (
+              <div className="space-y-1">
+                <div className="text-xs text-gray-500">Features:</div>
+                <div className="flex flex-wrap gap-1">
+                  {matchingFeatures.map((feature, index) => (
+                    <Badge 
+                      key={index} 
+                      variant="secondary" 
+                      className={`text-xs ${
+                        highlightFeatures.some(h => 
+                          feature.toLowerCase().includes(h.toLowerCase()) ||
+                          h.toLowerCase().includes(feature.toLowerCase())
+                        ) ? 'bg-saffron/20 text-saffron border-saffron' : ''
+                      }`}
+                    >
+                      {feature}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="flex items-center justify-between pt-3 mt-auto">
+            <span className="text-lg font-bold text-terracotta">
               ₹{parseFloat(product.price).toLocaleString()}
             </span>
 
-            <Button
-              size="sm"
-              onClick={handleAddToCart}
-              disabled={product.stock === 0 || isAddingToCart}
-              className="bg-terracotta hover:bg-terracotta/90 text-white"
-            >
-              <ShoppingCart className="h-4 w-4 mr-1" />
-              {isAddingToCart ? "Adding..." : "Add to Cart"}
-            </Button>
+            <div className="text-right">
+              <div className="text-xs text-gray-500">
+                {product.stock > 0 ? `${product.stock} left` : 'Out of stock'}
+              </div>
+            </div>
           </div>
-
-          {product.stock > 0 && product.stock <= 5 && (
-            <p className="text-orange-600 text-xs mt-2">
-              Only {product.stock} left in stock
-            </p>
-          )}
         </CardContent>
       </Card>
     </Link>
