@@ -1,37 +1,104 @@
 {
   "categories": [
     {
-      "name": "wooden Craft",
-      "slug": "wooden-craft",
-      "description": "",
-      "thumbnail": "/images/categories/2025/05/29/image11_1748553618147-33658346.png",
-      "id": 6
-    }
-  ],
-  "products": [
+      "name": "Handcrafted Furniture",
+      "slug": "handcrafted-furniture",
+      "description": "This category includes small furniture items that are both decorative and functional. These are often made using wood and hand-painted in traditional Indian styles like Rajasthani or Madhubani.",
+      "thumbnail": "/images/categories/2025/05/29/image30_1748554370085-734515569.png",
+      "id": 7
+    },
     {
-      "name": "Wooden Bird with Movable Wings",
-      "description": "Material: Wood\n\nDesign: Bright yellow bird with painted wings and floral motifs, mounted on wheels.\n\n",
-      "price": "5000",
-      "categoryId": 6,
-      "stock": 500,
-      "images": [
-        "/images/products/2025/05/29/image6_1748551609440-380216249.png"
-      ],
-      "sku": "WOD008",
-      "featured": true,
-      "features": [],
-      "id": 9,
-      "createdAt": "2025-05-29T20:47:04.597Z"
+      "name": "Traditional Wooden Toys",
+      "slug": "traditional-wooden-toys",
+      "description": "These are colorful, eco-friendly toys made from wood, showcasing traditional Indian folk art. They double as collectibles or play items for children.",
+      "thumbnail": "/images/categories/2025/05/29/image18_1748554422283-907876054.png",
+      "id": 8
+    },
+    {
+      "name": "Decorative Storage Containers",
+      "slug": "decorative-storage-containers",
+      "description": "Storage solutions with an artistic touch. These containers are functional yet stylish, ideal for organizing spices, tea, or knick-knacks.",
+      "thumbnail": "/images/categories/2025/05/29/image10_1748554455718-481058977.png",
+      "id": 9
+    },
+    {
+      "name": "Kitchen & Serveware",
+      "slug": "kitchen-serveware",
+      "description": "Items used for serving or displaying food and beverages, usually made of wood and decorated with ethnic art.",
+      "thumbnail": "/images/categories/2025/05/29/pic11_1748554515185-784360809.png",
+      "id": 10
+    },
+    {
+      "name": "Spiritual & Religious Decor",
+      "slug": "spiritual-religious-decor",
+      "description": "This category includes items used for pooja, temple decor, or spiritual displays. Richly painted and sculpted, they represent deities or mythological scenes.",
+      "thumbnail": "/images/categories/2025/05/29/image16_1748554556287-772504027.png",
+      "id": 11
     }
   ],
+  "products": [],
   "cartItems": [],
   "orders": [],
   "counters": {
-    "categoryId": 7,
+    "categoryId": 12,
     "productId": 10,
     "cartItemId": 2,
-    "orderId": 1
+    "orderId": 7
   },
-  "settings": []
+  "settings": [
+    {
+      "id": 1,
+      "key": "heroTitle",
+      "value": "Authentic",
+      "type": "text",
+      "description": "Homepage heroTitle setting",
+      "createdAt": "2025-05-29T21:24:37.098Z",
+      "updatedAt": "2025-05-29T21:24:37.098Z"
+    },
+    {
+      "id": 2,
+      "key": "heroDescription",
+      "value": "Discover masterpieces created by skilled artisans who carry forward centuries-old traditions. Each piece is a testament to India's rich cultural heritage.",
+      "type": "text",
+      "description": "Homepage heroDescription setting",
+      "createdAt": "2025-05-29T21:24:37.100Z",
+      "updatedAt": "2025-05-29T21:24:37.100Z"
+    },
+    {
+      "id": 3,
+      "key": "heroSubtitle",
+      "value": "Indian Arts",
+      "type": "text",
+      "description": "Homepage heroSubtitle setting",
+      "createdAt": "2025-05-29T21:24:37.101Z",
+      "updatedAt": "2025-05-29T21:24:37.101Z"
+    },
+    {
+      "id": 4,
+      "key": "heroImage",
+      "value": "/images/homepage/hero/2025/05/29/hero_banner_mithila-page-banner_1748553874916-3070228.jpg",
+      "type": "image",
+      "description": "Homepage heroImage setting",
+      "createdAt": "2025-05-29T21:24:37.102Z",
+      "updatedAt": "2025-05-29T21:24:37.102Z"
+    },
+    {
+      "id": 5,
+      "key": "heroButtonText",
+      "value": "Explore Collection",
+      "type": "text",
+      "description": "Homepage heroButtonText setting",
+      "createdAt": "2025-05-29T21:24:37.104Z",
+      "updatedAt": "2025-05-29T21:24:37.104Z"
+    },
+    {
+      "id": 6,
+      "key": "heroButtonSecondaryText",
+      "value": "Our Story",
+      "type": "text",
+      "description": "Homepage heroButtonSecondaryText setting",
+      "createdAt": "2025-05-29T21:24:37.105Z",
+      "updatedAt": "2025-05-29T21:24:37.105Z"
+    }
+  ]
 }

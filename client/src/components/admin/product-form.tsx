@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -43,6 +43,14 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
     queryFn: getCategories,
   });
 
+  const { data: existingProducts = [] } = useQuery({
+    queryKey: ["/api/products-with-category"],
+    queryFn: async () => {
+      const response = await fetch('/api/products-with-category');
+      return response.json();
+    },
+  });
+
   const form = useForm<ProductFormData>({
     resolver: zodResolver(productFormSchema),
     defaultValues: {
@@ -57,6 +65,46 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
       features: product?.features || [],
     },
   });
+
+  // Generate SKU based on category
+  const generateSKU = (categoryId: number) => {
+    const category = categories.find(c => c.id === categoryId);
+    if (!category) return "";
+
+    // Create category prefix from first 3-4 letters of category name
+    const prefix = category.name
+      .replace(/[^a-zA-Z]/g, '')
+      .substring(0, 4)
+      .toUpperCase();
+
+    // Find highest existing SKU number for this category
+    const categoryProducts = existingProducts.filter(p => p.categoryId === categoryId);
+    const existingNumbers = categoryProducts
+      .map(p => p.sku)
+      .filter(sku => sku.startsWith(prefix))
+      .map(sku => {
+        const match = sku.match(/(\d+)$/);
+        return match ? parseInt(match[1]) : 0;
+      })
+      .filter(num => !isNaN(num));
+
+    const nextNumber = existingNumbers.length > 0 ? Math.max(...existingNumbers) + 1 : 1;
+    return `${prefix}${nextNumber.toString().padStart(3, '0')}`;
+  };
+
+  // Auto-generate SKU when category changes (only for new products)
+  useEffect(() => {
+    const categoryId = form.watch("categoryId");
+    const currentSku = form.watch("sku");
+    
+    // Only auto-generate for new products or if SKU is empty
+    if (!product && categoryId && categoryId > 0 && !currentSku) {
+      const newSku = generateSKU(categoryId);
+      if (newSku) {
+        form.setValue("sku", newSku);
+      }
+    }
+  }, [form.watch("categoryId"), categories, existingProducts]);
 
   const createMutation = useMutation({
     mutationFn: createProduct,
@@ -201,11 +249,40 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
 
             <div>
               <Label htmlFor="sku">SKU</Label>
-              <Input
-                id="sku"
-                {...form.register("sku")}
-                placeholder="Enter SKU"
-              />
+              <div className="flex space-x-2">
+                <Input
+                  id="sku"
+                  {...form.register("sku")}
+                  placeholder="Enter SKU or select category to auto-generate"
+                  className="flex-1"
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => {
+                    const categoryId = form.watch("categoryId");
+                    if (categoryId && categoryId > 0) {
+                      const newSku = generateSKU(categoryId);
+                      if (newSku) {
+                        form.setValue("sku", newSku);
+                        toast({
+                          title: "SKU Generated",
+                          description: `New SKU: ${newSku}`,
+                        });
+                      }
+                    } else {
+                      toast({
+                        title: "Select Category",
+                        description: "Please select a category first",
+                        variant: "destructive",
+                      });
+                    }
+                  }}
+                  disabled={!form.watch("categoryId") || form.watch("categoryId") === 0}
+                >
+                  Generate
+                </Button>
+              </div>
               {form.formState.errors.sku && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.sku.message}</p>
               )}
