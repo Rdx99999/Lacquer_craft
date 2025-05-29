@@ -240,6 +240,11 @@
       "sessionId": "acrx48mb9ympzl",
       "userId": 1,
       "expiresAt": "2025-06-28T22:42:58.449Z"
+    },
+    {
+      "sessionId": "570pubmb9z112l",
+      "userId": 1,
+      "expiresAt": "2025-06-28T22:54:05.997Z"
     }
   ],
   "counters": {
