@@ -170,7 +170,11 @@ export class JsonStorage implements IStorage {
 
     // Add categories
     for (const cat of sampleCategories) {
-      const category: Category = { ...cat, id: this.data.counters.categoryId++ };
+      const category: Category = { 
+        ...cat, 
+        id: this.data.counters.categoryId++,
+        thumbnail: cat.thumbnail || null
+      };
       this.data.categories.push(category);
     }
 
@@ -197,7 +201,8 @@ export class JsonStorage implements IStorage {
     const newCategory: Category = { 
       ...category, 
       id: this.data.counters.categoryId++,
-      description: category.description || null
+      description: category.description || null,
+      thumbnail: category.thumbnail || null
     };
     this.data.categories.push(newCategory);
     await this.saveData();

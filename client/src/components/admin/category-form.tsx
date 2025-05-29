@@ -17,6 +17,7 @@ const categoryFormSchema = z.object({
   name: z.string().min(1, "Name is required"),
   slug: z.string().min(1, "Slug is required").regex(/^[a-z0-9-]+$/, "Slug can only contain lowercase letters, numbers, and hyphens"),
   description: z.string().nullable().optional(),
+  thumbnail: z.string().nullable().optional(),
 });
 
 type CategoryFormData = z.infer<typeof categoryFormSchema>;
@@ -29,6 +30,9 @@ interface CategoryFormProps {
 export function CategoryForm({ category, onSuccess }: CategoryFormProps) {
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
+  const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(category?.thumbnail || null);
+  const [isUploadingThumbnail, setIsUploadingThumbnail] = useState(false);
 
   const form = useForm<CategoryFormData>({
     resolver: zodResolver(categoryFormSchema),
@@ -36,6 +40,7 @@ export function CategoryForm({ category, onSuccess }: CategoryFormProps) {
       name: category?.name || "",
       slug: category?.slug || "",
       description: category?.description || "",
+      thumbnail: category?.thumbnail || null,
     },
   });
 
@@ -77,12 +82,75 @@ export function CategoryForm({ category, onSuccess }: CategoryFormProps) {
     },
   });
 
-  const onSubmit = (data: CategoryFormData) => {
-    if (category) {
-      updateMutation.mutate(data);
-    } else {
-      createMutation.mutate(data);
+  const onSubmit = async (data: CategoryFormData) => {
+    try {
+      let finalData = { ...data };
+      
+      // Upload thumbnail if a new file is selected
+      if (thumbnailFile) {
+        setIsUploadingThumbnail(true);
+        try {
+          const result = await uploadImage(thumbnailFile);
+          finalData.thumbnail = result.imageUrl;
+        } catch (error) {
+          toast({
+            title: "Error",
+            description: "Failed to upload thumbnail image",
+            variant: "destructive",
+          });
+          return;
+        } finally {
+          setIsUploadingThumbnail(false);
+        }
+      }
+      
+      if (category) {
+        updateMutation.mutate(finalData);
+      } else {
+        createMutation.mutate(finalData);
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "An error occurred while saving the category",
+        variant: "destructive",
+      });
     }
+  };
+
+  // Handle thumbnail upload
+  const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) { // 5MB limit
+        toast({
+          title: "Error",
+          description: "Image size must be less than 5MB",
+          variant: "destructive",
+        });
+        return;
+      }
+      
+      setThumbnailFile(file);
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setThumbnailPreview(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const removeThumbnail = async () => {
+    if (thumbnailPreview && category?.thumbnail) {
+      try {
+        await deleteImage(category.thumbnail);
+      } catch (error) {
+        // Continue even if delete fails
+      }
+    }
+    setThumbnailFile(null);
+    setThumbnailPreview(null);
+    form.setValue("thumbnail", null);
   };
 
   // Generate slug from name
@@ -103,7 +171,7 @@ export function CategoryForm({ category, onSuccess }: CategoryFormProps) {
     }
   };
 
-  const isLoading = createMutation.isPending || updateMutation.isPending;
+  const isLoading = createMutation.isPending || updateMutation.isPending || isUploadingThumbnail;
 
   return (
     <Card>
@@ -153,6 +221,57 @@ export function CategoryForm({ category, onSuccess }: CategoryFormProps) {
             {form.formState.errors.description && (
               <p className="text-red-500 text-sm mt-1">{form.formState.errors.description.message}</p>
             )}
+          </div>
+
+          <div>
+            <Label>Category Thumbnail</Label>
+            <div className="mt-2">
+              {thumbnailPreview ? (
+                <div className="relative">
+                  <div className="w-32 h-32 border-2 border-gray-300 rounded-lg overflow-hidden bg-gray-50">
+                    <img
+                      src={thumbnailPreview}
+                      alt="Category thumbnail"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <Button
+                    type="button"
+                    variant="destructive"
+                    size="sm"
+                    onClick={removeThumbnail}
+                    className="absolute -top-2 -right-2 h-6 w-6 rounded-full p-0"
+                  >
+                    <X className="h-3 w-3" />
+                  </Button>
+                </div>
+              ) : (
+                <div className="w-32 h-32 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center bg-gray-50 hover:bg-gray-100 transition-colors">
+                  <Image className="h-8 w-8 text-gray-400 mb-2" />
+                  <span className="text-sm text-gray-500">No image</span>
+                </div>
+              )}
+              
+              <div className="mt-4">
+                <Input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleThumbnailChange}
+                  className="hidden"
+                  id="thumbnail-upload"
+                />
+                <Label
+                  htmlFor="thumbnail-upload"
+                  className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 cursor-pointer"
+                >
+                  <Upload className="h-4 w-4 mr-2" />
+                  {thumbnailPreview ? "Change Image" : "Upload Image"}
+                </Label>
+                <p className="text-gray-500 text-sm mt-1">
+                  Upload a thumbnail image for this category (max 5MB)
+                </p>
+              </div>
+            </div>
           </div>
 
           <div className="flex justify-end space-x-4">
