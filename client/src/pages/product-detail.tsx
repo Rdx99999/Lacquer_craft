@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
-import { Star, ArrowLeft, Plus, Minus, Heart, Share2, Package, Truck, Shield, Award, ShoppingCart, ChevronLeft, ChevronRight, X } from "lucide-react";
+import { getProduct, getRecommendedProducts, addToCart } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
+import { useToast } from "@/hooks/use-toast";
+import { useCart } from "@/hooks/use-cart";
+import { ChevronLeft, ChevronRight, Star, Plus, Minus, Heart, Share2, X, ArrowRight } from "lucide-react";
+import { CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { getProduct, getRecommendedProducts } from "@/lib/api";
 import { useCart } from "@/hooks/use-cart";
-import { useToast } from "@/hooks/use-toast";
 import { ProductCard } from "@/components/product-card";
 
 export default function ProductDetail() {

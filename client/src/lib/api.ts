@@ -148,22 +148,6 @@ export async function uploadCategoryImage(file: File): Promise<{ imageUrl: strin
   return response.json();
 }
 
-export async function deleteImage(imageUrl: string) {
-  const response = await fetch('/api/delete-image', {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ imageUrl }),
-  });
-
-  if (!response.ok) {
-    throw new Error('Failed to delete image');
-  }
-
-  return response.json();
-}
-
 // Cart
 export const getCartItems = async (sessionId: string): Promise<CartItemWithProduct[]> => {
   const res = await fetch(`/api/cart/${sessionId}`);
