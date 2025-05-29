@@ -75,10 +75,27 @@ export type InsertOrder = z.infer<typeof insertOrderSchema>;
 
 // Additional types for frontend
 export type ProductWithCategory = Product & { category: Category };
-export type CartItemWithProduct = CartItem & { product: Product };
-export type OrderItem = {
-  productId: number;
-  productName: string;
-  price: string;
-  quantity: number;
+export type CartItemWithProduct = CartItem & {
+  product: Product;
 };
+
+// Settings schema for homepage customization
+export const insertSettingSchema = z.object({
+  key: z.string().min(1, "Key is required"),
+  value: z.string(),
+  type: z.enum(["text", "image", "boolean"]).default("text"),
+  description: z.string().optional(),
+});
+
+export const settingSchema = z.object({
+  id: z.number(),
+  key: z.string(),
+  value: z.string(),
+  type: z.string(),
+  description: z.string().nullable(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+
+export type InsertSetting = z.infer<typeof insertSettingSchema>;
+export type Setting = z.infer<typeof settingSchema>;

@@ -53,7 +53,7 @@ export class MemStorage implements IStorage {
   private products: Map<number, Product> = new Map();
   private cartItems: Map<string, CartItem[]> = new Map(); // sessionId -> CartItem[]
   private orders: Map<number, Order> = new Map();
-  
+
   private categoryIdCounter = 1;
   private productIdCounter = 1;
   private cartItemIdCounter = 1;
@@ -169,7 +169,7 @@ export class MemStorage implements IStorage {
   async updateCategory(id: number, category: Partial<InsertCategory>): Promise<Category | undefined> {
     const existing = this.categories.get(id);
     if (!existing) return undefined;
-    
+
     const updated: Category = { ...existing, ...category };
     this.categories.set(id, updated);
     return updated;
@@ -207,10 +207,10 @@ export class MemStorage implements IStorage {
   async getProductWithCategory(id: number): Promise<ProductWithCategory | undefined> {
     const product = this.products.get(id);
     if (!product) return undefined;
-    
+
     const category = this.categories.get(product.categoryId);
     if (!category) return undefined;
-    
+
     return { ...product, category };
   }
 
@@ -235,7 +235,7 @@ export class MemStorage implements IStorage {
   async updateProduct(id: number, product: Partial<InsertProduct>): Promise<Product | undefined> {
     const existing = this.products.get(id);
     if (!existing) return undefined;
-    
+
     const updated: Product = { ...existing, ...product };
     this.products.set(id, updated);
     return updated;
@@ -257,7 +257,7 @@ export class MemStorage implements IStorage {
   async addToCart(cartItem: InsertCartItem): Promise<CartItem> {
     const sessionItems = this.cartItems.get(cartItem.sessionId) || [];
     const existingIndex = sessionItems.findIndex(item => item.productId === cartItem.productId);
-    
+
     if (existingIndex >= 0) {
       sessionItems[existingIndex].quantity += cartItem.quantity;
       this.cartItems.set(cartItem.sessionId, sessionItems);
@@ -277,7 +277,7 @@ export class MemStorage implements IStorage {
   async updateCartItem(sessionId: string, productId: number, quantity: number): Promise<CartItem | undefined> {
     const sessionItems = this.cartItems.get(sessionId) || [];
     const itemIndex = sessionItems.findIndex(item => item.productId === productId);
-    
+
     if (itemIndex >= 0) {
       if (quantity <= 0) {
         sessionItems.splice(itemIndex, 1);
@@ -294,7 +294,7 @@ export class MemStorage implements IStorage {
     const sessionItems = this.cartItems.get(sessionId) || [];
     const initialLength = sessionItems.length;
     const filteredItems = sessionItems.filter(item => item.productId !== productId);
-    
+
     this.cartItems.set(sessionId, filteredItems);
     return filteredItems.length < initialLength;
   }
@@ -328,7 +328,7 @@ export class MemStorage implements IStorage {
   async updateOrderStatus(id: number, status: string): Promise<Order | undefined> {
     const existing = this.orders.get(id);
     if (!existing) return undefined;
-    
+
     const updated: Order = { ...existing, status };
     this.orders.set(id, updated);
     return updated;

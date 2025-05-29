@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ProductCard } from "@/components/product-card";
-import { getProducts, getCategories } from "@/lib/api";
+import { getProducts, getCategories, getSettings } from "@/lib/api";
 
 export default function Home() {
   const { data: featuredProducts = [] } = useQuery({
@@ -17,6 +17,25 @@ export default function Home() {
     queryKey: ["/api/categories"],
     queryFn: getCategories,
   });
+
+  const { data: settings = [] } = useQuery({
+    queryKey: ["/api/settings"],
+    queryFn: getSettings,
+  });
+
+  // Convert settings array to key-value object
+  const settingsMap = settings.reduce((acc: any, setting: any) => {
+    acc[setting.key] = setting.value;
+    return acc;
+  }, {});
+
+  // Default values if settings are not available
+  const heroTitle = settingsMap.heroTitle || "Authentic";
+  const heroSubtitle = settingsMap.heroSubtitle || "Indian Arts";
+  const heroDescription = settingsMap.heroDescription || "Discover masterpieces created by skilled artisans who carry forward centuries-old traditions. Each piece is a testament to India's rich cultural heritage.";
+  const heroImage = settingsMap.heroImage || "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600";
+  const heroButtonText = settingsMap.heroButtonText || "Explore Collection";
+  const heroButtonSecondaryText = settingsMap.heroButtonSecondaryText || "Our Story";
 
   // Fallback images for categories without thumbnails
   const fallbackCategoryImages = {
@@ -48,25 +67,25 @@ export default function Home() {
                   Handcrafted Excellence Since 1947
                 </Badge>
                 <h1 className="font-display text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 leading-tight">
-                  Authentic
-                  <span className="text-terracotta block">Indian Arts</span>
+                  {heroTitle}
+                  <span className="text-terracotta block">{heroSubtitle}</span>
                   <span className="text-gray-700">& Crafts</span>
                 </h1>
                 <p className="text-xl text-gray-600 leading-relaxed max-w-lg">
-                  Discover masterpieces created by skilled artisans who carry forward centuries-old traditions. Each piece is a testament to India's rich cultural heritage.
+                  {heroDescription}
                 </p>
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/products">
                   <Button size="lg" className="bg-terracotta hover:bg-terracotta/90 text-white px-8 py-4 text-lg">
-                    Explore Collection
+                    {heroButtonText}
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
                 <Button size="lg" variant="outline" className="border-gray-300 text-gray-700 hover:bg-gray-50 px-8 py-4 text-lg">
                   <Heart className="mr-2 h-5 w-5" />
-                  Our Story
+                  {heroButtonSecondaryText}
                 </Button>
               </div>
               
@@ -92,7 +111,7 @@ export default function Home() {
               {/* Main Image */}
               <div className="relative rounded-2xl overflow-hidden shadow-2xl">
                 <img
-                  src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"
+                  src={heroImage}
                   alt="Traditional Indian Craftsmanship"
                   className="w-full h-[500px] object-cover"
                 />

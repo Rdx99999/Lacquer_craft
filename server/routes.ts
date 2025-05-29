@@ -4,7 +4,7 @@ import { join } from "path";
 import express from "express";
 import multer from "multer";
 import { storage } from "./storage";
-import { insertProductSchema, insertOrderSchema, insertCartItemSchema, insertCategorySchema } from "@shared/schema";
+import { insertProductSchema, insertOrderSchema, insertCartItemSchema, insertCategorySchema, insertSettingSchema } from "@shared/schema";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -520,6 +520,70 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(order);
     } catch (error) {
       res.status(500).json({ message: "Failed to update order status" });
+    }
+  });
+
+  // Settings endpoints
+  app.get("/api/settings", async (req, res) => {
+    try {
+      const settings = await storage.getSettings();
+      res.json(settings);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch settings" });
+    }
+  });
+
+  app.get("/api/settings/:key", async (req, res) => {
+    try {
+      const setting = await storage.getSetting(req.params.key);
+      if (!setting) {
+        return res.status(404).json({ message: "Setting not found" });
+      }
+      res.json(setting);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch setting" });
+    }
+  });
+
+  app.post("/api/settings", async (req, res) => {
+    try {
+      const validatedData = insertSettingSchema.parse(req.body);
+      const setting = await storage.createSetting(validatedData);
+      res.status(201).json(setting);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Invalid setting data", errors: error.errors });
+      }
+      res.status(500).json({ message: "Failed to create setting" });
+    }
+  });
+
+  app.put("/api/settings/:key", async (req, res) => {
+    try {
+      const { value } = req.body;
+      if (typeof value !== "string") {
+        return res.status(400).json({ message: "Value must be a string" });
+      }
+      
+      const setting = await storage.updateSetting(req.params.key, value);
+      if (!setting) {
+        return res.status(404).json({ message: "Setting not found" });
+      }
+      res.json(setting);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to update setting" });
+    }
+  });
+
+  app.delete("/api/settings/:key", async (req, res) => {
+    try {
+      const deleted = await storage.deleteSetting(req.params.key);
+      if (!deleted) {
+        return res.status(404).json({ message: "Setting not found" });
+      }
+      res.json({ message: "Setting deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to delete setting" });
     }
   });
 

@@ -50,6 +50,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { AdminLayout } from "@/components/admin/admin-layout";
 import { ProductForm } from "@/components/admin/product-form";
 import { CategoryForm } from "@/components/admin/category-form";
+import { HomepageSettingsForm } from "@/components/admin/homepage-settings-form";
 import { useToast } from "@/hooks/use-toast";
 import { 
   getProductsWithCategory, 
@@ -66,6 +67,7 @@ const navigation = [
   { name: "Orders", tab: "orders", icon: ShoppingBag },
   { name: "Categories", tab: "categories", icon: Tags },
   { name: "Analytics", tab: "analytics", icon: BarChart3 },
+  { name: "Homepage", tab: "homepage", icon: Settings },
   { name: "Settings", tab: "settings", icon: Settings },
 ];
 
@@ -587,6 +589,12 @@ export default function Admin() {
     </div>
   );
 
+  const renderHomepage = () => (
+    <div className="space-y-6">
+      <HomepageSettingsForm />
+    </div>
+  );
+
   const renderSettings = () => (
     <div className="space-y-6">
       <Card>
@@ -645,6 +653,8 @@ export default function Admin() {
         return renderCategories();
       case "analytics":
         return renderAnalytics();
+      case "homepage":
+        return renderHomepage();
       case "settings":
         return renderSettings();
       default:

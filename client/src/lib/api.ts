@@ -188,7 +188,67 @@ export const createOrder = async (order: InsertOrder): Promise<Order> => {
   return res.json();
 };
 
-export const updateOrderStatus = async (id: number, status: string): Promise<Order> => {
-  const res = await apiRequest("PUT", `/api/orders/${id}/status`, { status });
-  return res.json();
-};
+export async function updateOrderStatus(id: number, status: string) {
+  const response = await fetch(`/api/orders/${id}/status`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ status }),
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || "Failed to update order status");
+  }
+
+  return response.json();
+}
+
+// Settings API functions
+export async function getSettings() {
+  const response = await fetch("/api/settings");
+  if (!response.ok) {
+    throw new Error("Failed to fetch settings");
+  }
+  return response.json();
+}
+
+export async function getSetting(key: string) {
+  const response = await fetch(`/api/settings/${key}`);
+  if (!response.ok) {
+    if (response.status === 404) {
+      return null;
+    }
+    throw new Error("Failed to fetch setting");
+  }
+  return response.json();
+}
+
+export async function createSetting(settingData: any) {
+  const response = await fetch("/api/settings", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(settingData),
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || "Failed to create setting");
+  }
+
+  return response.json();
+}
+
+export async function updateSetting(key: string, value: string) {
+  const response = await fetch(`/api/settings/${key}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ value }),
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || "Failed to update setting");
+  }
+
+  return response.json();
+}
