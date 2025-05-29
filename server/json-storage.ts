@@ -651,6 +651,53 @@ export class JsonStorage implements IStorage {
     await this.saveData();
   }
 
+  async addToWishlist(userId: number, productId: number): Promise<User | undefined> {
+    const user = await this.getUserById(userId);
+    if (!user) return undefined;
+
+    // Initialize wishlist if it doesn't exist
+    if (!user.wishlist) {
+      user.wishlist = [];
+    }
+
+    // Don't add if already in wishlist
+    if (!user.wishlist.includes(productId)) {
+      user.wishlist.push(productId);
+      await this.saveData();
+    }
+
+    return user;
+  }
+
+  async removeFromWishlist(userId: number, productId: number): Promise<User | undefined> {
+    const user = await this.getUserById(userId);
+    if (!user) return undefined;
+
+    if (!user.wishlist) {
+      user.wishlist = [];
+    }
+
+    user.wishlist = user.wishlist.filter(id => id !== productId);
+    await this.saveData();
+
+    return user;
+  }
+
+  async getWishlist(userId: number): Promise<Product[]> {
+    const user = await this.getUserById(userId);
+    if (!user || !user.wishlist) return [];
+
+    const wishlistProducts: Product[] = [];
+    for (const productId of user.wishlist) {
+      const product = await this.getProduct(productId);
+      if (product) {
+        wishlistProducts.push(product);
+      }
+    }
+
+    return wishlistProducts;
+  }
+
   private getNextId(table: 'products' | 'categories' | 'cartItems' | 'orders' | 'settings' | 'users'): number {
     if (table === 'products') {
       return this.data.counters.productId++;

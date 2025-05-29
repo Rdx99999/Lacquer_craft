@@ -158,6 +158,82 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Wishlist routes
+  app.get("/api/wishlist", async (req, res) => {
+    try {
+      const sessionId = req.headers.authorization?.replace('Bearer ', '');
+      if (!sessionId) {
+        return res.status(401).json({ message: "Authentication required" });
+      }
+
+      const user = await storage.getSessionUser(sessionId);
+      if (!user) {
+        return res.status(401).json({ message: "Invalid session" });
+      }
+
+      const wishlistProducts = await storage.getWishlist(user.id);
+      res.json(wishlistProducts);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch wishlist" });
+    }
+  });
+
+  app.post("/api/wishlist/:productId", async (req, res) => {
+    try {
+      const sessionId = req.headers.authorization?.replace('Bearer ', '');
+      if (!sessionId) {
+        return res.status(401).json({ message: "Authentication required" });
+      }
+
+      const user = await storage.getSessionUser(sessionId);
+      if (!user) {
+        return res.status(401).json({ message: "Invalid session" });
+      }
+
+      const productId = parseInt(req.params.productId);
+      if (isNaN(productId)) {
+        return res.status(400).json({ message: "Invalid product ID" });
+      }
+
+      const updatedUser = await storage.addToWishlist(user.id, productId);
+      if (!updatedUser) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      res.json({ message: "Product added to wishlist" });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to add to wishlist" });
+    }
+  });
+
+  app.delete("/api/wishlist/:productId", async (req, res) => {
+    try {
+      const sessionId = req.headers.authorization?.replace('Bearer ', '');
+      if (!sessionId) {
+        return res.status(401).json({ message: "Authentication required" });
+      }
+
+      const user = await storage.getSessionUser(sessionId);
+      if (!user) {
+        return res.status(401).json({ message: "Invalid session" });
+      }
+
+      const productId = parseInt(req.params.productId);
+      if (isNaN(productId)) {
+        return res.status(400).json({ message: "Invalid product ID" });
+      }
+
+      const updatedUser = await storage.removeFromWishlist(user.id, productId);
+      if (!updatedUser) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      res.json({ message: "Product removed from wishlist" });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to remove from wishlist" });
+    }
+  });
+
   // Category image upload endpoint
   app.post("/api/upload-category-image", multer({
     storage: multer.diskStorage({

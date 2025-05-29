@@ -66,6 +66,11 @@ export interface IStorage {
   createSession(userId: number): Promise<string>;
   getSessionUser(sessionId: string): Promise<User | null>;
   deleteSession(sessionId: string): Promise<void>;
+
+  // Wishlist
+  addToWishlist(userId: number, productId: number): Promise<User | undefined>;
+  removeFromWishlist(userId: number, productId: number): Promise<User | undefined>;
+  getWishlist(userId: number): Promise<Product[]>;
 }
 
 export class MemStorage implements IStorage {
@@ -374,6 +379,18 @@ export class MemStorage implements IStorage {
     throw new Error("Method not implemented.");
   }
   async deleteSession(sessionId: string): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
+
+  async addToWishlist(userId: number, productId: number): Promise<User | undefined> {
+    throw new Error("Method not implemented.");
+  }
+
+  async removeFromWishlist(userId: number, productId: number): Promise<User | undefined> {
+    throw new Error("Method not implemented.");
+  }
+
+  async getWishlist(userId: number): Promise<Product[]> {
     throw new Error("Method not implemented.");
   }
 }

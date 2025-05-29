@@ -21,6 +21,7 @@ export const userSchema = z.object({
   name: z.string(),
   email: z.string(),
   passwordHash: z.string(),
+  wishlist: z.array(z.number()).default([]), // Array of product IDs
   createdAt: z.string(),
 });
 
