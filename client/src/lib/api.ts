@@ -284,3 +284,59 @@ export async function updateSetting(key: string, value: string) {
 
   return response.json();
 }
+
+// Wishlist API functions
+export async function getWishlist(): Promise<Product[]> {
+  const sessionId = localStorage.getItem("sessionId");
+  if (!sessionId) {
+    throw new Error("Not authenticated");
+  }
+
+  const response = await fetch("/api/wishlist", {
+    headers: {
+      Authorization: `Bearer ${sessionId}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch wishlist");
+  }
+
+  return response.json();
+}
+
+export async function addToWishlist(productId: number): Promise<void> {
+  const sessionId = localStorage.getItem("sessionId");
+  if (!sessionId) {
+    throw new Error("Not authenticated");
+  }
+
+  const response = await fetch(`/api/wishlist/${productId}`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${sessionId}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to add to wishlist");
+  }
+}
+
+export async function removeFromWishlist(productId: number): Promise<void> {
+  const sessionId = localStorage.getItem("sessionId");
+  if (!sessionId) {
+    throw new Error("Not authenticated");
+  }
+
+  const response = await fetch(`/api/wishlist/${productId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${sessionId}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to remove from wishlist");
+  }
+}

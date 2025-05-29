@@ -586,6 +586,7 @@ export class JsonStorage implements IStorage {
       name: userData.name,
       email: userData.email,
       passwordHash: userData.passwordHash,
+      wishlist: [],
       createdAt: new Date().toISOString(),
     };
 

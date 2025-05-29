@@ -88,6 +88,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         name: validatedData.name,
         email: validatedData.email,
         passwordHash,
+        wishlist: [],
       });
 
       // Create session
