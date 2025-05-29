@@ -422,3 +422,34 @@ body {
     max-height: 85vh;
   }
 }
+
+/* Zoom lens styles */
+.zoom-lens {
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(1px);
+}
+
+/* Custom cursor for zoom area */
+.cursor-zoom {
+  cursor: zoom-in;
+}
+
+.cursor-zoom:hover {
+  cursor: crosshair;
+}
+
+/* Smooth zoom transition */
+.zoom-image {
+  transition: transform 0.1s ease-out;
+  transform-origin: center;
+  will-change: transform;
+}
+
+/* Disable text selection during zoom */
+.zoom-container * {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}

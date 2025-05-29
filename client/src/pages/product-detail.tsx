@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { getProduct, getRecommendedProducts, addToCart } from "@/lib/api";
@@ -20,6 +20,10 @@ export default function ProductDetail() {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isFullscreenOpen, setIsFullscreenOpen] = useState(false);
   const [fullscreenImageIndex, setFullscreenImageIndex] = useState(0);
+  const [isZooming, setIsZooming] = useState(false);
+  const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
+  const imageRef = useRef<HTMLImageElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const { addToCart, isAddingToCart } = useCart();
   const { toast } = useToast();
@@ -85,6 +89,25 @@ export default function ProductDetail() {
     } else if (e.key === 'Escape') {
       setIsFullscreenOpen(false);
     }
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!containerRef.current || !imageRef.current) return;
+    
+    const container = containerRef.current;
+    const rect = container.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    
+    setZoomPosition({ x, y });
+  };
+
+  const handleMouseEnter = () => {
+    setIsZooming(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsZooming(false);
   };
 
   if (isLoading) {
@@ -186,22 +209,50 @@ export default function ProductDetail() {
               </div>
 
               {/* Main Image */}
-              <div className="relative aspect-[4/5] bg-gradient-to-br from-white via-gray-50 to-gray-100 cursor-pointer group" onDoubleClick={handleImageDoubleClick}>
+              <div 
+                ref={containerRef}
+                className="relative aspect-[4/5] bg-gradient-to-br from-white via-gray-50 to-gray-100 cursor-crosshair group overflow-hidden" 
+                onDoubleClick={handleImageDoubleClick}
+                onMouseMove={handleMouseMove}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+              >
                 <img
+                  ref={imageRef}
                   src={product.images[selectedImageIndex] || "/placeholder-image.jpg"}
                   alt={product.name}
-                  className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110 filter group-hover:brightness-105"
+                  className="w-full h-full object-cover transition-all duration-300 select-none"
+                  style={{
+                    transform: isZooming ? `scale(2)` : 'scale(1)',
+                    transformOrigin: `${zoomPosition.x}% ${zoomPosition.y}%`,
+                  }}
+                  draggable={false}
                 />
                 
+                {/* Zoom lens overlay */}
+                {isZooming && (
+                  <div 
+                    className="absolute pointer-events-none border-2 border-white shadow-lg bg-black/10 rounded-full"
+                    style={{
+                      width: '120px',
+                      height: '120px',
+                      left: `${zoomPosition.x}%`,
+                      top: `${zoomPosition.y}%`,
+                      transform: 'translate(-50%, -50%)',
+                      zIndex: 10,
+                    }}
+                  />
+                )}
+                
                 {/* Hover overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 
                 {/* Zoom indicator */}
-                <div className="absolute bottom-4 right-4 bg-black/60 text-white text-xs px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center">
+                <div className="absolute bottom-4 right-4 bg-black/60 text-white text-xs px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center z-20">
                   <svg className="h-3 w-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
                   </svg>
-                  Double-click to zoom
+                  Hover to zoom
                 </div>
 
                 {/* Navigation Arrows */}
@@ -211,7 +262,7 @@ export default function ProductDetail() {
                       onClick={() => setSelectedImageIndex(prev => 
                         prev === 0 ? product.images.length - 1 : prev - 1
                       )}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/20 hover:bg-black/40 text-white rounded-full flex items-center justify-center transition-colors duration-200 z-10"
+                      className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/20 hover:bg-black/40 text-white rounded-full flex items-center justify-center transition-colors duration-200 z-30"
                     >
                       <ArrowLeft className="h-5 w-5" />
                     </button>
@@ -219,7 +270,7 @@ export default function ProductDetail() {
                       onClick={() => setSelectedImageIndex(prev => 
                         prev === product.images.length - 1 ? 0 : prev + 1
                       )}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/20 hover:bg-black/40 text-white rounded-full flex items-center justify-center transition-colors duration-200 z-10"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/20 hover:bg-black/40 text-white rounded-full flex items-center justify-center transition-colors duration-200 z-30"
                     >
                       <ChevronRight className="h-5 w-5" />
                     </button>
