@@ -104,11 +104,3 @@ export const settingSchema = z.object({
 
 export type InsertSetting = z.infer<typeof insertSettingSchema>;
 export type Setting = z.infer<typeof settingSchema>;
-
-export interface WishlistItem {
-  id: number;
-  userId: number;
-  productId: number;
-  addedAt: string;
-}
-`

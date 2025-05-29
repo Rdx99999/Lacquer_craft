@@ -186,7 +186,7 @@ export const getOrder = async (id: number): Promise<Order> => {
 export const createOrder = async (order: InsertOrder, sessionId: string): Promise<Order> => {
   console.log("Creating order with data:", order);
   console.log("Using session ID:", sessionId);
-
+  
   const res = await fetch("/api/orders", {
     method: "POST",
     headers: { 
@@ -226,7 +226,7 @@ export async function updateOrderStatus(id: number, status: string) {
 
 export async function trackOrder(trackingNumber: string) {
   const response = await fetch(`/api/track/${trackingNumber}`);
-
+  
   if (!response.ok) {
     const error = await response.json();
     throw new Error(error.message || "Failed to track order");
@@ -284,50 +284,3 @@ export async function updateSetting(key: string, value: string) {
 
   return response.json();
 }
-
-// Wishlist API functions
-export const getWishlist = async (userId: number) => {
-  const response = await fetch(`/api/wishlist/${userId}`);
-  if (!response.ok) {
-    throw new Error("Failed to fetch wishlist");
-  }
-  return response.json();
-};
-
-export const addToWishlist = async (userId: number, productId: number) => {
-  const response = await fetch("/api/wishlist", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ userId, productId }),
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to add to wishlist");
-  }
-
-  return response.json();
-};
-
-export const removeFromWishlist = async (userId: number, productId: number) => {
-  const response = await fetch(`/api/wishlist/${userId}/${productId}`, {
-    method: "DELETE",
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to remove from wishlist");
-  }
-
-  return response.json();
-};
-
-export const clearWishlist = async (userId: number) => {
-  const response = await fetch(`/api/wishlist/${userId}`, {
-    method: "DELETE",
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to clear wishlist");
-  }
-
-  return response.json();
-};

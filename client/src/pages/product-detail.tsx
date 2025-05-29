@@ -1,13 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams, Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
-import { getProduct, getRecommendedProducts, addToCart, addToWishlist, removeFromWishlist, getWishlist } from "@/lib/api";
+import { getProduct, getRecommendedProducts, addToCart } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { useCart } from "@/hooks/use-cart";
-import { useAuth } from "@/hooks/use-auth";
 import { ChevronLeft, ChevronRight, Star, Plus, Minus, Heart, Share2, X, ArrowRight, ArrowLeft, ShoppingCart } from "lucide-react";
 import { CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -31,7 +30,6 @@ export default function ProductDetail() {
 
   const { addToCart, isAddingToCart } = useCart();
   const { toast } = useToast();
-  const { user } = useAuth();
 
   const { data: product, isLoading, error } = useQuery({
     queryKey: ["/api/products", productId],
@@ -126,41 +124,39 @@ export default function ProductDetail() {
     }
   };
 
-  const handleWishlist = async () => {
-    if (!product || !user) {
-      toast({
-        title: "Sign in Required",
-        description: "Please sign in to add items to your wishlist.",
-        variant: "destructive",
-      });
-      return;
-    }
+  const handleWishlist = () => {
+    if (!product) return;
     
-    try {
-      if (!isWishlisted) {
-        // Add to wishlist
-        await addToWishlist(user.id, product.id);
-        setIsWishlisted(true);
-        
-        toast({
-          title: "Added to Wishlist",
-          description: `${product.name} has been added to your wishlist.`,
-        });
-      } else {
-        // Remove from wishlist
-        await removeFromWishlist(user.id, product.id);
-        setIsWishlisted(false);
-        
-        toast({
-          title: "Removed from Wishlist",
-          description: `${product.name} has been removed from your wishlist.`,
-        });
-      }
-    } catch (error) {
+    setIsWishlisted(!isWishlisted);
+    
+    // Get existing wishlist from localStorage
+    const existingWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+    
+    if (!isWishlisted) {
+      // Add to wishlist
+      const wishlistItem = {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.images[0],
+        addedAt: new Date().toISOString()
+      };
+      
+      const updatedWishlist = [...existingWishlist, wishlistItem];
+      localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+      
       toast({
-        title: "Error",
-        description: "Failed to update wishlist. Please try again.",
-        variant: "destructive",
+        title: "Added to Wishlist",
+        description: `${product.name} has been added to your wishlist.`,
+      });
+    } else {
+      // Remove from wishlist
+      const updatedWishlist = existingWishlist.filter((item: any) => item.id !== product.id);
+      localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+      
+      toast({
+        title: "Removed from Wishlist",
+        description: `${product.name} has been removed from your wishlist.`,
       });
     }
   };
@@ -200,20 +196,12 @@ export default function ProductDetail() {
 
   // Check if product is in wishlist on component mount
   useEffect(() => {
-    const checkWishlistStatus = async () => {
-      if (product && user) {
-        try {
-          const wishlist = await getWishlist(user.id);
-          const isInWishlist = wishlist.some((item: any) => item.productId === product.id);
-          setIsWishlisted(isInWishlist);
-        } catch (error) {
-          console.error('Error checking wishlist status:', error);
-        }
-      }
-    };
-    
-    checkWishlistStatus();
-  }, [product, user]);
+    if (product) {
+      const existingWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+      const isInWishlist = existingWishlist.some((item: any) => item.id === product.id);
+      setIsWishlisted(isInWishlist);
+    }
+  }, [product]);
 
   if (isLoading) {
     return (

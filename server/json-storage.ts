@@ -33,14 +33,6 @@ interface DatabaseData {
     orderId: number;
     userId: number;
   };
-  wishlist: WishlistItem[];
-}
-
-export interface WishlistItem {
-  id: number;
-  userId: number;
-  productId: number;
-  addedAt: string;
 }
 
 export class JsonStorage implements IStorage {
@@ -63,8 +55,7 @@ export class JsonStorage implements IStorage {
         cartItemId: 1,
         orderId: 1,
         userId: 1
-      },
-      wishlist: []
+      }
     };
     this.ensureDataDirectory();
     this.loadData();
@@ -102,8 +93,7 @@ export class JsonStorage implements IStorage {
             cartItemId: loadedData.counters?.cartItemId || 1,
             orderId: loadedData.counters?.orderId || 1,
             userId: loadedData.counters?.userId || 1
-          },
-          wishlist: loadedData.wishlist || []
+          }
         };
       } else {
         // Initialize with sample data
@@ -494,7 +484,7 @@ export class JsonStorage implements IStorage {
       items: order.items,
       createdAt: new Date()
     };
-
+    
     this.data.orders.push(newOrder);
     await this.saveData();
     return newOrder;

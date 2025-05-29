@@ -1,19 +1,15 @@
 
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Heart, ShoppingCart, Trash2, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useCart } from "@/hooks/use-cart";
-import { useAuth } from "@/hooks/use-auth";
-import { getWishlist, removeFromWishlist as removeFromWishlistAPI, clearWishlist as clearWishlistAPI } from "@/lib/api";
 
 interface WishlistItem {
   id: number;
-  productId: number;
   name: string;
   price: string;
   image: string;
@@ -21,64 +17,41 @@ interface WishlistItem {
 }
 
 export default function Wishlist() {
-  const { user } = useAuth();
+  const [wishlistItems, setWishlistItems] = useState<WishlistItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { addToCart, isAddingToCart } = useCart();
   const { toast } = useToast();
-  const queryClient = useQueryClient();
 
-  // Fetch wishlist from server
-  const { data: wishlistItems = [], isLoading, error } = useQuery({
-    queryKey: ["/api/wishlist", user?.id],
-    queryFn: () => user ? getWishlist(user.id) : Promise.resolve([]),
-    enabled: !!user,
-  });
+  useEffect(() => {
+    loadWishlist();
+  }, []);
 
-  // Remove from wishlist mutation
-  const removeFromWishlistMutation = useMutation({
-    mutationFn: ({ productId }: { productId: number }) => 
-      user ? removeFromWishlistAPI(user.id, productId) : Promise.reject("No user"),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/wishlist", user?.id] });
-      toast({
-        title: "Removed from Wishlist",
-        description: "Item has been removed from your wishlist.",
-      });
-    },
-    onError: () => {
-      toast({
-        title: "Error",
-        description: "Failed to remove item from wishlist.",
-        variant: "destructive",
-      });
-    },
-  });
+  const loadWishlist = () => {
+    try {
+      const savedWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+      setWishlistItems(savedWishlist);
+    } catch (error) {
+      console.error('Error loading wishlist:', error);
+      setWishlistItems([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-  // Clear wishlist mutation
-  const clearWishlistMutation = useMutation({
-    mutationFn: () => user ? clearWishlistAPI(user.id) : Promise.reject("No user"),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/wishlist", user?.id] });
-      toast({
-        title: "Wishlist Cleared",
-        description: "All items have been removed from your wishlist.",
-      });
-    },
-    onError: () => {
-      toast({
-        title: "Error",
-        description: "Failed to clear wishlist.",
-        variant: "destructive",
-      });
-    },
-  });
-
-  const handleRemoveFromWishlist = (productId: number) => {
-    removeFromWishlistMutation.mutate({ productId });
+  const removeFromWishlist = (productId: number) => {
+    const updatedWishlist = wishlistItems.filter(item => item.id !== productId);
+    setWishlistItems(updatedWishlist);
+    localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+    
+    toast({
+      title: "Removed from Wishlist",
+      description: "Item has been removed from your wishlist.",
+    });
   };
 
   const addToCartFromWishlist = (item: WishlistItem) => {
     addToCart({
-      productId: item.productId,
+      productId: item.id,
       quantity: 1,
     });
 
@@ -88,32 +61,15 @@ export default function Wishlist() {
     });
   };
 
-  const handleClearWishlist = () => {
-    clearWishlistMutation.mutate();
+  const clearWishlist = () => {
+    setWishlistItems([]);
+    localStorage.setItem('wishlist', JSON.stringify([]));
+    
+    toast({
+      title: "Wishlist Cleared",
+      description: "All items have been removed from your wishlist.",
+    });
   };
-
-  // Show login message if user is not authenticated
-  if (!user) {
-    return (
-      <div className="min-h-screen bg-warm-cream flex items-center justify-center">
-        <Card className="w-full max-w-md mx-4">
-          <CardContent className="pt-6 text-center">
-            <Heart className="h-24 w-24 text-gray-300 mx-auto mb-6" />
-            <h1 className="text-2xl font-bold text-gray-900 mb-4">Sign in to view your wishlist</h1>
-            <p className="text-gray-600 mb-6">
-              You need to be signed in to save and view your wishlist items.
-            </p>
-            <Link href="/">
-              <Button className="bg-terracotta hover:bg-terracotta/90 text-white">
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Go to Homepage
-              </Button>
-            </Link>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
 
   if (isLoading) {
     return (
@@ -150,12 +106,11 @@ export default function Wishlist() {
             {wishlistItems.length > 0 && (
               <Button 
                 variant="outline" 
-                onClick={handleClearWishlist}
-                disabled={clearWishlistMutation.isPending}
+                onClick={clearWishlist}
                 className="border-red-300 text-red-600 hover:bg-red-50"
               >
                 <Trash2 className="h-4 w-4 mr-2" />
-                {clearWishlistMutation.isPending ? "Clearing..." : "Clear All"}
+                Clear All
               </Button>
             )}
           </div>
@@ -186,9 +141,8 @@ export default function Wishlist() {
                     className="w-full h-48 object-cover"
                   />
                   <button
-                    onClick={() => handleRemoveFromWishlist(item.productId)}
-                    disabled={removeFromWishlistMutation.isPending}
-                    className="absolute top-2 right-2 w-8 h-8 bg-white/80 hover:bg-white text-red-500 rounded-full flex items-center justify-center transition-colors duration-200 disabled:opacity-50"
+                    onClick={() => removeFromWishlist(item.id)}
+                    className="absolute top-2 right-2 w-8 h-8 bg-white/80 hover:bg-white text-red-500 rounded-full flex items-center justify-center transition-colors duration-200"
                   >
                     <Trash2 className="h-4 w-4" />
                   </button>
@@ -221,7 +175,7 @@ export default function Wishlist() {
                         <ShoppingCart className="h-4 w-4 mr-1" />
                         Add to Cart
                       </Button>
-                      <Link href={`/products/${item.productId}`}>
+                      <Link href={`/products/${item.id}`}>
                         <Button size="sm" variant="outline" className="flex-1">
                           View Details
                         </Button>
