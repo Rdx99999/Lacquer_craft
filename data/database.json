@@ -44,6 +44,12 @@
         "/images/products/2025/05/29/image13_1748548396717-651312701.png",
         "/images/products/2025/05/29/image17_1748548407116-416922982.png"
       ],
+      "features": [
+        "Authentic handcrafted design",
+        "Traditional Indian motifs",
+        "Premium quality ceramic",
+        "Perfect for home decoration"
+      ],
       "createdAt": "2025-05-29T19:34:45.017Z",
       "id": 1
     },
@@ -58,6 +64,12 @@
       "images": [
         "/images/silk-scarf-1.svg"
       ],
+      "features": [
+        "100% pure silk material",
+        "Handwoven by skilled artisans",
+        "Intricate traditional patterns",
+        "Lightweight and comfortable"
+      ],
       "createdAt": "2025-05-29T19:34:45.017Z",
       "id": 2
     },
@@ -71,6 +83,12 @@
       "stock": 12,
       "images": [
         "/images/silver-earrings-1.svg"
+      ],
+      "features": [
+        "Sterling silver construction",
+        "Traditional filigree technique",
+        "Hypoallergenic materials",
+        "Elegant design"
       ],
       "createdAt": "2025-05-29T19:34:45.017Z",
       "id": 3
@@ -87,6 +105,12 @@
         "/images/wooden-box-1.jpg",
         "/images/wooden-box-2.jpg"
       ],
+      "features": [
+        "Hand-carved traditional designs",
+        "Premium hardwood construction",
+        "Velvet-lined interior",
+        "Multiple compartments"
+      ],
       "createdAt": "2025-05-29T19:34:45.017Z",
       "id": 4
     },
@@ -100,6 +124,12 @@
       "stock": 30,
       "images": [
         "/images/cushion-cover-1.jpg"
+      ],
+      "features": [
+        "Hand-embroidered details",
+        "Vibrant traditional colors",
+        "Premium cotton fabric",
+        "Machine washable"
       ],
       "createdAt": "2025-05-29T19:34:45.017Z",
       "id": 5
@@ -115,6 +145,12 @@
       "images": [
         "/images/brass-plate-1.jpg",
         "/images/brass-plate-2.jpg"
+      ],
+      "features": [
+        "Pure brass construction",
+        "Intricate etched patterns",
+        "Antique finish",
+        "Wall mounting ready"
       ],
       "createdAt": "2025-05-29T19:34:45.017Z",
       "id": 6

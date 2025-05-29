@@ -61,7 +61,7 @@ export class JsonStorage implements IStorage {
   private async loadData() {
     try {
       const fileExists = await fs.access(this.dbFile).then(() => true).catch(() => false);
-      
+
       if (fileExists) {
         const fileContent = await fs.readFile(this.dbFile, 'utf-8');
         this.data = JSON.parse(fileContent);
@@ -273,7 +273,8 @@ export class JsonStorage implements IStorage {
       stock: product.stock || 0,
       images: product.images || [],
       featured: product.featured || false,
-      createdAt: new Date()
+      createdAt: new Date(),
+      features: product.features || []
     };
     this.data.products.push(newProduct);
     await this.saveData();
@@ -286,7 +287,8 @@ export class JsonStorage implements IStorage {
 
     const updated: Product = { 
       ...this.data.products[index], 
-      ...product
+      ...product,
+      features: product.features !== undefined ? product.features : this.data.products[index].features
     };
     this.data.products[index] = updated;
     await this.saveData();
@@ -364,7 +366,7 @@ export class JsonStorage implements IStorage {
   async clearCart(sessionId: string): Promise<boolean> {
     const initialLength = this.data.cartItems.length;
     this.data.cartItems = this.data.cartItems.filter(item => item.sessionId !== sessionId);
-    
+
     if (this.data.cartItems.length !== initialLength) {
       await this.saveData();
       return true;

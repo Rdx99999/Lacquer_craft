@@ -19,6 +19,7 @@ export const products = pgTable("products", {
   images: text("images").array().notNull().default([]),
   sku: text("sku").notNull().unique(),
   featured: boolean("featured").notNull().default(false),
+  features: text("features").array().notNull().default([]),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 

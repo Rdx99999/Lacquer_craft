@@ -251,15 +251,16 @@ export default function ProductDetail() {
             </div>
 
             {/* Product Features */}
-            <div className="bg-gray-50 rounded-lg p-4">
-              <h4 className="font-medium text-gray-900 mb-2">Product Features</h4>
-              <ul className="text-sm text-gray-600 space-y-1">
-                <li>• Authentic handcrafted design</li>
-                <li>• Traditional Indian artistry</li>
-                <li>• Premium quality materials</li>
-                <li>• Unique piece with natural variations</li>
-              </ul>
-            </div>
+            {product.features && product.features.length > 0 && (
+              <div className="bg-gray-50 rounded-lg p-4">
+                <h4 className="font-medium text-gray-900 mb-2">Product Features</h4>
+                <ul className="text-sm text-gray-600 space-y-1">
+                  {product.features.map((feature, index) => (
+                    <li key={index}>• {feature}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
 
           {/* Product Info */}

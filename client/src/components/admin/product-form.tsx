@@ -23,6 +23,7 @@ const productFormSchema = z.object({
   sku: z.string().min(1, "SKU is required"),
   featured: z.boolean().default(false),
   images: z.array(z.string()).default([]),
+  features: z.array(z.string()).default([]),
 });
 
 type ProductFormData = z.infer<typeof productFormSchema>;
@@ -53,6 +54,7 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
       sku: product?.sku || "",
       featured: product?.featured || false,
       images: product?.images || [],
+      features: product?.features || [],
     },
   });
 
@@ -281,6 +283,77 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
               onCheckedChange={(checked) => form.setValue("featured", checked)}
             />
             <Label htmlFor="featured">Featured Product</Label>
+          </div>
+
+          {/* Product Features */}
+          <div>
+            <Label>Product Features</Label>
+            <div className="space-y-4">
+              <div className="flex space-x-2">
+                <Input
+                  id="new-feature"
+                  placeholder="Enter a product feature"
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      const input = e.target as HTMLInputElement;
+                      const value = input.value.trim();
+                      if (value) {
+                        const currentFeatures = form.getValues("features");
+                        form.setValue("features", [...currentFeatures, value]);
+                        input.value = '';
+                      }
+                    }
+                  }}
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => {
+                    const input = document.getElementById('new-feature') as HTMLInputElement;
+                    const value = input.value.trim();
+                    if (value) {
+                      const currentFeatures = form.getValues("features");
+                      form.setValue("features", [...currentFeatures, value]);
+                      input.value = '';
+                    }
+                  }}
+                >
+                  Add Feature
+                </Button>
+              </div>
+              
+              {form.watch("features").length > 0 && (
+                <div>
+                  <h4 className="text-sm font-medium text-gray-700 mb-2">
+                    Features ({form.watch("features").length})
+                  </h4>
+                  <div className="space-y-2">
+                    {form.watch("features").map((feature, index) => (
+                      <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <span className="text-sm text-gray-700">• {feature}</span>
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="ghost"
+                          className="text-red-600 hover:text-red-700 h-6 w-6 p-0"
+                          onClick={() => {
+                            const currentFeatures = form.getValues("features");
+                            form.setValue("features", currentFeatures.filter((_, i) => i !== index));
+                          }}
+                        >
+                          ×
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              <p className="text-xs text-gray-500">
+                Press Enter or click "Add Feature" to add a new feature
+              </p>
+            </div>
           </div>
 
           {/* Images */}
