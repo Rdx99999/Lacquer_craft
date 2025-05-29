@@ -192,12 +192,12 @@ export const createOrder = async (order: InsertOrder, sessionId: string): Promis
     },
     body: JSON.stringify(order),
   });
-  
+
   if (!res.ok) {
     const error = await res.json();
     throw new Error(error.message || "Failed to create order");
   }
-  
+
   return res.json();
 };
 

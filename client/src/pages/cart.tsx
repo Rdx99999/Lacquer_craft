@@ -69,7 +69,7 @@ export default function Cart() {
       const tax = Math.round(total * 0.18);
       const finalTotal = subtotal + tax;
 
-      // Create order
+      // Create order - the server will automatically add userId from the authenticated user
       const orderData = {
         customerName: customerInfo.name,
         customerEmail: customerInfo.email,
@@ -80,7 +80,8 @@ export default function Cart() {
         items: JSON.stringify(cartItems.map(item => ({
           productId: item.productId,
           quantity: item.quantity,
-          price: item.product.price
+          price: item.product.price,
+          name: item.product.name
         })))
       };
 
