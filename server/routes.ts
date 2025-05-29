@@ -79,11 +79,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/auth/register", async (req, res) => {
     try {
       const validatedData = registerSchema.parse(req.body);
-      
+
       // Hash password
       const saltRounds = 10;
       const passwordHash = await bcrypt.hash(validatedData.password, saltRounds);
-      
+
       const user = await storage.createUser({
         name: validatedData.name,
         email: validatedData.email,
@@ -108,7 +108,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/auth/login", async (req, res) => {
     try {
       const validatedData = loginSchema.parse(req.body);
-      
+
       const user = await storage.verifyPassword(validatedData.email, validatedData.password);
       if (!user) {
         return res.status(401).json({ message: "Invalid email or password" });
@@ -468,16 +468,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Score products based on similarity
       const scoredProducts = otherProducts.map(p => {
         let score = 0;
-        
+
         // Same category gets highest score
         if (p.categoryId === product.categoryId) {
           score += 50;
         }
-        
+
         // Calculate feature similarity
         const productFeatures = product.features || [];
         const otherFeatures = p.features || [];
-        
+
         if (productFeatures.length > 0 && otherFeatures.length > 0) {
           const commonFeatures = productFeatures.filter(feature => 
             otherFeatures.some(otherFeature => 
@@ -487,7 +487,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           );
           score += (commonFeatures.length / Math.max(productFeatures.length, otherFeatures.length)) * 30;
         }
-        
+
         // Similar price range (within 20% gets points)
         const productPrice = parseFloat(product.price);
         const otherPrice = parseFloat(p.price);
@@ -497,12 +497,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         } else if (priceDiff <= 0.5) {
           score += 5;
         }
-        
+
         // Featured products get slight boost
         if (p.featured) {
           score += 5;
         }
-        
+
         // In stock products get slight boost
         if (p.stock > 0) {
           score += 3;
@@ -660,9 +660,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ...req.body,
         userId: req.user.id,
       };
-      
+
       console.log("Order data received:", orderData);
-      
+
       const validatedData = insertOrderSchema.parse(orderData);
       const order = await storage.createOrder(validatedData);
       res.status(201).json(order);
@@ -700,7 +700,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const trackingNumber = req.params.trackingNumber.toUpperCase();
       const order = await storage.getOrderByTrackingNumber(trackingNumber);
-      
+
       if (!order) {
         return res.status(404).json({ message: "Order not found with this tracking number" });
       }
@@ -762,7 +762,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (typeof value !== "string") {
         return res.status(400).json({ message: "Value must be a string" });
       }
-      
+
       const setting = await storage.updateSetting(req.params.key, value);
       if (!setting) {
         return res.status(404).json({ message: "Setting not found" });
@@ -782,6 +782,72 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ message: "Setting deleted successfully" });
     } catch (error) {
       res.status(500).json({ message: "Failed to delete setting" });
+    }
+  });
+
+  // Wishlist routes
+  app.get("/api/wishlist/:userId", async (req, res) => {
+    const userId = parseInt(req.params.userId);
+    const wishlistItems = await storage.getWishlistByUserId(userId);
+
+    // Get product details for each wishlist item
+    const wishlistWithProducts = await Promise.all(
+      wishlistItems.map(async (item) => {
+        const product = await storage.getProduct(item.productId);
+        return {
+          id: item.id,
+          productId: item.productId,
+          name: product?.name || '',
+          price: product?.price || '0',
+          image: product?.images?.[0] || '',
+          addedAt: item.addedAt
+        };
+      })
+    );
+
+    res.json(wishlistWithProducts);
+  });
+
+  app.post("/api/wishlist", async (req, res) => {
+    const { userId, productId } = req.body;
+
+    // Check if item already exists in wishlist
+    const existingWishlist = await storage.getWishlistByUserId(userId);
+    const existingItem = existingWishlist.find(item => item.productId === productId);
+
+    if (existingItem) {
+      return res.status(400).json({ error: "Item already in wishlist" });
+    }
+
+    const wishlistItem = await storage.addToWishlist({
+      userId,
+      productId,
+      addedAt: new Date().toISOString()
+    });
+
+    res.status(201).json(wishlistItem);
+  });
+
+  app.delete("/api/wishlist/:userId/:productId", async (req, res) => {
+    const userId = parseInt(req.params.userId);
+    const productId = parseInt(req.params.productId);
+
+    try {
+      await storage.removeFromWishlist(userId, productId);
+      res.json({ message: "Item removed from wishlist" });
+    } catch (error) {
+      res.status(404).json({ error: "Item not found in wishlist" });
+    }
+  });
+
+  app.delete("/api/wishlist/:userId", async (req, res) => {
+    const userId = parseInt(req.params.userId);
+
+    try {
+      await storage.clearWishlist(userId);
+      res.json({ message: "Wishlist cleared" });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to clear wishlist" });
     }
   });
 
