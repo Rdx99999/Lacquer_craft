@@ -261,12 +261,41 @@ export default function Products() {
             </Button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {sortedProducts.map((product) => (
-              <ProductCard key={product.id} product={product} showCategory />
-            ))}
-          </div>
-        )}
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {sortedProducts.map((product) => (
+                <ProductCard key={product.id} product={product} showCategory />
+              ))}
+            </div>
+
+            {/* Recommended Products Section */}
+            {!selectedCategory && !searchQuery && (
+              <div className="mt-16 border-t pt-12">
+                <div className="mb-8">
+                  <h2 className="font-display text-2xl font-bold text-gray-900 mb-2">
+                    You might also like
+                  </h2>
+                  <p className="text-gray-600">
+                    Discover more handcrafted treasures from our artisans
+                  </p>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                  {products
+                    .filter(product => product.featured)
+                    .slice(0, 4)
+                    .map((product) => (
+                      <ProductCard key={`featured-${product.id}`} product={product} showCategory />
+                    ))}
+                </div>
+              </div>
+            )}
+          </>
+        )}</div>
+      </div>
+    </div>
+  );
+}
       </div>
     </div>
   );

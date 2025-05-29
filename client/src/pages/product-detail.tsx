@@ -7,10 +7,11 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { getProduct } from "@/lib/api";
+import { getProduct, getRecommendedProducts } from "@/lib/api";
 import { useCart } from "@/hooks/use-cart";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "wouter";
+import { ProductCard } from "@/components/product-card";
 
 export default function ProductDetail() {
   const params = useParams();
@@ -27,6 +28,13 @@ export default function ProductDetail() {
     queryKey: ["/api/products", productId],
     queryFn: () => getProduct(productId),
     enabled: !isNaN(productId),
+  });
+
+  // Get recommended products
+  const { data: recommendedProducts = [] } = useQuery({
+    queryKey: ["/api/products", productId, "recommendations"],
+    queryFn: () => getRecommendedProducts(productId),
+    enabled: !isNaN(productId) && !!product,
   });
 
   const handleAddToCart = () => {
@@ -383,6 +391,40 @@ export default function ProductDetail() {
             </Card>
           </div>
         </div>
+
+        {/* Recommended Products Section */}
+        {recommendedProducts.length > 0 && (
+          <div className="mt-16 border-t pt-12">
+            <div className="mb-8">
+              <h2 className="font-display text-2xl font-bold text-gray-900 mb-2">
+                Recommended for you
+              </h2>
+              <p className="text-gray-600">
+                Similar products from the same category
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {recommendedProducts.map((recommendedProduct) => (
+                <ProductCard 
+                  key={recommendedProduct.id} 
+                  product={recommendedProduct} 
+                  showCategory={false}
+                />
+              ))}
+            </div>
+
+            {/* View More Link */}
+            <div className="text-center mt-8">
+              <Link href={`/products?category=${product?.category?.slug}`}>
+                <Button variant="outline" className="border-terracotta text-terracotta hover:bg-terracotta hover:text-white">
+                  View more in {product?.category?.name}
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </Button>
+              </Link>
+            </div>
+          </div>
+        )}
 
         {/* Fullscreen Image Modal */}
         <Dialog open={isFullscreenOpen} onOpenChange={setIsFullscreenOpen}>

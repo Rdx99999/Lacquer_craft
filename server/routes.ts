@@ -16,14 +16,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
-        
+
         const uploadPath = join(process.cwd(), 'data', 'images', 'products', `${year}`, `${month}`, `${day}`);
-        
+
         // Create directory if it doesn't exist
         import('fs').then(fs => {
           fs.mkdirSync(uploadPath, { recursive: true });
         });
-        
+
         cb(null, uploadPath);
       },
       filename: (req, file, cb) => {
@@ -55,11 +55,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!req.file) {
         return res.status(400).json({ message: "No image file uploaded" });
       }
-      
+
       // Get relative path from data/images
       const relativePath = req.file.path.split('data/images/')[1];
       const imageUrl = `/images/${relativePath}`;
-      
+
       res.json({ 
         imageUrl,
         filename: req.file.filename,
@@ -77,7 +77,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.delete("/api/delete-image", (req, res) => {
     try {
       const { imageUrl } = req.body;
-      
+
       if (!imageUrl) {
         return res.status(400).json({ message: "Image URL is required" });
       }
@@ -85,7 +85,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Convert URL to file path
       const imagePath = imageUrl.replace('/images/', '');
       const fullPath = join(process.cwd(), 'data', 'images', imagePath);
-      
+
       // Delete the file
       import('fs').then(fs => {
         fs.unlink(fullPath, (err) => {
@@ -206,16 +206,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get single product with category
   app.get("/api/products/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       const product = await storage.getProductWithCategory(id);
+
       if (!product) {
-        return res.status(404).json({ message: "Product not found" });
+        return res.status(404).json({ error: "Product not found" });
       }
+
       res.json(product);
     } catch (error) {
-      res.status(500).json({ message: "Failed to fetch product" });
+      console.error("Error fetching product:", error);
+      res.status(500).json({ error: "Failed to fetch product" });
+    }
+  });
+
+  // Get recommended products for a specific product
+  app.get("/api/products/:id/recommendations", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const product = await storage.getProduct(id);
+
+      if (!product) {
+        return res.status(404).json({ error: "Product not found" });
+      }
+
+      // Get products from the same category, excluding the current product
+      const categoryProducts = await storage.getProducts(product.categoryId);
+      const recommendations = categoryProducts
+        .filter(p => p.id !== id)
+        .sort(() => Math.random() - 0.5) // Randomize order
+        .slice(0, 6); // Limit to 6 recommendations
+
+      res.json(recommendations);
+    } catch (error) {
+      console.error("Error fetching recommendations:", error);
+      res.status(500).json({ error: "Failed to fetch recommendations" });
     }
   });
 
@@ -290,7 +318,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const sessionId = req.params.sessionId;
       const productId = parseInt(req.params.productId);
       const { quantity } = req.body;
-      
+
       if (typeof quantity !== "number" || quantity < 0) {
         return res.status(400).json({ message: "Invalid quantity" });
       }
@@ -365,7 +393,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const id = parseInt(req.params.id);
       const { status } = req.body;
-      
+
       if (!status) {
         return res.status(400).json({ message: "Status is required" });
       }

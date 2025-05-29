@@ -57,10 +57,21 @@ export const getProductsWithCategory = async (): Promise<ProductWithCategory[]> 
   return res.json();
 };
 
-export const getProduct = async (id: number): Promise<ProductWithCategory> => {
-  const res = await fetch(`/api/products/${id}`);
-  return res.json();
-};
+export async function getProduct(id: number): Promise<ProductWithCategory> {
+  const response = await fetch(`/api/products/${id}`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch product");
+  }
+  return response.json();
+}
+
+export async function getRecommendedProducts(productId: number): Promise<Product[]> {
+  const response = await fetch(`/api/products/${productId}/recommendations`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch recommended products");
+  }
+  return response.json();
+}
 
 export const createProduct = async (product: InsertProduct): Promise<Product> => {
   const res = await apiRequest("POST", "/api/products", product);
