@@ -4,13 +4,15 @@ import type {
   Category, 
   Product, 
   CartItem, 
-  Order, 
+  Order,
   InsertCategory, 
   InsertProduct, 
   InsertCartItem, 
   InsertOrder,
   ProductWithCategory,
-  CartItemWithProduct
+  CartItemWithProduct,
+  Setting,
+  InsertSetting
 } from "@shared/schema";
 import { IStorage } from './storage';
 
@@ -19,6 +21,7 @@ interface DatabaseData {
   products: Product[];
   cartItems: CartItem[];
   orders: Order[];
+  settings: Setting[];
   counters: {
     categoryId: number;
     productId: number;
@@ -38,6 +41,7 @@ export class JsonStorage implements IStorage {
       products: [],
       cartItems: [],
       orders: [],
+      settings: [],
       counters: {
         categoryId: 1,
         productId: 1,
@@ -429,5 +433,45 @@ export class JsonStorage implements IStorage {
     this.data.orders[index] = updated;
     await this.saveData();
     return updated;
+  }
+
+  // Settings
+  async getSettings(): Promise<Setting[]> {
+    return [...this.data.settings];
+  }
+
+  async getSetting(key: string): Promise<Setting | undefined> {
+    return this.data.settings.find(setting => setting.key === key);
+  }
+
+  async createSetting(setting: InsertSetting): Promise<Setting> {
+    const newSetting: Setting = {
+      id: this.data.counters.orderId++,
+      ...setting,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+    this.data.settings.push(newSetting);
+    await this.saveData();
+    return newSetting;
+  }
+
+  async updateSetting(key: string, value: string): Promise<Setting | undefined> {
+    const index = this.data.settings.findIndex(setting => setting.key === key);
+    if (index === -1) return undefined;
+
+    const updated: Setting = { ...this.data.settings[index], value: value, updatedAt: new Date().toISOString() };
+    this.data.settings[index] = updated;
+    await this.saveData();
+    return updated;
+  }
+
+  async deleteSetting(key: string): Promise<boolean> {
+    const index = this.data.settings.findIndex(setting => setting.key === key);
+    if (index === -1) return false;
+
+    this.data.settings.splice(index, 1);
+    await this.saveData();
+    return true;
   }
 }

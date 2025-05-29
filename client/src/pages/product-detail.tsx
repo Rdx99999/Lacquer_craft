@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams, Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
-import { Star, ArrowLeft, ArrowRight, Plus, Minus, Heart, Share2, Package, Truck, Shield, Award, ShoppingCart, ChevronLeft, ChevronRight, X } from "lucide-react";
+import { Star, ArrowLeft, Plus, Minus, Heart, Share2, Package, Truck, Shield, Award, ShoppingCart, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -204,7 +204,7 @@ export default function ProductDetail() {
                       )}
                       className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/20 hover:bg-black/40 text-white rounded-full flex items-center justify-center transition-colors duration-200 z-10"
                     >
-                      <ArrowRight className="h-5 w-5" />
+                      <ChevronRight className="h-5 w-5" />
                     </button>
                   </>
                 )}
