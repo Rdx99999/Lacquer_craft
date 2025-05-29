@@ -271,7 +271,9 @@ export default function Admin() {
                       </div>
                     </TableCell>
                     <TableCell>
-                      <Badge variant="outline">{product.category.name}</Badge>
+                      <Badge variant="outline">
+                        {product.category?.name || "Unknown Category"}
+                      </Badge>
                     </TableCell>
                     <TableCell className="font-medium">
                       ₹{parseFloat(product.price).toLocaleString()}

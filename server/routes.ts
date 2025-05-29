@@ -165,7 +165,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "Category not found" });
       }
       res.json({ message: "Category deleted successfully" });
-    } catch (error) {
+    } catch (error: any) {
+      if (error.message && error.message.includes("Cannot delete category")) {
+        return res.status(400).json({ message: error.message });
+      }
       res.status(500).json({ message: "Failed to delete category" });
     }
   });

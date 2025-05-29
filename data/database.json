@@ -1,60 +1,6 @@
 {
-  "categories": [
-    {
-      "name": "Pottery",
-      "slug": "pottery",
-      "description": "Traditional ceramic arts and pottery items",
-      "id": 1,
-      "thumbnail": null
-    },
-    {
-      "name": "Textiles",
-      "slug": "textiles",
-      "description": "Handwoven fabrics and textile crafts",
-      "id": 2
-    },
-    {
-      "name": "Jewelry",
-      "slug": "jewelry",
-      "description": "Traditional and contemporary handmade jewelry",
-      "id": 3
-    },
-    {
-      "name": "Woodwork",
-      "slug": "woodwork",
-      "description": "Carved wooden crafts and furniture",
-      "id": 4
-    },
-    {
-      "name": "Metalwork",
-      "slug": "metalwork",
-      "description": "Brass, copper and other metal crafts",
-      "id": 5
-    }
-  ],
+  "categories": [],
   "products": [
-    {
-      "name": "Traditional Ceramic Vase",
-      "description": "Handcrafted ceramic vase with traditional Indian motifs. Perfect for home decoration.",
-      "price": "2999",
-      "categoryId": 1,
-      "sku": "POT001",
-      "featured": true,
-      "stock": 15,
-      "images": [
-        "/images/products/2025/05/29/image13_1748548396717-651312701.png",
-        "/images/products/2025/05/29/image17_1748548407116-416922982.png"
-      ],
-      "features": [
-        "Authentic handcrafted design",
-        "Traditional Indian motifs",
-        "Premium quality ceramic",
-        "Perfect for home decoration",
-        "good quality"
-      ],
-      "createdAt": "2025-05-29T19:34:45.017Z",
-      "id": 1
-    },
     {
       "name": "Handwoven Silk Scarf",
       "description": "Beautiful silk scarf with intricate handwoven patterns. Made by skilled artisans.",

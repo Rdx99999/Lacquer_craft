@@ -227,6 +227,12 @@ export class JsonStorage implements IStorage {
     const index = this.data.categories.findIndex(cat => cat.id === id);
     if (index === -1) return false;
 
+    // Check if any products are using this category
+    const productsUsingCategory = this.data.products.filter(product => product.categoryId === id);
+    if (productsUsingCategory.length > 0) {
+      throw new Error(`Cannot delete category. ${productsUsingCategory.length} product(s) are still using this category.`);
+    }
+
     this.data.categories.splice(index, 1);
     await this.saveData();
     return true;
@@ -245,13 +251,19 @@ export class JsonStorage implements IStorage {
   }
 
   async getProductsWithCategory(): Promise<ProductWithCategory[]> {
-    return this.data.products.map(product => {
-      const category = this.data.categories.find(cat => cat.id === product.categoryId);
-      return {
-        ...product,
-        category: category!
-      };
-    });
+    return this.data.products
+      .map(product => {
+        const category = this.data.categories.find(cat => cat.id === product.categoryId);
+        if (!category) {
+          // Return null for products with missing categories so we can filter them out
+          return null;
+        }
+        return {
+          ...product,
+          category
+        };
+      })
+      .filter((product): product is ProductWithCategory => product !== null);
   }
 
   async getProduct(id: number): Promise<Product | undefined> {
@@ -263,9 +275,11 @@ export class JsonStorage implements IStorage {
     if (!product) return undefined;
 
     const category = this.data.categories.find(cat => cat.id === product.categoryId);
+    if (!category) return undefined; // Don't return product if category is missing
+
     return {
       ...product,
-      category: category!
+      category
     };
   }
 
