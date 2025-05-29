@@ -77,7 +77,7 @@ export class JsonStorage implements IStorage {
       if (fileExists) {
         const fileContent = await fs.readFile(this.dbFile, 'utf-8');
         const loadedData = JSON.parse(fileContent);
-        
+
         // Ensure all required arrays exist
         this.data = {
           categories: loadedData.categories || [],
@@ -527,26 +527,28 @@ export class JsonStorage implements IStorage {
 
   // User management
   async createUser(userData: InsertUser): Promise<User> {
-    // Ensure users array exists
     if (!this.data.users) {
       this.data.users = [];
     }
 
     // Check if user already exists
-    const existingUser = this.data.users.find(user => user.email === userData.email);
+    const existingUser = await this.getUserByEmail(userData.email);
     if (existingUser) {
-      throw new Error('User with this email already exists');
+      throw new Error("User with this email already exists");
     }
 
-    const newUser: User = {
-      id: this.data.counters.userId++,
-      ...userData,
+    const id = this.getNextId('users');
+    const user: User = {
+      id,
+      name: userData.name,
+      email: userData.email,
+      passwordHash: userData.passwordHash,
       createdAt: new Date().toISOString(),
     };
 
-    this.data.users.push(newUser);
+    this.data.users.push(user);
     await this.saveData();
-    return newUser;
+    return user;
   }
 
   async getUserByEmail(email: string): Promise<User | undefined> {
