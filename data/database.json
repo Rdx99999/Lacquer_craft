@@ -140,12 +140,20 @@
       "createdAt": "2025-05-29T22:05:15.358Z"
     }
   ],
-  "cartItems": [],
+  "cartItems": [
+    {
+      "id": 3,
+      "sessionId": "session-1748553571473-4pe3dwcge",
+      "productId": 10,
+      "quantity": 1,
+      "createdAt": "2025-05-29T22:11:42.783Z"
+    }
+  ],
   "orders": [],
   "counters": {
     "categoryId": 12,
     "productId": 14,
-    "cartItemId": 3,
+    "cartItemId": 4,
     "orderId": 7
   },
   "settings": [
