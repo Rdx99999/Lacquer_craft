@@ -113,6 +113,64 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Homepage hero banner image upload endpoint
+  app.post("/api/upload-homepage-image", multer({
+    storage: multer.diskStorage({
+      destination: (req, file, cb) => {
+        const date = new Date();
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+
+        const uploadPath = join(process.cwd(), 'data', 'images', 'homepage', 'hero', `${year}`, `${month}`, `${day}`);
+
+        import('fs').then(fs => {
+          fs.mkdirSync(uploadPath, { recursive: true });
+        });
+
+        cb(null, uploadPath);
+      },
+      filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        const extension = file.originalname.split('.').pop();
+        const sanitizedName = file.originalname.replace(/[^a-zA-Z0-9.-]/g, '_');
+        cb(null, `hero_banner_${sanitizedName.split('.')[0]}_${uniqueSuffix}.${extension}`);
+      }
+    }),
+    fileFilter: (req, file, cb) => {
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif'];
+      if (allowedTypes.includes(file.mimetype)) {
+        cb(null, true);
+      } else {
+        cb(new Error('Only image files (JPEG, PNG, WebP, GIF) are allowed'), false);
+      }
+    },
+    limits: {
+      fileSize: 10 * 1024 * 1024 // 10MB limit
+    }
+  }).single('image'), (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ message: "No hero banner image file uploaded" });
+      }
+
+      // Get relative path from data/images
+      const relativePath = req.file.path.split('data/images/')[1];
+      const imageUrl = `/images/${relativePath}`;
+
+      res.json({ 
+        imageUrl,
+        filename: req.file.filename,
+        originalName: req.file.originalname,
+        size: req.file.size,
+        mimetype: req.file.mimetype
+      });
+    } catch (error) {
+      console.error('Homepage hero banner image upload error:', error);
+      res.status(500).json({ message: "Failed to upload hero banner image" });
+    }
+  });
+
   // Product image upload endpoint
   app.post("/api/upload-image", upload.single('image'), (req, res) => {
     try {

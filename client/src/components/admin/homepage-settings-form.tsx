@@ -109,7 +109,7 @@ export function HomepageSettingsForm() {
       const formData = new FormData();
       formData.append('image', file);
 
-      const response = await fetch('/api/upload-image', {
+      const response = await fetch('/api/upload-homepage-image', {
         method: 'POST',
         body: formData,
       });
