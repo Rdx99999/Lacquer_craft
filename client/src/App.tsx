@@ -4,12 +4,13 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Navigation } from "@/components/navigation";
-import Home from "@/pages/home";
-import Products from "@/pages/products";
-import ProductDetail from "@/pages/product-detail";
-import Cart from "@/pages/cart";
-import Admin from "@/pages/admin";
-import NotFound from "@/pages/not-found";
+import Home from "./pages/home";
+import Products from "./pages/products";
+import ProductDetail from "./pages/product-detail";
+import Cart from "./pages/cart";
+import TrackOrder from "./pages/track-order";
+import Admin from "./pages/admin";
+import NotFound from "./pages/not-found";
 
 function Router() {
   return (
@@ -18,8 +19,8 @@ function Router() {
       <Route path="/products" component={Products} />
       <Route path="/products/:id" component={ProductDetail} />
       <Route path="/cart" component={Cart} />
+      <Route path="/track" component={TrackOrder} />
       <Route path="/admin" component={Admin} />
-      <Route path="/admin/:tab" component={Admin} />
       <Route component={NotFound} />
     </Switch>
   );

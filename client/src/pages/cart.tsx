@@ -62,7 +62,7 @@ export default function Cart() {
     }
 
     setIsCheckingOut(true);
-    
+
     try {
       // Calculate totals
       const subtotal = total;
@@ -87,19 +87,22 @@ export default function Cart() {
       };
 
       console.log("Sending order data:", orderData);
-      await createOrder(orderData, sessionId!);
-      
+      const newOrder = await createOrder(orderData, sessionId!);
+
       toast({
         title: "Order Placed Successfully!",
-        description: `Order total: ₹${finalTotal.toLocaleString()}. You will receive a confirmation email shortly.`,
+        description: `Your tracking number is: ${newOrder.trackingNumber}. You will receive a confirmation email shortly.`,
+        duration: 8000,
       });
-      
+
+      // Clear the cart and reset form
       clearCart();
       setCustomerInfo({ name: "", email: "", phone: "", address: "" });
     } catch (error: any) {
+      console.error("Checkout error:", error);
       toast({
         title: "Order Failed",
-        description: error.message || "Failed to place order. Please try again.",
+        description: error.message || "There was an error processing your order. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -177,7 +180,7 @@ export default function Cart() {
                           className="w-20 h-20 object-cover rounded-lg cursor-pointer hover:opacity-90 transition-opacity"
                         />
                       </Link>
-                      
+
                       <div className="flex-1 min-w-0">
                         <Link href={`/products/${item.productId}`}>
                           <h3 className="font-semibold text-gray-900 hover:text-terracotta transition-colors cursor-pointer">
@@ -191,7 +194,7 @@ export default function Cart() {
                           ₹{parseFloat(item.product.price).toLocaleString()} each
                         </p>
                       </div>
-                      
+
                       <div className="flex items-center space-x-2">
                         <Button
                           size="sm"
@@ -202,11 +205,11 @@ export default function Cart() {
                         >
                           <Minus className="h-3 w-3" />
                         </Button>
-                        
+
                         <span className="font-medium min-w-[3rem] text-center">
                           {item.quantity}
                         </span>
-                        
+
                         <Button
                           size="sm"
                           variant="outline"
@@ -217,7 +220,7 @@ export default function Cart() {
                           <Plus className="h-3 w-3" />
                         </Button>
                       </div>
-                      
+
                       <div className="text-right">
                         <p className="font-semibold text-gray-900">
                           ₹{(parseFloat(item.product.price) * item.quantity).toLocaleString()}
@@ -233,7 +236,7 @@ export default function Cart() {
                         </Button>
                       </div>
                     </div>
-                    
+
                     {index < cartItems.length - 1 && <Separator className="mt-4" />}
                   </div>
                 ))}
@@ -259,9 +262,9 @@ export default function Cart() {
                     </div>
                   ))}
                 </div>
-                
+
                 <Separator />
-                
+
                 <div className="space-y-2">
                   <div className="flex justify-between">
                     <span>Subtotal</span>
@@ -276,9 +279,9 @@ export default function Cart() {
                     <span>₹{Math.round(total * 0.18).toLocaleString()}</span>
                   </div>
                 </div>
-                
+
                 <Separator />
-                
+
                 <div className="flex justify-between text-lg font-semibold">
                   <span>Total</span>
                   <span className="text-terracotta">₹{Math.round(total * 1.18).toLocaleString()}</span>
@@ -340,7 +343,7 @@ export default function Cart() {
                     placeholder="Enter your full name"
                   />
                 </div>
-                
+
                 <div>
                   <Label htmlFor="email">Email Address *</Label>
                   <Input
@@ -351,7 +354,7 @@ export default function Cart() {
                     placeholder="Enter your email"
                   />
                 </div>
-                
+
                 <div>
                   <Label htmlFor="phone">Phone Number</Label>
                   <Input
@@ -362,7 +365,7 @@ export default function Cart() {
                     placeholder="Enter your phone number"
                   />
                 </div>
-                
+
                 <div>
                   <Label htmlFor="address">Shipping Address *</Label>
                   <Textarea
@@ -373,7 +376,7 @@ export default function Cart() {
                     rows={3}
                   />
                 </div>
-                
+
                 <Button
                   onClick={handleCheckout}
                   disabled={isCheckingOut}
@@ -382,7 +385,7 @@ export default function Cart() {
                 >
                   {isCheckingOut ? "Processing..." : isAuthenticated ? "Place Order" : "Login to Place Order"}
                 </Button>
-                
+
                 <p className="text-xs text-gray-500 text-center">
                   By placing your order, you agree to our terms and conditions.
                 </p>

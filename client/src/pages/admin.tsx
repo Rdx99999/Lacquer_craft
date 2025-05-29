@@ -353,6 +353,7 @@ export default function Admin() {
             <TableHeader>
               <TableRow>
                 <TableHead>Order ID</TableHead>
+                <TableHead>Tracking #</TableHead>
                 <TableHead>Customer</TableHead>
                 <TableHead>Total</TableHead>
                 <TableHead>Status</TableHead>
@@ -377,6 +378,7 @@ export default function Admin() {
                 orders.map((order) => (
                   <TableRow key={order.id}>
                     <TableCell className="font-medium">#{order.id}</TableCell>
+                    <TableCell className="font-mono text-sm">{order.trackingNumber}</TableCell>
                     <TableCell>
                       <div>
                         <div className="font-medium">{order.customerName}</div>

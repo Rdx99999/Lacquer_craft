@@ -41,6 +41,7 @@ export const orders = pgTable("orders", {
   shippingAddress: text("shipping_address").notNull(),
   total: decimal("total", { precision: 10, scale: 2 }).notNull(),
   status: text("status").notNull().default("pending"), // pending, confirmed, shipped, delivered, cancelled
+  trackingNumber: text("tracking_number").notNull().unique(),
   items: text("items").notNull(), // JSON stringified array of order items
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });

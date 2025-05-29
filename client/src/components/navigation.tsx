@@ -59,7 +59,7 @@ export function Navigation() {
               <Link href="/" className={`text-gray-700 hover:text-terracotta transition-colors ${location === "/" ? "text-terracotta font-medium" : ""}`}>
                 Home
               </Link>
-              
+
               <NavigationMenu>
                 <NavigationMenuList>
                   <NavigationMenuItem>
@@ -175,7 +175,7 @@ export function Navigation() {
                       </div>
                     </div>
                     <Link href="/products" className="text-lg font-medium">Products</Link>
-                    
+
                     {/* Mobile Search */}
                     <form onSubmit={handleSearch} className="relative sm:hidden">
                       <Input
@@ -194,7 +194,7 @@ export function Navigation() {
                         <Search className="h-4 w-4" />
                       </Button>
                     </form>
-                    
+
                     {/* Mobile Authentication */}
                     {isAuthenticated ? (
                       <div className="pt-4 border-t">
@@ -229,7 +229,7 @@ export function Navigation() {
       </nav>
 
       <ShoppingCartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
-      
+
       <AuthDialog
         open={showAuthDialog}
         onOpenChange={setShowAuthDialog}

@@ -695,6 +695,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Track order by tracking number
+  app.get("/api/track/:trackingNumber", async (req, res) => {
+    try {
+      const trackingNumber = req.params.trackingNumber.toUpperCase();
+      const order = await storage.getOrderByTrackingNumber(trackingNumber);
+      
+      if (!order) {
+        return res.status(404).json({ message: "Order not found with this tracking number" });
+      }
+
+      // Return order tracking info (without sensitive customer details for public tracking)
+      const trackingInfo = {
+        id: order.id,
+        trackingNumber: order.trackingNumber,
+        status: order.status,
+        createdAt: order.createdAt,
+        customerName: order.customerName.split(' ')[0], // Only first name for privacy
+        total: order.total
+      };
+
+      res.json(trackingInfo);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to track order" });
+    }
+  });
+
   // Settings endpoints
   app.get("/api/settings", async (req, res) => {
     try {

@@ -224,6 +224,17 @@ export async function updateOrderStatus(id: number, status: string) {
   return response.json();
 }
 
+export async function trackOrder(trackingNumber: string) {
+  const response = await fetch(`/api/track/${trackingNumber}`);
+  
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || "Failed to track order");
+  }
+
+  return response.json();
+}
+
 // Settings API functions
 export async function getSettings() {
   const response = await fetch("/api/settings");

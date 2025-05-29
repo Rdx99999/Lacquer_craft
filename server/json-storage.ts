@@ -438,6 +438,12 @@ export class JsonStorage implements IStorage {
     return this.data.orders.find(order => order.id === id);
   }
 
+  private generateTrackingNumber(): string {
+    const timestamp = Date.now().toString(36).toUpperCase();
+    const random = Math.random().toString(36).substr(2, 4).toUpperCase();
+    return `TRK${timestamp}${random}`;
+  }
+
   async createOrder(order: InsertOrder): Promise<Order> {
     // Validate required fields
     if (!order.userId) {
@@ -459,6 +465,12 @@ export class JsonStorage implements IStorage {
       throw new Error("Order items are required");
     }
 
+    // Generate unique tracking number
+    let trackingNumber;
+    do {
+      trackingNumber = this.generateTrackingNumber();
+    } while (this.data.orders.some(o => o.trackingNumber === trackingNumber));
+
     const newOrder: Order = {
       id: this.data.counters.orderId++,
       userId: order.userId,
@@ -468,6 +480,7 @@ export class JsonStorage implements IStorage {
       shippingAddress: order.shippingAddress,
       total: order.total,
       status: order.status || "pending",
+      trackingNumber: trackingNumber,
       items: order.items,
       createdAt: new Date()
     };
@@ -475,6 +488,10 @@ export class JsonStorage implements IStorage {
     this.data.orders.push(newOrder);
     await this.saveData();
     return newOrder;
+  }
+
+  async getOrderByTrackingNumber(trackingNumber: string): Promise<Order | undefined> {
+    return this.data.orders.find(order => order.trackingNumber === trackingNumber);
   }
 
   async updateOrderStatus(id: number, status: string): Promise<Order | undefined> {
