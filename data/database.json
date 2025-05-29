@@ -4,7 +4,8 @@
       "name": "Pottery",
       "slug": "pottery",
       "description": "Traditional ceramic arts and pottery items",
-      "id": 1
+      "id": 1,
+      "thumbnail": null
     },
     {
       "name": "Textiles",
