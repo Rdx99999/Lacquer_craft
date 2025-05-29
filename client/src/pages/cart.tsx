@@ -69,22 +69,24 @@ export default function Cart() {
       const tax = Math.round(total * 0.18);
       const finalTotal = subtotal + tax;
 
-      // Create order - the server will automatically add userId from the authenticated user
+      // Create order data with all required fields
       const orderData = {
-        customerName: customerInfo.name,
-        customerEmail: customerInfo.email,
-        customerPhone: customerInfo.phone || null,
-        shippingAddress: customerInfo.address,
+        customerName: customerInfo.name.trim(),
+        customerEmail: customerInfo.email.trim(),
+        customerPhone: customerInfo.phone?.trim() || null,
+        shippingAddress: customerInfo.address.trim(),
         total: finalTotal.toString(),
-        status: "pending",
+        status: "pending" as const,
         items: JSON.stringify(cartItems.map(item => ({
           productId: item.productId,
           quantity: item.quantity,
-          price: item.product.price,
-          name: item.product.name
+          price: parseFloat(item.product.price).toString(),
+          name: item.product.name.trim(),
+          sku: item.product.sku
         })))
       };
 
+      console.log("Sending order data:", orderData);
       await createOrder(orderData, sessionId!);
       
       toast({

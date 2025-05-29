@@ -62,6 +62,8 @@ export const insertCartItemSchema = createInsertSchema(cartItems).omit({
 export const insertOrderSchema = createInsertSchema(orders).omit({
   id: true,
   createdAt: true,
+}).extend({
+  userId: z.number().min(1, "User ID is required"),
 });
 
 export type Category = typeof categories.$inferSelect;

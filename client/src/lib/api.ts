@@ -184,6 +184,9 @@ export const getOrder = async (id: number): Promise<Order> => {
 };
 
 export const createOrder = async (order: InsertOrder, sessionId: string): Promise<Order> => {
+  console.log("Creating order with data:", order);
+  console.log("Using session ID:", sessionId);
+  
   const res = await fetch("/api/orders", {
     method: "POST",
     headers: { 
@@ -193,12 +196,17 @@ export const createOrder = async (order: InsertOrder, sessionId: string): Promis
     body: JSON.stringify(order),
   });
 
+  console.log("Order creation response status:", res.status);
+
   if (!res.ok) {
     const error = await res.json();
+    console.error("Order creation error:", error);
     throw new Error(error.message || "Failed to create order");
   }
 
-  return res.json();
+  const result = await res.json();
+  console.log("Order created successfully:", result);
+  return result;
 };
 
 export async function updateOrderStatus(id: number, status: string) {

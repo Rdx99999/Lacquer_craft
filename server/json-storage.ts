@@ -439,13 +439,39 @@ export class JsonStorage implements IStorage {
   }
 
   async createOrder(order: InsertOrder): Promise<Order> {
+    // Validate required fields
+    if (!order.userId) {
+      throw new Error("User ID is required");
+    }
+    if (!order.customerName) {
+      throw new Error("Customer name is required");
+    }
+    if (!order.customerEmail) {
+      throw new Error("Customer email is required");
+    }
+    if (!order.shippingAddress) {
+      throw new Error("Shipping address is required");
+    }
+    if (!order.total) {
+      throw new Error("Order total is required");
+    }
+    if (!order.items) {
+      throw new Error("Order items are required");
+    }
+
     const newOrder: Order = {
       id: this.data.counters.orderId++,
-      ...order,
-      status: order.status || "pending",
+      userId: order.userId,
+      customerName: order.customerName,
+      customerEmail: order.customerEmail,
       customerPhone: order.customerPhone || null,
+      shippingAddress: order.shippingAddress,
+      total: order.total,
+      status: order.status || "pending",
+      items: order.items,
       createdAt: new Date()
     };
+    
     this.data.orders.push(newOrder);
     await this.saveData();
     return newOrder;
