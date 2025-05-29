@@ -33,7 +33,7 @@ interface ProductFormProps {
 }
 
 export function ProductForm({ product, onSuccess }: ProductFormProps) {
-  const [imageUrl, setImageUrl] = useState("");
+  const [uploading, setUploading] = useState(false);
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -102,11 +102,44 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
     }
   };
 
-  const addImage = () => {
-    if (imageUrl.trim()) {
+  const uploadImage = async (file: File) => {
+    setUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append('image', file);
+
+      const response = await fetch('/api/upload-image', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to upload image');
+      }
+
+      const data = await response.json();
       const currentImages = form.getValues("images");
-      form.setValue("images", [...currentImages, imageUrl.trim()]);
-      setImageUrl("");
+      form.setValue("images", [...currentImages, data.imageUrl]);
+      
+      toast({
+        title: "Success",
+        description: "Image uploaded successfully",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to upload image",
+        variant: "destructive",
+      });
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      uploadImage(file);
     }
   };
 
@@ -231,14 +264,14 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
             <div className="space-y-4">
               <div className="flex space-x-2">
                 <Input
-                  type="url"
-                  placeholder="Enter image URL"
-                  value={imageUrl}
-                  onChange={(e) => setImageUrl(e.target.value)}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileSelect}
                   className="flex-1"
+                  disabled={uploading}
                 />
-                <Button type="button" onClick={addImage}>
-                  Add Image
+                <Button type="button" disabled={uploading}>
+                  {uploading ? "Uploading..." : "Upload Image"}
                 </Button>
               </div>
 

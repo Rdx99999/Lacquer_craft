@@ -47,7 +47,7 @@ export const getProducts = async (params?: {
   if (params?.category) searchParams.append("category", params.category);
   if (params?.search) searchParams.append("search", params.search);
   if (params?.featured) searchParams.append("featured", "true");
-  
+
   const res = await fetch(`/api/products?${searchParams}`);
   return res.json();
 };
@@ -72,9 +72,31 @@ export const updateProduct = async (id: number, product: Partial<InsertProduct>)
   return res.json();
 };
 
-export const deleteProduct = async (id: number): Promise<void> => {
-  await apiRequest("DELETE", `/api/products/${id}`);
-};
+export async function deleteProduct(id: number): Promise<void> {
+  const response = await fetch(`/api/products/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to delete product");
+  }
+}
+
+export async function uploadImage(file: File): Promise<{ imageUrl: string }> {
+  const formData = new FormData();
+  formData.append('image', file);
+
+  const response = await fetch('/api/upload-image', {
+    method: 'POST',
+    body: formData,
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to upload image");
+  }
+
+  return response.json();
+}
 
 // Cart
 export const getCartItems = async (sessionId: string): Promise<CartItemWithProduct[]> => {

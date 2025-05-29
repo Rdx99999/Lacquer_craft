@@ -2,13 +2,50 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { join } from "path";
 import express from "express";
+import multer from "multer";
 import { storage } from "./storage";
 import { insertProductSchema, insertOrderSchema, insertCartItemSchema, insertCategorySchema } from "@shared/schema";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Configure multer for image uploads
+  const upload = multer({
+    storage: multer.diskStorage({
+      destination: join(process.cwd(), 'data', 'images'),
+      filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        const extension = file.originalname.split('.').pop();
+        cb(null, `upload-${uniqueSuffix}.${extension}`);
+      }
+    }),
+    fileFilter: (req, file, cb) => {
+      if (file.mimetype.startsWith('image/')) {
+        cb(null, true);
+      } else {
+        cb(new Error('Only image files are allowed'), false);
+      }
+    },
+    limits: {
+      fileSize: 5 * 1024 * 1024 // 5MB limit
+    }
+  });
+
   // Serve static images
   app.use('/images', express.static(join(process.cwd(), 'data', 'images')));
+
+  // Image upload endpoint
+  app.post("/api/upload-image", upload.single('image'), (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ message: "No image file uploaded" });
+      }
+      
+      const imageUrl = `/images/${req.file.filename}`;
+      res.json({ imageUrl });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to upload image" });
+    }
+  });
 
   // Categories
   app.get("/api/categories", async (req, res) => {
