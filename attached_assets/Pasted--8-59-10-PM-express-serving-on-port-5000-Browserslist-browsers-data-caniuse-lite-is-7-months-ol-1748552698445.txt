@@ -1,0 +1,35 @@
+
+8:59:10 PM [express] serving on port 5000
+Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[vite:css] @import must precede all other statements (besides @charset or empty @layer)
+111|  
+112|  /* Google Fonts */
+113|  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+   |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+114|  
+115|  /* Apply the warm cream background to the body by default */
+8:59:17 PM [express] GET /api/cart/session-1748549854683-xg444b8ye 304 in 1ms :: []
+8:59:17 PM [express] GET /api/settings 500 in 0ms :: {"message":"Failed to fetch settings"}
+8:59:17 PM [express] GET /api/categories 304 in 0ms :: [{"name":"wooden Craft","slug":"wooden-craft"…
+8:59:17 PM [express] GET /api/products 304 in 0ms :: [{"name":"Wooden Bird with Movable Wings","desc…
+8:59:17 PM [express] GET /api/cart/session-1748549814705-xf8ywo5m9 304 in 1ms :: []
+8:59:17 PM [express] GET /api/products 304 in 0ms :: [{"name":"Wooden Bird with Movable Wings","desc…
+8:59:17 PM [express] GET /api/categories 304 in 1ms :: [{"name":"wooden Craft","slug":"wooden-craft"…
+8:59:17 PM [express] GET /api/settings 500 in 0ms :: {"message":"Failed to fetch settings"}
+8:59:23 PM [express] GET /api/products-with-category 304 in 1ms :: [{"name":"Wooden Bird with Movabl…
+8:59:24 PM [express] GET /api/settings 500 in 1ms :: {"message":"Failed to fetch settings"}
+8:59:38 PM [express] POST /api/upload-image 200 in 122ms :: {"imageUrl":"/images/products/2025/05/29…
+9:00:08 PM [express] GET /api/cart/session-1748549854683-xg444b8ye 304 in 1ms :: []
+9:00:08 PM [express] GET /api/categories 304 in 0ms :: [{"name":"wooden Craft","slug":"wooden-craft"…
+9:00:08 PM [express] GET /api/settings 500 in 0ms :: {"message":"Failed to fetch settings"}
+9:00:08 PM [express] GET /api/products 304 in 0ms :: [{"name":"Wooden Bird with Movable Wings","desc…
+9:00:08 PM [express] GET /api/cart/session-1748549854683-xg444b8ye 304 in 1ms :: []
+9:00:08 PM [express] GET /api/products-with-category 304 in 0ms :: [{"name":"Wooden Bird with Movabl…
+9:04:35 PM [express] POST /api/settings 500 in 2ms :: {"message":"Failed to create setting"}
+9:04:35 PM [express] POST /api/settings 500 in 1ms :: {"message":"Failed to create setting"}
+9:04:35 PM [express] POST /api/settings 500 in 0ms :: {"message":"Failed to create setting"}
+9:04:35 PM [express] POST /api/settings 500 in 0ms :: {"message":"Failed to create setting"}
+9:04:35 PM [express] POST /api/settings 500 in 1ms :: {"message":"Failed to create setting"}
+9:04:35 PM [express] POST /api/settings 500 in 1ms :: {"message":"Failed to create setting"}
