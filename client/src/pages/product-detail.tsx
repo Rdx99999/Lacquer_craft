@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams } from "wouter";
 import { useQuery } from "@tanstack/react-query";
-import { Minus, Plus, ShoppingCart, ArrowLeft, ArrowRight, Star, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, ShoppingCart, Heart, Share2, Star, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -20,7 +20,7 @@ export default function ProductDetail() {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isFullscreenOpen, setIsFullscreenOpen] = useState(false);
   const [fullscreenImageIndex, setFullscreenImageIndex] = useState(0);
-  
+
   const { addToCart, isAddingToCart } = useCart();
   const { toast } = useToast();
 
@@ -39,7 +39,7 @@ export default function ProductDetail() {
 
   const handleAddToCart = () => {
     if (!product) return;
-    
+
     addToCart({
       productId: product.id,
       quantity,
@@ -187,7 +187,7 @@ export default function ProductDetail() {
                   alt={product.name}
                   className="w-full h-full object-cover transition-transform duration-200 hover:scale-105"
                 />
-                
+
                 {/* Navigation Arrows */}
                 {product.images.length > 1 && (
                   <>
@@ -403,7 +403,7 @@ export default function ProductDetail() {
                 Products with similar features and from related categories
               </p>
             </div>
-            
+
             {/* Same Category Products */}
             {recommendedProducts.filter(p => p.categoryId === product.categoryId).length > 0 && (
               <div className="mb-12">

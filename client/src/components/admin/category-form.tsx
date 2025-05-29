@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { createCategory, updateCategory, uploadImage, deleteImage } from "@/lib/api";
+import { createCategory, updateCategory, uploadCategoryImage, deleteImage } from "@/lib/api";
 import type { Category, InsertCategory } from "@shared/schema";
 
 const categoryFormSchema = z.object({
@@ -90,7 +90,7 @@ export function CategoryForm({ category, onSuccess }: CategoryFormProps) {
       if (thumbnailFile) {
         setIsUploadingThumbnail(true);
         try {
-          const result = await uploadImage(thumbnailFile);
+          const result = await uploadCategoryImage(thumbnailFile);
           finalData.thumbnail = result.imageUrl;
         } catch (error) {
           toast({

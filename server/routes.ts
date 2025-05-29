@@ -17,7 +17,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
 
-        const uploadPath = join(process.cwd(), 'data', 'images', 'products', `${year}`, `${month}`, `${day}`);
+        // Determine upload type based on request path or referrer
+        let uploadType = 'products'; // default
+        if (req.headers.referer && req.headers.referer.includes('/admin') && req.headers.referer.includes('categories')) {
+          uploadType = 'categories';
+        }
+
+        const uploadPath = join(process.cwd(), 'data', 'images', uploadType, `${year}`, `${month}`, `${day}`);
 
         // Create directory if it doesn't exist
         import('fs').then(fs => {
@@ -49,7 +55,65 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Serve static images
   app.use('/images', express.static(join(process.cwd(), 'data', 'images')));
 
-  // Image upload endpoint
+  // Category image upload endpoint
+  app.post("/api/upload-category-image", multer({
+    storage: multer.diskStorage({
+      destination: (req, file, cb) => {
+        const date = new Date();
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+
+        const uploadPath = join(process.cwd(), 'data', 'images', 'categories', `${year}`, `${month}`, `${day}`);
+
+        import('fs').then(fs => {
+          fs.mkdirSync(uploadPath, { recursive: true });
+        });
+
+        cb(null, uploadPath);
+      },
+      filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        const extension = file.originalname.split('.').pop();
+        const sanitizedName = file.originalname.replace(/[^a-zA-Z0-9.-]/g, '_');
+        cb(null, `${sanitizedName.split('.')[0]}_${uniqueSuffix}.${extension}`);
+      }
+    }),
+    fileFilter: (req, file, cb) => {
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif'];
+      if (allowedTypes.includes(file.mimetype)) {
+        cb(null, true);
+      } else {
+        cb(new Error('Only image files (JPEG, PNG, WebP, GIF) are allowed'), false);
+      }
+    },
+    limits: {
+      fileSize: 10 * 1024 * 1024 // 10MB limit
+    }
+  }).single('image'), (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ message: "No image file uploaded" });
+      }
+
+      // Get relative path from data/images
+      const relativePath = req.file.path.split('data/images/')[1];
+      const imageUrl = `/images/${relativePath}`;
+
+      res.json({ 
+        imageUrl,
+        filename: req.file.filename,
+        originalName: req.file.originalname,
+        size: req.file.size,
+        mimetype: req.file.mimetype
+      });
+    } catch (error) {
+      console.error('Category image upload error:', error);
+      res.status(500).json({ message: "Failed to upload category image" });
+    }
+  });
+
+  // Product image upload endpoint
   app.post("/api/upload-image", upload.single('image'), (req, res) => {
     try {
       if (!req.file) {

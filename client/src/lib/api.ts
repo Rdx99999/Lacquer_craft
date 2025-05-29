@@ -132,6 +132,22 @@ export async function uploadImage(file: File): Promise<{ imageUrl: string }> {
   return response.json();
 }
 
+export async function uploadCategoryImage(file: File): Promise<{ imageUrl: string }> {
+  const formData = new FormData();
+  formData.append('image', file);
+
+  const response = await fetch("/api/upload-category-image", {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to upload category image");
+  }
+
+  return response.json();
+}
+
 // Cart
 export const getCartItems = async (sessionId: string): Promise<CartItemWithProduct[]> => {
   const res = await fetch(`/api/cart/${sessionId}`);
