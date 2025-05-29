@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 48 23% 97%; /* #FDF5E6 - warm cream */
+  --foreground: 20 14% 4%; /* #0A0A0A */
+  --muted: 43 13% 90%; /* #F5F5DC - soft beige */
+  --muted-foreground: 25 5% 45%; /* #737373 */
+  --popover: 0 0% 100%; /* #FFFFFF */
+  --popover-foreground: 20 14% 4%; /* #0A0A0A */
+  --card: 0 0% 100%; /* #FFFFFF */
+  --card-foreground: 20 14% 4%; /* #0A0A0A */
+  --border: 20 6% 90%; /* #E5E5E5 */
+  --input: 20 6% 90%; /* #E5E5E5 */
+  --primary: 25 62% 47%; /* #D2691E - terracotta */
+  --primary-foreground: 0 0% 100%; /* #FFFFFF */
+  --secondary: 48 23% 97%; /* #FDF5E6 - warm cream */
+  --secondary-foreground: 20 14% 4%; /* #0A0A0A */
+  --accent: 36 100% 58%; /* #FF9933 - saffron */
+  --accent-foreground: 0 0% 100%; /* #FFFFFF */
+  --destructive: 0 84% 60%; /* #EF4444 */
+  --destructive-foreground: 0 0% 100%; /* #FFFFFF */
+  --ring: 25 62% 47%; /* #D2691E - terracotta */
+  --radius: 0.5rem;
+
+  /* Custom craft colors */
+  --terracotta: 25 62% 47%; /* #D2691E */
+  --saffron: 36 100% 58%; /* #FF9933 */
+  --warm-gold: 43 76% 45%; /* #DAA520 */
+  --maroon: 343 100% 25%; /* #800020 */
+  --forest: 120 61% 34%; /* #228B22 */
+  --royal-blue: 225 73% 57%; /* #4169E1 */
+  --warm-cream: 48 23% 97%; /* #FDF5E6 */
+  --soft-beige: 43 13% 90%; /* #F5F5DC */
+}
+
+.dark {
+  --background: 222 84% 5%; /* #0A0A0A */
+  --foreground: 0 0% 98%; /* #FAFAFA */
+  --muted: 217 33% 17%; /* #1F2937 */
+  --muted-foreground: 215 20% 65%; /* #9CA3AF */
+  --popover: 222 84% 5%; /* #0A0A0A */
+  --popover-foreground: 0 0% 98%; /* #FAFAFA */
+  --card: 222 84% 5%; /* #0A0A0A */
+  --card-foreground: 0 0% 98%; /* #FAFAFA */
+  --border: 217 33% 17%; /* #1F2937 */
+  --input: 217 33% 17%; /* #1F2937 */
+  --primary: 25 62% 47%; /* #D2691E - terracotta */
+  --primary-foreground: 0 0% 100%; /* #FFFFFF */
+  --secondary: 217 33% 17%; /* #1F2937 */
+  --secondary-foreground: 0 0% 98%; /* #FAFAFA */
+  --accent: 36 100% 58%; /* #FF9933 - saffron */
+  --accent-foreground: 0 0% 100%; /* #FFFFFF */
+  --destructive: 0 63% 31%; /* #7F1D1D */
+  --destructive-foreground: 0 0% 98%; /* #FAFAFA */
+  --ring: 25 62% 47%; /* #D2691E - terracotta */
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .text-terracotta {
+    color: hsl(var(--terracotta));
+  }
+  
+  .bg-terracotta {
+    background-color: hsl(var(--terracotta));
+  }
+  
+  .border-terracotta {
+    border-color: hsl(var(--terracotta));
+  }
+  
+  .text-saffron {
+    color: hsl(var(--saffron));
+  }
+  
+  .bg-saffron {
+    background-color: hsl(var(--saffron));
+  }
+  
+  .text-warm-gold {
+    color: hsl(var(--warm-gold));
+  }
+  
+  .bg-warm-gold {
+    background-color: hsl(var(--warm-gold));
+  }
+  
+  .bg-warm-cream {
+    background-color: hsl(var(--warm-cream));
+  }
+  
+  .bg-soft-beige {
+    background-color: hsl(var(--soft-beige));
+  }
+  
+  .font-display {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
