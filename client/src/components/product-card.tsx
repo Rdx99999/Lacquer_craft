@@ -17,6 +17,7 @@ interface ProductCardProps {
 
 export function ProductCard({ product, showCategory = true, highlightFeatures = [] }: ProductCardProps) {
   const { addToCart, isAddingToCart } = useCart();
+  const { isInWishlist, toggleWishlist } = useWishlist();
   const { toast } = useToast();
 
   const handleAddToCart = (e: React.MouseEvent) => {
@@ -34,6 +35,12 @@ export function ProductCard({ product, showCategory = true, highlightFeatures = 
       title: "Added to cart",
       description: `${product.name} added to your cart.`,
     });
+  };
+
+  const handleWishlistToggle = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleWishlist(product.id);
   };
 
   const category = 'category' in product ? product.category : null;
