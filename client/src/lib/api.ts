@@ -183,8 +183,21 @@ export const getOrder = async (id: number): Promise<Order> => {
   return res.json();
 };
 
-export const createOrder = async (order: InsertOrder): Promise<Order> => {
-  const res = await apiRequest("POST", "/api/orders", order);
+export const createOrder = async (order: InsertOrder, sessionId: string): Promise<Order> => {
+  const res = await fetch("/api/orders", {
+    method: "POST",
+    headers: { 
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${sessionId}`
+    },
+    body: JSON.stringify(order),
+  });
+  
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.message || "Failed to create order");
+  }
+  
   return res.json();
 };
 

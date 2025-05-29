@@ -6,7 +6,9 @@ import express from "express";
 import multer from "multer";
 import { storage } from "./storage";
 import { insertProductSchema, insertOrderSchema, insertCartItemSchema, insertCategorySchema, insertSettingSchema } from "@shared/schema";
+import { registerSchema, loginSchema } from "@shared/auth-schema";
 import { z } from "zod";
+import bcrypt from 'bcrypt';
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Configure multer for image uploads with organized directory structure
@@ -55,6 +57,106 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Serve static images
   app.use('/images', express.static(join(process.cwd(), 'data', 'images')));
+
+  // Authentication middleware
+  const requireAuth = async (req: any, res: any, next: any) => {
+    const sessionId = req.headers.authorization?.replace('Bearer ', '');
+    if (!sessionId) {
+      return res.status(401).json({ message: "Authentication required" });
+    }
+
+    const user = await storage.getSessionUser(sessionId);
+    if (!user) {
+      return res.status(401).json({ message: "Invalid session" });
+    }
+
+    req.user = user;
+    req.sessionId = sessionId;
+    next();
+  };
+
+  // Auth routes
+  app.post("/api/auth/register", async (req, res) => {
+    try {
+      const validatedData = registerSchema.parse(req.body);
+      
+      // Hash password
+      const saltRounds = 10;
+      const passwordHash = await bcrypt.hash(validatedData.password, saltRounds);
+      
+      const user = await storage.createUser({
+        name: validatedData.name,
+        email: validatedData.email,
+        passwordHash,
+      });
+
+      // Create session
+      const sessionId = await storage.createSession(user.id);
+
+      res.status(201).json({
+        user: { id: user.id, name: user.name, email: user.email },
+        sessionId,
+      });
+    } catch (error: any) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Validation error", errors: error.errors });
+      }
+      res.status(400).json({ message: error.message || "Registration failed" });
+    }
+  });
+
+  app.post("/api/auth/login", async (req, res) => {
+    try {
+      const validatedData = loginSchema.parse(req.body);
+      
+      const user = await storage.verifyPassword(validatedData.email, validatedData.password);
+      if (!user) {
+        return res.status(401).json({ message: "Invalid email or password" });
+      }
+
+      const sessionId = await storage.createSession(user.id);
+
+      res.json({
+        user: { id: user.id, name: user.name, email: user.email },
+        sessionId,
+      });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Validation error", errors: error.errors });
+      }
+      res.status(401).json({ message: "Login failed" });
+    }
+  });
+
+  app.post("/api/auth/logout", async (req, res) => {
+    try {
+      const sessionId = req.headers.authorization?.replace('Bearer ', '');
+      if (sessionId) {
+        await storage.deleteSession(sessionId);
+      }
+      res.json({ message: "Logged out successfully" });
+    } catch (error) {
+      res.status(500).json({ message: "Logout failed" });
+    }
+  });
+
+  app.get("/api/auth/me", async (req, res) => {
+    try {
+      const sessionId = req.headers.authorization?.replace('Bearer ', '');
+      if (!sessionId) {
+        return res.status(401).json({ message: "No session" });
+      }
+
+      const user = await storage.getSessionUser(sessionId);
+      if (!user) {
+        return res.status(401).json({ message: "Invalid session" });
+      }
+
+      res.json({ id: user.id, name: user.name, email: user.email });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get user info" });
+    }
+  });
 
   // Category image upload endpoint
   app.post("/api/upload-category-image", multer({
@@ -551,10 +653,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/orders", async (req, res) => {
+  app.post("/api/orders", requireAuth, async (req: any, res) => {
     try {
       const validatedData = insertOrderSchema.parse(req.body);
-      const order = await storage.createOrder(validatedData);
+      const order = await storage.createOrder({
+        ...validatedData,
+        userId: req.user.id,
+      });
       res.status(201).json(order);
     } catch (error) {
       if (error instanceof z.ZodError) {

@@ -14,6 +14,8 @@ import type {
   Setting,
   InsertSetting
 } from "@shared/schema";
+import type { User, InsertUser } from "@shared/auth-schema";
+import bcrypt from 'bcrypt';
 import { IStorage } from './storage';
 
 interface DatabaseData {
@@ -22,11 +24,14 @@ interface DatabaseData {
   cartItems: CartItem[];
   orders: Order[];
   settings: Setting[];
+  users: User[];
+  sessions: { sessionId: string; userId: number; expiresAt: string }[];
   counters: {
     categoryId: number;
     productId: number;
     cartItemId: number;
     orderId: number;
+    userId: number;
   };
 }
 
@@ -42,11 +47,14 @@ export class JsonStorage implements IStorage {
       cartItems: [],
       orders: [],
       settings: [],
+      users: [],
+      sessions: [],
       counters: {
         categoryId: 1,
         productId: 1,
         cartItemId: 1,
-        orderId: 1
+        orderId: 1,
+        userId: 1
       }
     };
     this.ensureDataDirectory();
@@ -499,7 +507,65 @@ export class JsonStorage implements IStorage {
     return false;
   }
 
-  private getNextId(table: 'products' | 'categories' | 'cartItems' | 'orders' | 'settings'): number {
+  // User management
+  async createUser(userData: InsertUser): Promise<User> {
+    // Check if user already exists
+    const existingUser = this.data.users.find(user => user.email === userData.email);
+    if (existingUser) {
+      throw new Error('User with this email already exists');
+    }
+
+    const newUser: User = {
+      id: this.data.counters.userId++,
+      ...userData,
+      createdAt: new Date().toISOString(),
+    };
+
+    this.data.users.push(newUser);
+    await this.saveData();
+    return newUser;
+  }
+
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    return this.data.users.find(user => user.email === email);
+  }
+
+  async getUserById(id: number): Promise<User | undefined> {
+    return this.data.users.find(user => user.id === id);
+  }
+
+  async verifyPassword(email: string, password: string): Promise<User | null> {
+    const user = await this.getUserByEmail(email);
+    if (!user) return null;
+
+    const isValid = await bcrypt.compare(password, user.passwordHash);
+    return isValid ? user : null;
+  }
+
+  async createSession(userId: number): Promise<string> {
+    const sessionId = Math.random().toString(36).substring(7) + Date.now().toString(36);
+    const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(); // 30 days
+
+    this.data.sessions.push({ sessionId, userId, expiresAt });
+    await this.saveData();
+    return sessionId;
+  }
+
+  async getSessionUser(sessionId: string): Promise<User | null> {
+    const session = this.data.sessions.find(s => s.sessionId === sessionId);
+    if (!session || new Date(session.expiresAt) < new Date()) {
+      return null;
+    }
+
+    return this.getUserById(session.userId) || null;
+  }
+
+  async deleteSession(sessionId: string): Promise<void> {
+    this.data.sessions = this.data.sessions.filter(s => s.sessionId !== sessionId);
+    await this.saveData();
+  }
+
+  private getNextId(table: 'products' | 'categories' | 'cartItems' | 'orders' | 'settings' | 'users'): number {
     if (table === 'products') {
       return this.data.counters.productId++;
     } else if (table === 'categories') {
@@ -510,6 +576,8 @@ export class JsonStorage implements IStorage {
       return this.data.counters.orderId++;
     } else if (table === 'settings') {
         return this.data.counters.orderId++; //Using orderId as settings id.
+    } else if (table === 'users') {
+        return this.data.counters.userId++;
     }
     throw new Error(`Invalid table name: ${table}`);
   }

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Minus, Plus, Trash2, ArrowLeft, ShoppingBag } from "lucide-react";
+import React, { useState } from "react";
+import { Minus, Plus, Trash2, ArrowLeft, ShoppingBag, User } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,18 +9,33 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useCart } from "@/hooks/use-cart";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/use-auth";
 import { createOrder } from "@/lib/api";
+import { AuthDialog } from "@/components/auth/auth-dialog";
 
 export default function Cart() {
   const { cartItems, total, updateItem, removeItem, clearCart, isUpdating, isRemoving } = useCart();
   const { toast } = useToast();
+  const { user, isAuthenticated, login, logout, sessionId } = useAuth();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [showAuthDialog, setShowAuthDialog] = useState(false);
   const [customerInfo, setCustomerInfo] = useState({
     name: "",
     email: "",
     phone: "",
     address: "",
   });
+
+  // Pre-fill customer info if user is logged in
+  React.useEffect(() => {
+    if (user) {
+      setCustomerInfo(prev => ({
+        ...prev,
+        name: user.name,
+        email: user.email,
+      }));
+    }
+  }, [user]);
 
   const handleQuantityChange = (productId: number, newQuantity: number) => {
     if (newQuantity < 1) {
@@ -31,6 +46,12 @@ export default function Cart() {
   };
 
   const handleCheckout = async () => {
+    // Check if user is authenticated
+    if (!isAuthenticated) {
+      setShowAuthDialog(true);
+      return;
+    }
+
     if (!customerInfo.name || !customerInfo.email || !customerInfo.address) {
       toast({
         title: "Missing Information",
@@ -63,7 +84,7 @@ export default function Cart() {
         }))
       };
 
-      await createOrder(orderData);
+      await createOrder(orderData, sessionId!);
       
       toast({
         title: "Order Placed Successfully!",
@@ -262,6 +283,45 @@ export default function Cart() {
               </CardContent>
             </Card>
 
+            {/* User Authentication Status */}
+            {isAuthenticated ? (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center justify-between">
+                    <span className="flex items-center">
+                      <User className="h-4 w-4 mr-2" />
+                      Logged in as
+                    </span>
+                    <Button variant="outline" size="sm" onClick={logout}>
+                      Logout
+                    </Button>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-gray-600">{user?.name}</p>
+                  <p className="text-sm text-gray-500">{user?.email}</p>
+                </CardContent>
+              </Card>
+            ) : (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Authentication Required</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-gray-600 mb-4">
+                    Please login or create an account to place your order.
+                  </p>
+                  <Button 
+                    onClick={() => setShowAuthDialog(true)}
+                    className="w-full"
+                    variant="outline"
+                  >
+                    Login / Register
+                  </Button>
+                </CardContent>
+              </Card>
+            )}
+
             {/* Customer Information */}
             <Card>
               <CardHeader>
@@ -317,7 +377,7 @@ export default function Cart() {
                   className="w-full bg-terracotta hover:bg-terracotta/90"
                   size="lg"
                 >
-                  {isCheckingOut ? "Processing..." : "Place Order"}
+                  {isCheckingOut ? "Processing..." : isAuthenticated ? "Place Order" : "Login to Place Order"}
                 </Button>
                 
                 <p className="text-xs text-gray-500 text-center">
@@ -328,6 +388,18 @@ export default function Cart() {
           </div>
         </div>
       </div>
+
+      <AuthDialog
+        open={showAuthDialog}
+        onOpenChange={setShowAuthDialog}
+        onSuccess={(userData, sessionId) => {
+          login(userData, sessionId);
+          toast({
+            title: "Success!",
+            description: "You can now complete your order.",
+          });
+        }}
+      />
     </div>
   );
 }

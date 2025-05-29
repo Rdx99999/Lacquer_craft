@@ -12,8 +12,11 @@ import {
   type InsertCartItem, 
   type InsertOrder,
   type ProductWithCategory,
-  type CartItemWithProduct
+  type CartItemWithProduct,
+  Setting,
+  InsertSetting
 } from "@shared/schema";
+import type { User, InsertUser } from "@shared/auth-schema";
 
 export interface IStorage {
   // Categories
@@ -53,6 +56,15 @@ export interface IStorage {
   createSetting(setting: any): Promise<any>;
   updateSetting(key: string, value: string): Promise<any>;
   deleteSetting(key: string): Promise<boolean>;
+
+  // User management
+  createUser(userData: InsertUser): Promise<User>;
+  getUserByEmail(email: string): Promise<User | undefined>;
+  getUserById(id: number): Promise<User | undefined>;
+  verifyPassword(email: string, password: string): Promise<User | null>;
+  createSession(userId: number): Promise<string>;
+  getSessionUser(sessionId: string): Promise<User | null>;
+  deleteSession(sessionId: string): Promise<void>;
 }
 
 export class MemStorage implements IStorage {
@@ -339,6 +351,29 @@ export class MemStorage implements IStorage {
     const updated: Order = { ...existing, status };
     this.orders.set(id, updated);
     return updated;
+  }
+
+  // User management
+  async createUser(userData: InsertUser): Promise<User> {
+    throw new Error("Method not implemented.");
+  }
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    throw new Error("Method not implemented.");
+  }
+  async getUserById(id: number): Promise<User | undefined> {
+    throw new Error("Method not implemented.");
+  }
+  async verifyPassword(email: string, password: string): Promise<User | null> {
+    throw new Error("Method not implemented.");
+  }
+  async createSession(userId: number): Promise<string> {
+    throw new Error("Method not implemented.");
+  }
+  async getSessionUser(sessionId: string): Promise<User | null> {
+    throw new Error("Method not implemented.");
+  }
+  async deleteSession(sessionId: string): Promise<void> {
+    throw new Error("Method not implemented.");
   }
 }
 
