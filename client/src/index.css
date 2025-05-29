@@ -117,12 +117,29 @@ body {
   background-color: hsl(var(--warm-cream));
 }
 
-/* Hide scrollbar utility */
+/* Custom scrollbar styles */
 .scrollbar-hide {
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .scrollbar-hide::-webkit-scrollbar {
-  display: none;  /* Safari and Chrome */
+  display: none;
+}
+
+/* Fullscreen modal styles */
+[data-state="open"] .fullscreen-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+}
+
+/* Hide scrollbar for fullscreen thumbnail navigation */
+.fullscreen-thumbnails {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.fullscreen-thumbnails::-webkit-scrollbar {
+  display: none;
 }

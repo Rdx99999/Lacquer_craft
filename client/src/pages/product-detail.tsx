@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useParams } from "wouter";
 import { useQuery } from "@tanstack/react-query";
-import { Minus, Plus, ShoppingCart, ArrowLeft, Star } from "lucide-react";
+import { Minus, Plus, ShoppingCart, ArrowLeft, Star, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { getProduct } from "@/lib/api";
 import { useCart } from "@/hooks/use-cart";
 import { useToast } from "@/hooks/use-toast";
@@ -16,6 +17,8 @@ export default function ProductDetail() {
   const productId = parseInt(params.id as string);
   const [quantity, setQuantity] = useState(1);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [isFullscreenOpen, setIsFullscreenOpen] = useState(false);
+  const [fullscreenImageIndex, setFullscreenImageIndex] = useState(0);
   
   const { addToCart, isAddingToCart } = useCart();
   const { toast } = useToast();
@@ -43,6 +46,36 @@ export default function ProductDetail() {
   const handleQuantityChange = (newQuantity: number) => {
     if (newQuantity >= 1 && newQuantity <= (product?.stock || 0)) {
       setQuantity(newQuantity);
+    }
+  };
+
+  const handleImageDoubleClick = () => {
+    setFullscreenImageIndex(selectedImageIndex);
+    setIsFullscreenOpen(true);
+  };
+
+  const handleFullscreenPrevious = () => {
+    if (!product) return;
+    setFullscreenImageIndex(prev => 
+      prev === 0 ? product.images.length - 1 : prev - 1
+    );
+  };
+
+  const handleFullscreenNext = () => {
+    if (!product) return;
+    setFullscreenImageIndex(prev => 
+      prev === product.images.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (!product) return;
+    if (e.key === 'ArrowLeft') {
+      handleFullscreenPrevious();
+    } else if (e.key === 'ArrowRight') {
+      handleFullscreenNext();
+    } else if (e.key === 'Escape') {
+      setIsFullscreenOpen(false);
     }
   };
 
@@ -140,11 +173,11 @@ export default function ProductDetail() {
               </div>
 
               {/* Main Image */}
-              <div className="relative aspect-[4/5] bg-white">
+              <div className="relative aspect-[4/5] bg-white cursor-pointer" onDoubleClick={handleImageDoubleClick}>
                 <img
                   src={product.images[selectedImageIndex] || "/placeholder-image.jpg"}
                   alt={product.name}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-transform duration-200 hover:scale-105"
                 />
                 
                 {/* Navigation Arrows */}
@@ -213,7 +246,7 @@ export default function ProductDetail() {
                 </Button>
               </div>
               <span className="text-sm text-gray-500">
-                Click image to zoom
+                Double-click image to view fullscreen
               </span>
             </div>
 
@@ -349,6 +382,89 @@ export default function ProductDetail() {
             </Card>
           </div>
         </div>
+
+        {/* Fullscreen Image Modal */}
+        <Dialog open={isFullscreenOpen} onOpenChange={setIsFullscreenOpen}>
+          <DialogContent className="max-w-full max-h-full w-screen h-screen p-0 bg-black/95 border-none" onKeyDown={handleKeyDown}>
+            <div className="relative w-full h-full flex items-center justify-center">
+              {/* Close Button */}
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute top-4 right-4 z-50 bg-black/20 hover:bg-black/40 text-white rounded-full w-12 h-12"
+                onClick={() => setIsFullscreenOpen(false)}
+              >
+                <X className="h-6 w-6" />
+              </Button>
+
+              {/* Image Counter */}
+              {product && product.images.length > 1 && (
+                <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-black/60 text-white px-4 py-2 rounded-full z-50">
+                  {fullscreenImageIndex + 1} / {product.images.length}
+                </div>
+              )}
+
+              {/* Navigation Arrows */}
+              {product && product.images.length > 1 && (
+                <>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 z-50 bg-black/20 hover:bg-black/40 text-white rounded-full w-16 h-16"
+                    onClick={handleFullscreenPrevious}
+                  >
+                    <ChevronLeft className="h-8 w-8" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 z-50 bg-black/20 hover:bg-black/40 text-white rounded-full w-16 h-16"
+                    onClick={handleFullscreenNext}
+                  >
+                    <ChevronRight className="h-8 w-8" />
+                  </Button>
+                </>
+              )}
+
+              {/* Main Fullscreen Image */}
+              <div className="w-full h-full flex items-center justify-center p-8">
+                <img
+                  src={product?.images[fullscreenImageIndex] || "/placeholder-image.jpg"}
+                  alt={product?.name}
+                  className="max-w-full max-h-full object-contain"
+                />
+              </div>
+
+              {/* Thumbnail Navigation */}
+              {product && product.images.length > 1 && (
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 bg-black/40 p-3 rounded-full max-w-[90vw] overflow-x-auto">
+                  {product.images.map((image, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setFullscreenImageIndex(index)}
+                      className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all duration-200 ${
+                        fullscreenImageIndex === index
+                          ? "border-white"
+                          : "border-gray-500 hover:border-gray-300"
+                      }`}
+                    >
+                      <img
+                        src={image}
+                        alt={`${product.name} ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {/* Instructions */}
+              <div className="absolute bottom-20 left-1/2 -translate-x-1/2 text-white/70 text-sm text-center">
+                <p>Use arrow keys to navigate • Press ESC to close</p>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
