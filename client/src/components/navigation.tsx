@@ -128,6 +128,16 @@ export function Navigation() {
               {isAuthenticated ? (
                 <div className="flex items-center space-x-2">
                   <span className="text-sm text-gray-700">Hello, {user?.name}</span>
+                  <Link href="/profile">
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="text-terracotta hover:bg-terracotta/10"
+                    >
+                      <User className="h-4 w-4 mr-2" />
+                      Profile
+                    </Button>
+                  </Link>
                   <Button 
                     variant="outline" 
                     size="sm" 
@@ -197,8 +207,17 @@ export function Navigation() {
 
                     {/* Mobile Authentication */}
                     {isAuthenticated ? (
-                      <div className="pt-4 border-t">
+                      <div className="pt-4 border-t space-y-2">
                         <p className="text-sm text-gray-600 mb-2">Hello, {user?.name}</p>
+                        <Link href="/profile">
+                          <Button 
+                            variant="ghost" 
+                            className="w-full justify-start text-terracotta hover:bg-terracotta/10"
+                          >
+                            <User className="h-4 w-4 mr-2" />
+                            My Profile
+                          </Button>
+                        </Link>
                         <Button 
                           variant="outline" 
                           className="w-full bg-terracotta text-white border-terracotta hover:bg-terracotta/90"

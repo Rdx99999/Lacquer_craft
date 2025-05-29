@@ -9,6 +9,7 @@ import Products from "./pages/products";
 import ProductDetail from "./pages/product-detail";
 import Cart from "./pages/cart";
 import TrackOrder from "./pages/track-order";
+import Profile from "./pages/profile";
 import Admin from "./pages/admin";
 import NotFound from "./pages/not-found";
 
@@ -20,6 +21,7 @@ function Router() {
       <Route path="/products/:id" component={ProductDetail} />
       <Route path="/cart" component={Cart} />
       <Route path="/track" component={TrackOrder} />
+      <Route path="/profile" component={Profile} />
       <Route path="/admin" component={Admin} />
       <Route path="/admin/:tab" component={Admin} />
       <Route component={NotFound} />
