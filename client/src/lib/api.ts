@@ -67,10 +67,33 @@ export const createProduct = async (product: InsertProduct): Promise<Product> =>
   return res.json();
 };
 
-export const updateProduct = async (id: number, product: Partial<InsertProduct>): Promise<Product> => {
-  const res = await apiRequest("PUT", `/api/products/${id}`, product);
-  return res.json();
-};
+export async function updateProduct(id: number, data: Partial<InsertProduct>) {
+  const response = await fetch(`/api/products/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to update product: ${response.statusText}`);
+  }
+
+  return response.json();
+}
+
+export async function deleteImage(imageUrl: string) {
+  const response = await fetch("/api/delete-image", {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ imageUrl }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to delete image: ${response.statusText}`);
+  }
+
+  return response.json();
+}
 
 export async function deleteProduct(id: number): Promise<void> {
   const response = await fetch(`/api/products/${id}`, {

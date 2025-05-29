@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { getCategories, createProduct, updateProduct } from "@/lib/api";
+import { getCategories, createProduct, updateProduct, deleteImage } from "@/lib/api";
 import type { Product, InsertProduct } from "@shared/schema";
 
 const productFormSchema = z.object({
@@ -149,9 +149,28 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
     }
   };
 
-  const removeImage = (index: number) => {
+  const removeImage = async (index: number) => {
     const currentImages = form.getValues("images");
-    form.setValue("images", currentImages.filter((_, i) => i !== index));
+    const imageToDelete = currentImages[index];
+    
+    try {
+      // Delete the image file from server
+      await deleteImage(imageToDelete);
+      
+      // Remove from form
+      form.setValue("images", currentImages.filter((_, i) => i !== index));
+      
+      toast({
+        title: "Success",
+        description: "Image deleted successfully",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to delete image",
+        variant: "destructive",
+      });
+    }
   };
 
   const isLoading = createMutation.isPending || updateMutation.isPending;
@@ -325,6 +344,7 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
                           variant="destructive"
                           className="absolute top-2 right-2 h-7 w-7 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
                           onClick={() => removeImage(index)}
+                          disabled={uploading}
                         >
                           ×
                         </Button>

@@ -73,6 +73,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Delete image endpoint
+  app.delete("/api/delete-image", (req, res) => {
+    try {
+      const { imageUrl } = req.body;
+      
+      if (!imageUrl) {
+        return res.status(400).json({ message: "Image URL is required" });
+      }
+
+      // Convert URL to file path
+      const imagePath = imageUrl.replace('/images/', '');
+      const fullPath = join(process.cwd(), 'data', 'images', imagePath);
+      
+      // Delete the file
+      import('fs').then(fs => {
+        fs.unlink(fullPath, (err) => {
+          if (err) {
+            console.error('Error deleting image:', err);
+            return res.status(500).json({ message: "Failed to delete image file" });
+          }
+          res.json({ message: "Image deleted successfully" });
+        });
+      }).catch(error => {
+        console.error('Error importing fs:', error);
+        res.status(500).json({ message: "Failed to delete image" });
+      });
+    } catch (error) {
+      console.error('Image deletion error:', error);
+      res.status(500).json({ message: "Failed to delete image" });
+    }
+  });
+
   // Categories
   app.get("/api/categories", async (req, res) => {
     try {
