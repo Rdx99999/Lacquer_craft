@@ -74,14 +74,14 @@ export default function Cart() {
         customerName: customerInfo.name,
         customerEmail: customerInfo.email,
         customerPhone: customerInfo.phone || null,
-        customerAddress: customerInfo.address,
+        shippingAddress: customerInfo.address,
         total: finalTotal.toString(),
         status: "pending",
-        items: cartItems.map(item => ({
+        items: JSON.stringify(cartItems.map(item => ({
           productId: item.productId,
           quantity: item.quantity,
           price: item.product.price
-        }))
+        })))
       };
 
       await createOrder(orderData, sessionId!);
