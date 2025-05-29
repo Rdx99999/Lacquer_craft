@@ -162,7 +162,7 @@
       "customerPhone": "9650982844",
       "shippingAddress": "faridabad",
       "total": "1180",
-      "status": "pending",
+      "status": "delivered",
       "trackingNumber": "TRKMB9Z9F23JPT3",
       "items": "[{\"productId\":10,\"quantity\":1,\"price\":\"1000\",\"name\":\"Elephant Shaped Wooden Stool\",\"sku\":\"HAND001\"}]",
       "createdAt": "2025-05-29T23:00:37.371Z"
