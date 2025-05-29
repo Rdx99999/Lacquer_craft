@@ -26,11 +26,13 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Progress } from "@/components/ui/progress";
 import { useAuth } from "@/hooks/use-auth";
+import { useWishlist } from "@/hooks/use-wishlist";
 import { getOrders } from "@/lib/api";
 
 export default function Profile() {
   const { user, isAuthenticated } = useAuth();
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
+  const { wishlistItems, isLoading: isWishlistLoading, toggleWishlist } = useWishlist();
 
   const { data: orders = [], isLoading } = useQuery({
     queryKey: ["/api/orders"],
@@ -323,6 +325,102 @@ export default function Profile() {
                     )}
                   </div>
                 </div>
+              </CardContent>
+            </Card>
+
+            {/* Wishlist Section */}
+            <Card className="border-saffron/20 shadow-lg bg-white">
+              <CardHeader className="bg-gradient-to-r from-saffron/10 to-warm-gold/10 border-b border-saffron/20">
+                <CardTitle className="flex items-center space-x-2 text-saffron font-display">
+                  <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                  </svg>
+                  <span>My Wishlist</span>
+                  {wishlistItems.length > 0 && (
+                    <Badge className="bg-saffron text-white">
+                      {wishlistItems.length}
+                    </Badge>
+                  )}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-6">
+                {isWishlistLoading ? (
+                  <div className="text-center py-8">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-saffron mx-auto mb-3"></div>
+                    <p className="text-gray-600 text-sm">Loading wishlist...</p>
+                  </div>
+                ) : wishlistItems.length === 0 ? (
+                  <div className="text-center py-8">
+                    <div className="bg-gradient-to-br from-saffron/10 to-warm-gold/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 border border-saffron/20">
+                      <svg className="w-8 h-8 text-saffron" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2 font-display">No items in wishlist</h3>
+                    <p className="text-gray-600 text-sm mb-4">
+                      Discover and save your favorite crafts
+                    </p>
+                    <Link href="/products">
+                      <Button size="sm" className="bg-gradient-to-r from-saffron to-warm-gold hover:from-saffron/90 hover:to-warm-gold/90 text-white">
+                        Browse Products
+                      </Button>
+                    </Link>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between mb-4">
+                      <p className="text-sm text-gray-600">
+                        {wishlistItems.length} item{wishlistItems.length !== 1 ? 's' : ''} saved
+                      </p>
+                      <Link href="/wishlist">
+                        <Button variant="outline" size="sm" className="border-saffron text-saffron hover:bg-saffron hover:text-white">
+                          View All
+                        </Button>
+                      </Link>
+                    </div>
+                    <div className="space-y-3 max-h-64 overflow-y-auto">
+                      {wishlistItems.slice(0, 3).map((item) => (
+                        <div key={item.id} className="flex items-center space-x-3 p-3 bg-gradient-to-r from-saffron/5 to-warm-gold/5 rounded-lg border border-saffron/10 hover:border-saffron/20 transition-all duration-200">
+                          <img
+                            src={item.images?.[0] || '/placeholder-image.jpg'}
+                            alt={item.name}
+                            className="w-12 h-12 object-cover rounded-lg border border-saffron/20"
+                          />
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-medium text-gray-900 text-sm truncate">{item.name}</h4>
+                            <p className="text-terracotta font-semibold text-sm">₹{parseFloat(item.price).toLocaleString()}</p>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <Link href={`/products/${item.id}`}>
+                              <Button variant="outline" size="sm" className="text-xs border-gray-300 hover:bg-gray-50">
+                                View
+                              </Button>
+                            </Link>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => toggleWishlist(item.id)}
+                              className="text-red-500 hover:bg-red-50 p-1"
+                            >
+                              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                              </svg>
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    {wishlistItems.length > 3 && (
+                      <div className="text-center pt-3 border-t border-saffron/10">
+                        <Link href="/wishlist">
+                          <Button variant="outline" className="border-saffron text-saffron hover:bg-saffron hover:text-white">
+                            View {wishlistItems.length - 3} More Items
+                          </Button>
+                        </Link>
+                      </div>
+                    )}
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>
