@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useCart } from "@/hooks/use-cart";
 import { useToast } from "@/hooks/use-toast";
+import { createOrder } from "@/lib/api";
 
 export default function Cart() {
   const { cartItems, total, updateItem, removeItem, clearCart, isUpdating, isRemoving } = useCart();
@@ -40,16 +41,46 @@ export default function Cart() {
     }
 
     setIsCheckingOut(true);
-    // Simulate checkout process
-    await new Promise(resolve => setTimeout(resolve, 2000));
     
-    toast({
-      title: "Order Placed Successfully!",
-      description: "Thank you for your order. You will receive a confirmation email shortly.",
-    });
-    
-    clearCart();
-    setIsCheckingOut(false);
+    try {
+      // Calculate totals
+      const subtotal = total;
+      const tax = Math.round(total * 0.18);
+      const finalTotal = subtotal + tax;
+
+      // Create order
+      const orderData = {
+        customerName: customerInfo.name,
+        customerEmail: customerInfo.email,
+        customerPhone: customerInfo.phone || null,
+        customerAddress: customerInfo.address,
+        total: finalTotal.toString(),
+        status: "pending",
+        items: cartItems.map(item => ({
+          productId: item.productId,
+          quantity: item.quantity,
+          price: item.product.price
+        }))
+      };
+
+      await createOrder(orderData);
+      
+      toast({
+        title: "Order Placed Successfully!",
+        description: `Order total: ₹${finalTotal.toLocaleString()}. You will receive a confirmation email shortly.`,
+      });
+      
+      clearCart();
+      setCustomerInfo({ name: "", email: "", phone: "", address: "" });
+    } catch (error: any) {
+      toast({
+        title: "Order Failed",
+        description: error.message || "Failed to place order. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsCheckingOut(false);
+    }
   };
 
   if (cartItems.length === 0) {

@@ -36,13 +36,116 @@
       "id": 11
     }
   ],
-  "products": [],
+  "products": [
+    {
+      "name": "Elephant Shaped Wooden Stool",
+      "description": "Add a splash of color and culture to your living space with this beautifully handcrafted Elephant-Shaped Wooden Stool. Intricately designed and hand-painted by skilled artisans, this piece showcases traditional Indian folk art with vibrant patterns and motifs.\n\nThe stool’s structure takes the charming form of an elephant, symbolizing strength, wisdom, and prosperity in Indian culture. Whether used as a side table, a decorative accent, or a seat for kids, it stands out as a unique, multifunctional decor item.",
+      "price": "1000",
+      "categoryId": 7,
+      "stock": 10,
+      "images": [
+        "/images/products/2025/05/29/CUL0780_6_1748555094131-93892621.webp",
+        "/images/products/2025/05/29/CUL0780_4_1748555158847-791911609.webp",
+        "/images/products/2025/05/29/CUL0780_5_1748555163131-674190938.webp",
+        "/images/products/2025/05/29/CUL0780_6_1748555168237-664984917.webp"
+      ],
+      "sku": "HAND001",
+      "featured": true,
+      "features": [
+        "Solid wood",
+        "Hand-painted in traditional Rajasthani folk designs",
+        "Approx. 12-15 inches height (can be customized)",
+        "Sturdy enough for regular use",
+        "100% handmade by Indian artisans",
+        "Wipe gently with a soft, dry cloth"
+      ],
+      "id": 10,
+      "createdAt": "2025-05-29T21:46:13.377Z"
+    },
+    {
+      "name": "Traditional Wooden Toys",
+      "description": "Delight in the charm of India's vibrant folk art through our collection of Traditional Wooden Toys. Handcrafted by skilled artisans using sustainable wood and painted with natural, non-toxic colors, these toys are not only safe and fun but also serve as beautiful cultural artifacts.\n\nInspired by rural life, mythological stories, and everyday transport, these toys are designed to spark imagination, storytelling, and nostalgia—making them loved by children, collectors, and decor enthusiasts alike.",
+      "price": "2000",
+      "categoryId": 8,
+      "stock": 20,
+      "images": [
+        "/images/products/2025/05/29/channapatna-toys-7l_1748555531106-818558674.jpg",
+        "/images/products/2025/05/29/channapatna-toys-6l_1748555535520-756001559.jpg",
+        "/images/products/2025/05/29/channapatna-toys-5l_1748555538794-937998757.jpg",
+        "/images/products/2025/05/29/channapatna-toys-4l_1748555543288-722264115.jpg",
+        "/images/products/2025/05/29/channapatna-toys-2l_1748555547458-80417318.jpg",
+        "/images/products/2025/05/29/channapatna-toys-1l_1748555551731-600503231.jpg"
+      ],
+      "sku": "TRAD001",
+      "featured": true,
+      "features": [
+        "Eco-friendly, seasoned wood",
+        "Hand-painted using traditional Indian art forms like Pattachitra, Kondapalli, or Rajasthani folk styles",
+        "Non-toxic paints, child-safe edges",
+        "Rural artisans and traditional toy-makers",
+        "Long-lasting, sturdy build for play and decor"
+      ],
+      "id": 11,
+      "createdAt": "2025-05-29T21:52:51.598Z"
+    },
+    {
+      "name": "Decorative Storage Containers",
+      "description": "Discover the perfect blend of utility and artistry with our collection of Decorative Storage Containers. Handcrafted using wood or tin and embellished with vibrant hand-painted designs, these containers add a touch of ethnic charm to any space while keeping your essentials organized.\n\nWhether you use them in the kitchen for spices, in the living room for trinkets, or as gifting jars, these containers are as beautiful as they are practical. Each piece is a testament to India's rich artisan heritage, painted with traditional floral, geometric, and folk art motifs.",
+      "price": "5000",
+      "categoryId": 9,
+      "stock": 60,
+      "images": [
+        "/images/products/2025/05/29/2_97af07d3-c71d-476d-936f-019bf61641db_1748555894795-983471870.webp",
+        "/images/products/2025/05/29/3_7fd0e4e4-c5b7-4331-b17f-f380181bf408_1748555898883-415821421.webp",
+        "/images/products/2025/05/29/5_d8f7e93f-18e4-4dd1-825e-8a33b63a36a7_1748555902606-998954586.webp",
+        "/images/products/2025/05/29/6_27307629-5047-449c-a109-0442f42e7023_1748555905765-332691878.jpg",
+        "/images/products/2025/05/29/7_8340feeb-c0c0-4c55-a603-7ffc36abf548_1748555911416-208729580.webp",
+        "/images/products/2025/05/29/8_49f3d86b-21ce-4a2b-8ca7-6a3736ad403b_1748555914867-430849797.jpg",
+        "/images/products/2025/05/29/10_b45c9425-aa6a-4869-b757-23d9fe8cec89_1748555918098-173589166.webp",
+        "/images/products/2025/05/29/2021-02-16_224334124_1748555922044-292540078.webp"
+      ],
+      "sku": "DECO001",
+      "featured": true,
+      "features": [
+        "By skilled rural artisans using eco-friendly processes"
+      ],
+      "id": 12,
+      "createdAt": "2025-05-29T21:58:50.272Z"
+    },
+    {
+      "name": "Serveware",
+      "description": "Reconnect with tradition through our Terracotta Kitchen & Serveware collection—handcrafted from natural clay and baked in kilns using age-old techniques. These rustic yet elegant pieces bring a warm, earthy aesthetic to your dining table, while enhancing both health and sustainability.\n\nEach item is shaped and painted by skilled artisans, often inspired by folk patterns and natural tones. Whether you're serving water in a terracotta jug, plating up snacks in a clay bowl, or presenting a meal on a mud plate, this category blends function, culture, and eco-friendliness.",
+      "price": "3000",
+      "categoryId": 10,
+      "stock": 50,
+      "images": [
+        "/images/products/2025/05/29/terracotta-servewareutensilssowpeaceterr-uten-terr-tcsw-712301_1748556276537-382666591.webp",
+        "/images/products/2025/05/29/terracotta-servewareutensilssowpeaceterr-uten-terr-tcsw-154696_1748556279483-479189792.webp",
+        "/images/products/2025/05/29/terracotta-servewareutensilssowpeaceterr-uten-terr-tcsw-686056_1748556284330-981434807.webp",
+        "/images/products/2025/05/29/terracotta-servewareutensilssowpeaceterr-uten-terr-tcsw-211250_1748556287521-824311414.webp",
+        "/images/products/2025/05/29/terracotta-servewareutensilssowpeaceterr-uten-terr-tcsw-424418_1748556292771-889052844.webp",
+        "/images/products/2025/05/29/terracotta-servewareutensilssowpeaceterr-uten-terr-tcsw-493599_1748556298599-627559610.webp",
+        "/images/products/2025/05/29/terracotta-servewareutensilssowpeaceterr-uten-terr-tcsw-319242_1748556307645-481908944.webp"
+      ],
+      "sku": "KITC001",
+      "featured": true,
+      "features": [
+        "100% natural, unglazed or glazed terracotta",
+        "Biodegradable, sustainable, plastic-free",
+        "Traditional potters using centuries-old techniques",
+        "Ideal for dry or semi-moist foods; some items are pre-treated for water storage",
+        "Often hand-painted or etched with ethnic patterns"
+      ],
+      "id": 13,
+      "createdAt": "2025-05-29T22:05:15.358Z"
+    }
+  ],
   "cartItems": [],
   "orders": [],
   "counters": {
     "categoryId": 12,
-    "productId": 10,
-    "cartItemId": 2,
+    "productId": 14,
+    "cartItemId": 3,
     "orderId": 7
   },
   "settings": [
