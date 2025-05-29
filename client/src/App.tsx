@@ -21,6 +21,7 @@ function Router() {
       <Route path="/cart" component={Cart} />
       <Route path="/track" component={TrackOrder} />
       <Route path="/admin" component={Admin} />
+      <Route path="/admin/:tab" component={Admin} />
       <Route component={NotFound} />
     </Switch>
   );
