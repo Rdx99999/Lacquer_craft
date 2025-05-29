@@ -215,7 +215,13 @@
       "createdAt": "2025-05-29T22:30:34.176Z"
     }
   ],
-  "sessions": [],
+  "sessions": [
+    {
+      "sessionId": "0zyxiomb9y9u78",
+      "userId": 1,
+      "expiresAt": "2025-06-28T22:32:57.380Z"
+    }
+  ],
   "counters": {
     "categoryId": 12,
     "productId": 14,
