@@ -145,7 +145,7 @@
       "id": 3,
       "sessionId": "session-1748553571473-4pe3dwcge",
       "productId": 10,
-      "quantity": 1,
+      "quantity": 2,
       "createdAt": "2025-05-29T22:11:42.783Z"
     }
   ],
@@ -220,6 +220,11 @@
       "sessionId": "0zyxiomb9y9u78",
       "userId": 1,
       "expiresAt": "2025-06-28T22:32:57.380Z"
+    },
+    {
+      "sessionId": "scpbvtmb9yiuw4",
+      "userId": 1,
+      "expiresAt": "2025-06-28T22:39:58.180Z"
     }
   ],
   "counters": {
