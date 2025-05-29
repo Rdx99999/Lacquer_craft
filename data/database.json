@@ -4,7 +4,7 @@
       "name": "wooden Craft",
       "slug": "wooden-craft",
       "description": "",
-      "thumbnail": "/images/categories/2025/05/29/image11_1748551881187-787220409.png",
+      "thumbnail": "/images/categories/2025/05/29/image11_1748553618147-33658346.png",
       "id": 6
     }
   ],
@@ -32,5 +32,6 @@
     "productId": 10,
     "cartItemId": 2,
     "orderId": 1
-  }
+  },
+  "settings": []
 }

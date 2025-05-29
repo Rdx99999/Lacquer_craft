@@ -1,6 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { join } from "path";
+import fs from "fs";
 import express from "express";
 import multer from "multer";
 import { storage } from "./storage";
@@ -25,12 +26,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
         const uploadPath = join(process.cwd(), 'data', 'images', uploadType, `${year}`, `${month}`, `${day}`);
 
-        // Create directory if it doesn't exist
-        import('fs').then(fs => {
+        try {
           fs.mkdirSync(uploadPath, { recursive: true });
-        });
-
-        cb(null, uploadPath);
+          cb(null, uploadPath);
+        } catch (error) {
+          cb(error as any, '');
+        }
       },
       filename: (req, file, cb) => {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
@@ -44,7 +45,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (allowedTypes.includes(file.mimetype)) {
         cb(null, true);
       } else {
-        cb(new Error('Only image files (JPEG, PNG, WebP, GIF) are allowed'), false);
+        cb(new Error('Only image files (JPEG, PNG, WebP, GIF) are allowed') as any, false);
       }
     },
     limits: {
@@ -124,11 +125,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
         const uploadPath = join(process.cwd(), 'data', 'images', 'homepage', 'hero', `${year}`, `${month}`, `${day}`);
 
-        import('fs').then(fs => {
+        try {
           fs.mkdirSync(uploadPath, { recursive: true });
-        });
-
-        cb(null, uploadPath);
+          cb(null, uploadPath);
+        } catch (error) {
+          cb(error as Error, '');
+        }
       },
       filename: (req, file, cb) => {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
