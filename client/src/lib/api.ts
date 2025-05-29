@@ -136,13 +136,29 @@ export async function uploadCategoryImage(file: File): Promise<{ imageUrl: strin
   const formData = new FormData();
   formData.append('image', file);
 
-  const response = await fetch("/api/upload-category-image", {
-    method: "POST",
+  const response = await fetch('/api/upload-category-image', {
+    method: 'POST',
     body: formData,
   });
 
   if (!response.ok) {
-    throw new Error("Failed to upload category image");
+    throw new Error('Failed to upload category image');
+  }
+
+  return response.json();
+}
+
+export async function deleteImage(imageUrl: string) {
+  const response = await fetch('/api/delete-image', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ imageUrl }),
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to delete image');
   }
 
   return response.json();

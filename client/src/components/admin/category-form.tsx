@@ -141,11 +141,19 @@ export function CategoryForm({ category, onSuccess }: CategoryFormProps) {
   };
 
   const removeThumbnail = async () => {
-    if (thumbnailPreview && category?.thumbnail) {
+    if (form.watch("thumbnail")) {
       try {
-        await deleteImage(category.thumbnail);
+        await deleteImage(form.watch("thumbnail"));
+        toast({
+          title: "Success",
+          description: "Image deleted successfully",
+        });
       } catch (error) {
-        // Continue even if delete fails
+        toast({
+          title: "Warning",
+          description: "Failed to delete image file, but continuing",
+          variant: "destructive",
+        });
       }
     }
     setThumbnailFile(null);

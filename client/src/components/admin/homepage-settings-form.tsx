@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { getSettings, createSetting, updateSetting } from "@/lib/api";
+import { getSettings, createSetting, updateSetting, deleteImage } from "@/lib/api";
 
 const homepageSettingsSchema = z.object({
   heroTitle: z.string().min(1, "Hero title is required"),
@@ -244,7 +244,25 @@ export function HomepageSettingsForm() {
                     variant="destructive"
                     size="sm"
                     className="absolute top-2 right-2"
-                    onClick={() => form.setValue("heroImage", "")}
+                    onClick={async () => {
+                      const currentImage = form.watch("heroImage");
+                      if (currentImage && currentImage.startsWith('/images/')) {
+                        try {
+                          await deleteImage(currentImage);
+                          toast({
+                            title: "Success",
+                            description: "Image deleted successfully",
+                          });
+                        } catch (error) {
+                          toast({
+                            title: "Warning", 
+                            description: "Failed to delete image file, but continuing",
+                            variant: "destructive",
+                          });
+                        }
+                      }
+                      form.setValue("heroImage", "");
+                    }}
                   >
                     <X className="h-4 w-4" />
                   </Button>
