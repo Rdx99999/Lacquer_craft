@@ -62,6 +62,7 @@ export const insertCartItemSchema = createInsertSchema(cartItems).omit({
 
 export const insertOrderSchema = createInsertSchema(orders).omit({
   id: true,
+  trackingNumber: true,
   createdAt: true,
 }).extend({
   userId: z.number().min(1, "User ID is required"),
