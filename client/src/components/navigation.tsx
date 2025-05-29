@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { Search, ShoppingCart, Menu, X, Settings, User, LogOut } from "lucide-react";
+import { Search, ShoppingCart, Menu, X, Settings, User, LogOut, Package } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -85,6 +85,10 @@ export function Navigation() {
 
               <Link href="/products" className={`text-gray-700 hover:text-terracotta transition-colors ${location === "/products" ? "text-terracotta font-medium" : ""}`}>
                 Products
+              </Link>
+
+              <Link href="/track" className={`text-gray-700 hover:text-terracotta transition-colors ${location === "/track" ? "text-terracotta font-medium" : ""}`}>
+                Track Order
               </Link>
             </div>
 
@@ -185,6 +189,7 @@ export function Navigation() {
                       </div>
                     </div>
                     <Link href="/products" className="text-lg font-medium">Products</Link>
+                    <Link href="/track" className="text-lg font-medium">Track Order</Link>
 
                     {/* Mobile Search */}
                     <form onSubmit={handleSearch} className="relative sm:hidden">
