@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Minus, Plus, Trash2, ArrowLeft, ShoppingBag, User } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
@@ -14,7 +14,7 @@ import { createOrder } from "@/lib/api";
 import { AuthDialog } from "@/components/auth/auth-dialog";
 
 export default function Cart() {
-  const { cartItems, total, updateItem, removeItem, clearCart, isUpdating, isRemoving } = useCart();
+  const { cartItems, total, updateItem, removeItem, isUpdating, isRemoving } = useCart();
   const { toast } = useToast();
   const { user, isAuthenticated, login, logout, sessionId } = useAuth();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
@@ -25,6 +25,8 @@ export default function Cart() {
     phone: "",
     address: "",
   });
+    const [autoCheckout, setAutoCheckout] = useState(false);
+
 
   // Pre-fill customer info if user is logged in
   React.useEffect(() => {
@@ -36,6 +38,21 @@ export default function Cart() {
       }));
     }
   }, [user]);
+
+      useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('checkout') === 'true') {
+      setAutoCheckout(true);
+      // Remove the checkout parameter from URL
+      window.history.replaceState({}, '', '/cart');
+
+      toast({
+        title: "Ready for Checkout",
+        description: "Your item has been added to cart. Review and proceed to checkout.",
+      });
+    }
+  }, [toast]);
+
 
   const handleQuantityChange = (productId: number, newQuantity: number) => {
     if (newQuantity < 1) {
@@ -377,10 +394,10 @@ export default function Cart() {
                   />
                 </div>
 
-                <Button
+                                <Button 
                   onClick={handleCheckout}
                   disabled={isCheckingOut}
-                  className="w-full bg-terracotta hover:bg-terracotta/90"
+                  className={`w-full bg-terracotta hover:bg-terracotta/90`}
                   size="lg"
                 >
                   {isCheckingOut ? "Processing..." : isAuthenticated ? "Place Order" : "Login to Place Order"}

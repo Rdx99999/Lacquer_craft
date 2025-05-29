@@ -23,6 +23,8 @@ export default function ProductDetail() {
   const [isZooming, setIsZooming] = useState(false);
   const [zoomMode, setZoomMode] = useState(false);
   const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
+  const [isWishlisted, setIsWishlisted] = useState(false);
+  const [isBuyingNow, setIsBuyingNow] = useState(false);
   const imageRef = useRef<HTMLImageElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -121,6 +123,85 @@ export default function ProductDetail() {
       setIsZooming(false);
     }
   };
+
+  const handleWishlist = () => {
+    if (!product) return;
+    
+    setIsWishlisted(!isWishlisted);
+    
+    // Get existing wishlist from localStorage
+    const existingWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+    
+    if (!isWishlisted) {
+      // Add to wishlist
+      const wishlistItem = {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.images[0],
+        addedAt: new Date().toISOString()
+      };
+      
+      const updatedWishlist = [...existingWishlist, wishlistItem];
+      localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+      
+      toast({
+        title: "Added to Wishlist",
+        description: `${product.name} has been added to your wishlist.`,
+      });
+    } else {
+      // Remove from wishlist
+      const updatedWishlist = existingWishlist.filter((item: any) => item.id !== product.id);
+      localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+      
+      toast({
+        title: "Removed from Wishlist",
+        description: `${product.name} has been removed from your wishlist.`,
+      });
+    }
+  };
+
+  const handleBuyNow = async () => {
+    if (!product) return;
+    
+    setIsBuyingNow(true);
+    
+    try {
+      // First add to cart
+      await addToCart({
+        productId: product.id,
+        quantity,
+      });
+      
+      // Simulate processing time
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Redirect to cart page for immediate checkout
+      window.location.href = '/cart?checkout=true';
+      
+      toast({
+        title: "Redirecting to Checkout",
+        description: `${quantity} × ${product.name} added to cart. Redirecting to checkout...`,
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to process buy now. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsBuyingNow(false);
+    }
+  };
+
+  // Check if product is in wishlist on component mount
+  useEffect(() => {
+    if (product) {
+      const existingWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+      const isInWishlist = existingWishlist.some((item: any) => item.id === product.id);
+      setIsWishlisted(isInWishlist);
+    }
+  }, [product]);
 
   if (isLoading) {
     return (
@@ -348,9 +429,18 @@ export default function ProductDetail() {
                   </svg>
                   {zoomMode ? 'Exit Zoom' : 'Zoom View'}
                 </Button>
-                <Button variant="outline" size="sm" className="hover:bg-saffron hover:text-white transition-all duration-200 hover:scale-105">
-                  <Heart className="h-4 w-4 mr-2" />
-                  Wishlist
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={handleWishlist}
+                  className={`transition-all duration-200 hover:scale-105 ${
+                    isWishlisted 
+                      ? 'bg-saffron text-white border-saffron hover:bg-saffron/90' 
+                      : 'hover:bg-saffron hover:text-white'
+                  }`}
+                >
+                  <Heart className={`h-4 w-4 mr-2 ${isWishlisted ? 'fill-current' : ''}`} />
+                  {isWishlisted ? 'Wishlisted' : 'Wishlist'}
                 </Button>
                 <Button variant="outline" size="sm" className="hover:bg-sage hover:text-white transition-all duration-200 hover:scale-105">
                   <Share2 className="h-4 w-4 mr-2" />
@@ -524,16 +614,31 @@ export default function ProductDetail() {
                 <div className="flex gap-3">
                   <Button
                     variant="outline"
-                    className="flex-1 border-terracotta text-terracotta hover:bg-terracotta hover:text-white transition-all duration-200"
+                    onClick={handleWishlist}
+                    className={`flex-1 border-terracotta text-terracotta hover:bg-terracotta hover:text-white transition-all duration-200 ${
+                      isWishlisted ? 'bg-terracotta text-white' : ''
+                    }`}
                   >
-                    <Heart className="h-4 w-4 mr-2" />
-                    Wishlist
+                    <Heart className={`h-4 w-4 mr-2 ${isWishlisted ? 'fill-current' : ''}`} />
+                    {isWishlisted ? 'Wishlisted' : 'Wishlist'}
                   </Button>
                   <Button
                     variant="outline"
+                    onClick={handleBuyNow}
+                    disabled={isBuyingNow}
                     className="flex-1 border-saffron text-saffron hover:bg-saffron hover:text-white transition-all duration-200"
                   >
-                    Buy Now
+                    {isBuyingNow ? (
+                      <div className="flex items-center">
+                        <svg className="animate-spin -ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Processing...
+                      </div>
+                    ) : (
+                      "Buy Now"
+                    )}
                   </Button>
                 </div>
               </div>

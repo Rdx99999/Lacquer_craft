@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { Search, ShoppingCart, Menu, X, Settings, User, LogOut, Package } from "lucide-react";
+import { Search, ShoppingCart, Menu, X, Settings, User, LogOut, Package, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -113,13 +113,14 @@ export function Navigation() {
                 </Button>
               </form>
 
-              {/* Cart */}
-              <Button
-                variant="ghost"
-                size="sm"
-                className="relative"
-                onClick={() => setIsCartOpen(true)}
-              >
+              <Link href="/wishlist" className="relative">
+              <Button variant="ghost" size="sm" className="relative hover:bg-warm-cream/50">
+                <Heart className="h-5 w-5" />
+              </Button>
+            </Link>
+
+            <Link href="/cart" className="relative">
+              <Button variant="ghost" size="sm" className="relative hover:bg-warm-cream/50">
                 <ShoppingCart className="h-5 w-5" />
                 {itemCount > 0 && (
                   <Badge className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 bg-saffron text-white text-xs">
@@ -127,6 +128,7 @@ export function Navigation() {
                   </Badge>
                 )}
               </Button>
+            </Link>
 
               {/* Authentication */}
               {isAuthenticated ? (
@@ -209,6 +211,12 @@ export function Navigation() {
                         <Search className="h-4 w-4" />
                       </Button>
                     </form>
+
+                     <Link href="/wishlist" className="relative">
+                      <Button variant="ghost" size="sm" className="relative hover:bg-warm-cream/50">
+                        <Heart className="h-5 w-5" />
+                      </Button>
+                    </Link>
 
                     {/* Mobile Authentication */}
                     {isAuthenticated ? (
