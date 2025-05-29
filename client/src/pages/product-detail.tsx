@@ -510,22 +510,22 @@ export default function ProductDetail() {
               )}
 
               {/* Main Fullscreen Image */}
-              <div className="w-full h-full flex items-center justify-center p-8">
+              <div className="w-full h-full flex items-center justify-center p-4 sm:p-8">
                 <img
                   src={product?.images[fullscreenImageIndex] || "/placeholder-image.jpg"}
                   alt={product?.name}
-                  className="max-w-full max-h-full object-contain"
+                  className="max-w-[95vw] max-h-[80vh] sm:max-w-[90vw] sm:max-h-[85vh] w-auto h-auto object-contain"
                 />
               </div>
 
               {/* Thumbnail Navigation */}
               {product && product.images.length > 1 && (
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 bg-black/40 p-3 rounded-full max-w-[90vw] overflow-x-auto">
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 bg-black/60 p-2 sm:p-3 rounded-full max-w-[95vw] overflow-x-auto scrollbar-hide">
                   {product.images.map((image, index) => (
                     <button
                       key={index}
                       onClick={() => setFullscreenImageIndex(index)}
-                      className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all duration-200 ${
+                      className={`flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16 rounded-lg overflow-hidden border-2 transition-all duration-200 ${
                         fullscreenImageIndex === index
                           ? "border-white"
                           : "border-gray-500 hover:border-gray-300"
@@ -542,7 +542,7 @@ export default function ProductDetail() {
               )}
 
               {/* Instructions */}
-              <div className="absolute bottom-20 left-1/2 -translate-x-1/2 text-white/70 text-sm text-center">
+              <div className="absolute bottom-16 sm:bottom-20 left-1/2 -translate-x-1/2 text-white/70 text-xs sm:text-sm text-center px-4">
                 <p>Use arrow keys to navigate • Press ESC to close</p>
               </div>
             </div>
