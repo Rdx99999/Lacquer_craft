@@ -1,13 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { useParams, Link } from "wouter";
-import { useState } from "react";
-import { Star, ArrowLeft, ArrowRight, Plus, Minus, Heart, Share2, Package, Truck, Shield, Award } from "lucide-react";
-```
-
-```typescript
-import { useState } from "react";
-import { useParams } from "wouter";
 import { useQuery } from "@tanstack/react-query";
+import { Star, ArrowLeft, ArrowRight, Plus, Minus, Heart, Share2, Package, Truck, Shield, Award } from "lucide-react";
 import { ArrowLeft, ArrowRight, ShoppingCart, Heart, Share2, Star, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
