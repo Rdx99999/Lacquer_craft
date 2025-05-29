@@ -63,7 +63,7 @@
       "featured": true,
       "stock": 25,
       "images": [
-        "/images/silk-scarf-1.svg"
+        "/images/products/2025/05/29/image10_1748550062249-986875633.png"
       ],
       "features": [
         "100% pure silk material",
@@ -80,7 +80,7 @@
       "price": "3499",
       "categoryId": 3,
       "sku": "JEW001",
-      "featured": false,
+      "featured": true,
       "stock": 12,
       "images": [
         "/images/products/2025/05/29/pic1_1748549902589-113477623.png"
@@ -95,73 +95,48 @@
       "id": 3
     },
     {
-      "name": "Carved Wooden Box",
-      "description": "Intricately carved wooden jewelry box with traditional designs.",
-      "price": "1599",
+      "name": "Wooden Rocking Horse",
+      "description": "Material: Wood\n\nDesign: Painted in red with white floral and yellow accent designs.",
+      "price": "5000",
       "categoryId": 4,
+      "stock": 5,
+      "images": [
+        "/images/products/2025/05/29/pic_1748550244665-618966616.png"
+      ],
       "sku": "WOD001",
-      "featured": false,
-      "stock": 8,
-      "images": [
-        "/images/wooden-box-1.jpg",
-        "/images/wooden-box-2.jpg"
-      ],
-      "features": [
-        "Hand-carved traditional designs",
-        "Premium hardwood construction",
-        "Velvet-lined interior",
-        "Multiple compartments"
-      ],
-      "createdAt": "2025-05-29T19:34:45.017Z",
-      "id": 4
-    },
-    {
-      "name": "Embroidered Cushion Cover",
-      "description": "Hand-embroidered cushion cover with vibrant colors and traditional patterns.",
-      "price": "899",
-      "categoryId": 2,
-      "sku": "TEX002",
       "featured": true,
-      "stock": 30,
-      "images": [
-        "/images/cushion-cover-1.jpg"
-      ],
       "features": [
-        "Hand-embroidered details",
-        "Vibrant traditional colors",
-        "Premium cotton fabric",
-        "Machine washable"
+        "Toy piece or decorative showpiece.",
+        "Smooth finish, traditional handcrafted style.",
+        "Safe for kids (non-toxic paint, smooth edges)."
       ],
-      "createdAt": "2025-05-29T19:34:45.017Z",
-      "id": 5
+      "id": 7,
+      "createdAt": "2025-05-29T20:27:28.593Z"
     },
     {
-      "name": "Brass Decorative Plate",
-      "description": "Ornate brass plate with etched designs, perfect for wall decoration.",
-      "price": "2199",
-      "categoryId": 5,
-      "sku": "MET001",
-      "featured": false,
-      "stock": 10,
+      "name": "Wooden Bird with Movable Wings",
+      "description": "Material: Wood\n\nDesign: Bright yellow bird with painted wings and floral motifs, mounted on wheels.",
+      "price": "5000",
+      "categoryId": 4,
+      "stock": 5,
       "images": [
-        "/images/brass-plate-1.jpg",
-        "/images/brass-plate-2.jpg"
+        "/images/products/2025/05/29/image6_1748550535428-523552340.png"
       ],
+      "sku": "WOD008",
+      "featured": true,
       "features": [
-        "Pure brass construction",
-        "Intricate etched patterns",
-        "Antique finish",
-        "Wall mounting ready"
+        "Pull toy with flapping wings when pulled.",
+        "raditional toy design from Indian folk art."
       ],
-      "createdAt": "2025-05-29T19:34:45.017Z",
-      "id": 6
+      "id": 8,
+      "createdAt": "2025-05-29T20:29:11.062Z"
     }
   ],
   "cartItems": [],
   "orders": [],
   "counters": {
     "categoryId": 6,
-    "productId": 7,
+    "productId": 9,
     "cartItemId": 2,
     "orderId": 1
   }

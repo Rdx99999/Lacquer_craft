@@ -7,6 +7,7 @@ export const categories = pgTable("categories", {
   name: text("name").notNull().unique(),
   slug: text("slug").notNull().unique(),
   description: text("description"),
+  thumbnail: text("thumbnail"),
 });
 
 export const products = pgTable("products", {

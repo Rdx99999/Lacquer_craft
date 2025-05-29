@@ -86,11 +86,11 @@ export class JsonStorage implements IStorage {
 
   private async initializeData() {
     const sampleCategories = [
-      { name: "Pottery", slug: "pottery", description: "Traditional ceramic arts and pottery items" },
-      { name: "Textiles", slug: "textiles", description: "Handwoven fabrics and textile crafts" },
-      { name: "Jewelry", slug: "jewelry", description: "Traditional and contemporary handmade jewelry" },
-      { name: "Woodwork", slug: "woodwork", description: "Carved wooden crafts and furniture" },
-      { name: "Metalwork", slug: "metalwork", description: "Brass, copper and other metal crafts" },
+      { name: "Pottery", slug: "pottery", description: "Traditional ceramic arts and pottery items", thumbnail: null },
+      { name: "Textiles", slug: "textiles", description: "Handwoven fabrics and textile crafts", thumbnail: null },
+      { name: "Jewelry", slug: "jewelry", description: "Traditional and contemporary handmade jewelry", thumbnail: null },
+      { name: "Woodwork", slug: "woodwork", description: "Carved wooden crafts and furniture", thumbnail: null },
+      { name: "Metalwork", slug: "metalwork", description: "Brass, copper and other metal crafts", thumbnail: null },
     ];
 
     const sampleProducts = [
@@ -103,6 +103,7 @@ export class JsonStorage implements IStorage {
         featured: true,
         stock: 15,
         images: ["/images/ceramic-vase-1.svg"],
+        features: ["Handcrafted", "Traditional motifs", "Home decoration"],
         createdAt: new Date()
       },
       {
@@ -114,6 +115,7 @@ export class JsonStorage implements IStorage {
         featured: true,
         stock: 25,
         images: ["/images/silk-scarf-1.svg"],
+        features: ["Handwoven", "Silk material", "Intricate patterns"],
         createdAt: new Date()
       },
       {
@@ -125,6 +127,7 @@ export class JsonStorage implements IStorage {
         featured: false,
         stock: 12,
         images: ["/images/silver-earrings-1.svg"],
+        features: ["Silver filigree", "Traditional craftsmanship", "Lightweight"],
         createdAt: new Date()
       },
       {
@@ -136,6 +139,7 @@ export class JsonStorage implements IStorage {
         featured: false,
         stock: 8,
         images: ["/images/wooden-box-1.jpg", "/images/wooden-box-2.jpg"],
+        features: ["Hand-carved", "Traditional designs", "Jewelry storage"],
         createdAt: new Date()
       },
       {
@@ -147,6 +151,7 @@ export class JsonStorage implements IStorage {
         featured: true,
         stock: 30,
         images: ["/images/cushion-cover-1.jpg"],
+        features: ["Hand-embroidered", "Vibrant colors", "Traditional patterns"],
         createdAt: new Date()
       },
       {
@@ -158,6 +163,7 @@ export class JsonStorage implements IStorage {
         featured: false,
         stock: 10,
         images: ["/images/brass-plate-1.jpg", "/images/brass-plate-2.jpg"],
+        features: ["Brass material", "Etched designs", "Wall decoration"],
         createdAt: new Date()
       }
     ];
