@@ -102,7 +102,7 @@ export class JsonStorage implements IStorage {
         sku: "POT001",
         featured: true,
         stock: 15,
-        images: ["/images/ceramic-vase-1.jpg", "/images/ceramic-vase-2.jpg"],
+        images: ["/images/ceramic-vase-1.svg"],
         createdAt: new Date()
       },
       {
@@ -113,7 +113,7 @@ export class JsonStorage implements IStorage {
         sku: "TEX001",
         featured: true,
         stock: 25,
-        images: ["/images/silk-scarf-1.jpg", "/images/silk-scarf-2.jpg"],
+        images: ["/images/silk-scarf-1.svg"],
         createdAt: new Date()
       },
       {
@@ -124,7 +124,7 @@ export class JsonStorage implements IStorage {
         sku: "JEW001",
         featured: false,
         stock: 12,
-        images: ["/images/silver-earrings-1.jpg"],
+        images: ["/images/silver-earrings-1.svg"],
         createdAt: new Date()
       },
       {

@@ -1,0 +1,130 @@
+{
+  "categories": [
+    {
+      "name": "Pottery",
+      "slug": "pottery",
+      "description": "Traditional ceramic arts and pottery items",
+      "id": 1
+    },
+    {
+      "name": "Textiles",
+      "slug": "textiles",
+      "description": "Handwoven fabrics and textile crafts",
+      "id": 2
+    },
+    {
+      "name": "Jewelry",
+      "slug": "jewelry",
+      "description": "Traditional and contemporary handmade jewelry",
+      "id": 3
+    },
+    {
+      "name": "Woodwork",
+      "slug": "woodwork",
+      "description": "Carved wooden crafts and furniture",
+      "id": 4
+    },
+    {
+      "name": "Metalwork",
+      "slug": "metalwork",
+      "description": "Brass, copper and other metal crafts",
+      "id": 5
+    }
+  ],
+  "products": [
+    {
+      "name": "Traditional Ceramic Vase",
+      "description": "Handcrafted ceramic vase with traditional Indian motifs. Perfect for home decoration.",
+      "price": "2999",
+      "categoryId": 1,
+      "sku": "POT001",
+      "featured": true,
+      "stock": 15,
+      "images": [
+        "/images/ceramic-vase-1.svg"
+      ],
+      "createdAt": "2025-05-29T19:34:45.017Z",
+      "id": 1
+    },
+    {
+      "name": "Handwoven Silk Scarf",
+      "description": "Beautiful silk scarf with intricate handwoven patterns. Made by skilled artisans.",
+      "price": "1899",
+      "categoryId": 2,
+      "sku": "TEX001",
+      "featured": true,
+      "stock": 25,
+      "images": [
+        "/images/silk-scarf-1.svg"
+      ],
+      "createdAt": "2025-05-29T19:34:45.017Z",
+      "id": 2
+    },
+    {
+      "name": "Silver Filigree Earrings",
+      "description": "Exquisite silver filigree earrings showcasing traditional craftsmanship.",
+      "price": "3499",
+      "categoryId": 3,
+      "sku": "JEW001",
+      "featured": false,
+      "stock": 12,
+      "images": [
+        "/images/silver-earrings-1.svg"
+      ],
+      "createdAt": "2025-05-29T19:34:45.017Z",
+      "id": 3
+    },
+    {
+      "name": "Carved Wooden Box",
+      "description": "Intricately carved wooden jewelry box with traditional designs.",
+      "price": "1599",
+      "categoryId": 4,
+      "sku": "WOD001",
+      "featured": false,
+      "stock": 8,
+      "images": [
+        "/images/wooden-box-1.jpg",
+        "/images/wooden-box-2.jpg"
+      ],
+      "createdAt": "2025-05-29T19:34:45.017Z",
+      "id": 4
+    },
+    {
+      "name": "Embroidered Cushion Cover",
+      "description": "Hand-embroidered cushion cover with vibrant colors and traditional patterns.",
+      "price": "899",
+      "categoryId": 2,
+      "sku": "TEX002",
+      "featured": true,
+      "stock": 30,
+      "images": [
+        "/images/cushion-cover-1.jpg"
+      ],
+      "createdAt": "2025-05-29T19:34:45.017Z",
+      "id": 5
+    },
+    {
+      "name": "Brass Decorative Plate",
+      "description": "Ornate brass plate with etched designs, perfect for wall decoration.",
+      "price": "2199",
+      "categoryId": 5,
+      "sku": "MET001",
+      "featured": false,
+      "stock": 10,
+      "images": [
+        "/images/brass-plate-1.jpg",
+        "/images/brass-plate-2.jpg"
+      ],
+      "createdAt": "2025-05-29T19:34:45.017Z",
+      "id": 6
+    }
+  ],
+  "cartItems": [],
+  "orders": [],
+  "counters": {
+    "categoryId": 6,
+    "productId": 7,
+    "cartItemId": 1,
+    "orderId": 1
+  }
+}
