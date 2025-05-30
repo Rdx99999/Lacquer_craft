@@ -114,17 +114,7 @@ export default function Home() {
             
             {/* Enhanced Right Visual - Hidden on mobile, visible on desktop */}
             <div className="relative mt-6 lg:mt-0 order-first lg:order-last hidden lg:block">
-              {/* Main Image with Enhanced Styling */}
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-                <img
-                  src={heroImage}
-                  alt="Traditional Indian Craftsmanship"
-                  className="w-full h-[280px] sm:h-[320px] lg:h-[420px] object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/10" />
-                
-                
-              </div>
+              
               
               {/* Floating Cards - Hidden on mobile for cleaner look */}
               
