@@ -127,8 +127,8 @@ export default function Home() {
               </div>
             </div>
             
-            {/* Enhanced Right Visual */}
-            <div className="relative mt-6 lg:mt-0 order-first lg:order-last">
+            {/* Enhanced Right Visual - Hidden on mobile, visible on desktop */}
+            <div className="relative mt-6 lg:mt-0 order-first lg:order-last hidden lg:block">
               {/* Main Image with Enhanced Styling */}
               <div className="relative rounded-2xl overflow-hidden shadow-2xl">
                 <img
