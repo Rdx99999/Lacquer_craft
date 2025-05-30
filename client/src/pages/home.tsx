@@ -121,52 +121,52 @@ export default function Home() {
 
       
 
-      {/* Categories Section */}
-      <section className="py-6 sm:py-12 lg:py-16 bg-white">
+      {/* Categories Section - Enhanced Indian Style */}
+      <section className="py-8 sm:py-16 lg:py-20 bg-gradient-to-b from-warm-cream via-sandalwood/20 to-soft-beige ethnic-pattern">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-          <div className="text-center mb-4 sm:mb-8">
-            <Badge className="bg-terracotta/10 text-terracotta border-terracotta/20 px-2 py-1 sm:px-3 sm:py-1.5 mb-2 sm:mb-4 text-xs">
-              Curated Collections
+          <div className="text-center mb-8 sm:mb-16">
+            <Badge className="bg-terracotta/20 text-henna border-terracotta/30 px-4 py-2 mb-6 text-sm font-serif traditional-shadow">
+              🎨 पारंपरिक संग्रह • Traditional Collections
             </Badge>
-            <h2 className="font-display text-lg sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 sm:mb-4">
-              Explore Our <span className="text-terracotta">Craft Categories</span>
+            <h2 className="font-display text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-henna mb-6">
+              हमारी <span className="text-terracotta">विरासत</span> <span className="text-saffron">देखें</span>
             </h2>
-            <p className="text-xs sm:text-base lg:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed px-4 hidden sm:block">
-              Each category represents centuries of artistic tradition, carefully preserved and passed down through generations of master craftspeople
+            <p className="text-base sm:text-lg lg:text-xl text-copper/80 max-w-4xl mx-auto leading-relaxed px-4 font-serif">
+              भारत के विविध सांस्कृतिक परिदृश्य की प्रत्येक परंपरा और क्षेत्र का प्रतिनिधित्व करने वाले हमारे सावधानीपूर्वक तैयार किए गए संग्रहों में गोता लगाएं
             </p>
           </div>
           
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 lg:gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
             {categories.map((category, index) => (
               <Link key={category.id} href={`/products?category=${category.slug}`}>
-                <Card className="group cursor-pointer h-full overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                <Card className="group cursor-pointer h-full overflow-hidden craft-border traditional-shadow hover:scale-105 transition-all duration-300">
                   <div className="relative overflow-hidden">
                     <img
                       src={category.thumbnail || fallbackCategoryImages[category.slug as keyof typeof fallbackCategoryImages] || "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300"}
                       alt={`${category.name} Collection`}
-                      className="w-full h-24 sm:h-40 lg:h-48 object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-24 sm:h-40 lg:h-48 object-cover group-hover:scale-110 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-henna/80 via-terracotta/30 to-transparent" />
                     <div className="absolute top-2 sm:top-3 right-2 sm:right-3">
-                      <Badge className="bg-white/20 text-white border-white/30 backdrop-blur-sm text-xs">
-                        {index === 0 ? 'Popular' : index === 1 ? 'Trending' : index === 2 ? 'Premium' : 'Classic'}
+                      <Badge className="bg-saffron/90 text-white border-none backdrop-blur-sm text-xs font-serif">
+                        {index === 0 ? '🏆 लोकप्रिय' : index === 1 ? '⭐ ट्रेंडिंग' : index === 2 ? '💎 प्रीमियम' : '🎨 क्लासिक'}
                       </Badge>
                     </div>
                     <div className="absolute bottom-1 sm:bottom-4 left-1 sm:left-4 text-white">
-                      <h3 className="font-display text-xs sm:text-lg lg:text-xl font-bold mb-0.5 sm:mb-1 group-hover:text-saffron transition-colors duration-300">
+                      <h3 className="font-display text-xs sm:text-lg lg:text-xl font-bold mb-0.5 sm:mb-1 group-hover:text-turmeric transition-colors duration-300">
                         {category.name}
                       </h3>
-                      <p className="text-xs opacity-90 leading-relaxed line-clamp-2 hidden sm:block">
+                      <p className="text-xs opacity-90 leading-relaxed line-clamp-2 hidden sm:block font-serif">
                         {category.description}
                       </p>
                     </div>
                   </div>
-                  <CardContent className="p-1.5 sm:p-4 bg-gradient-to-br from-warm-cream to-white">
+                  <CardContent className="p-2 sm:p-4 bg-gradient-to-br from-warm-cream to-soft-beige paisley-pattern">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-medium text-gray-600">
-                        Explore
+                      <span className="text-xs font-serif font-medium text-henna">
+                        खोजें • Explore
                       </span>
-                      <ArrowRight className="h-3 w-3 text-terracotta group-hover:translate-x-1 transition-transform duration-300" />
+                      <ArrowRight className="h-3 w-3 text-terracotta group-hover:translate-x-1 group-hover:text-saffron transition-all duration-300" />
                     </div>
                   </CardContent>
                 </Card>
