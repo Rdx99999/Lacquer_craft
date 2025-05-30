@@ -49,21 +49,22 @@ export default function Home() {
     <div className="min-h-screen bg-warm-cream">
       {/* Hero Section - Hidden on mobile, visible on desktop */}
       <section className="relative overflow-hidden hidden lg:block">
-        <div className="absolute inset-0 bg-gradient-to-br from-terracotta/20 via-saffron/10 to-warm-cream" />
-        
-        {/* Logo Background Pattern */}
-        <div className="absolute inset-0 opacity-3" 
+        {/* Main Background Image */}
+        <div className="absolute inset-0" 
              style={{
-               backgroundImage: `url("/images/logo.png")`,
-               backgroundSize: '150px 150px',
-               backgroundRepeat: 'repeat',
+               backgroundImage: `url("${heroImage}")`,
+               backgroundSize: 'cover',
                backgroundPosition: 'center',
+               backgroundRepeat: 'no-repeat',
              }} />
         
-        {/* Decorative Pattern Overlay */}
-        <div className="absolute inset-0 opacity-3" 
+        {/* Dark overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/40" />
+        
+        {/* Subtle pattern overlay */}
+        <div className="absolute inset-0 opacity-10" 
              style={{
-               backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+               backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
              }} />
         
         <div className="relative max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-12 lg:py-24">
@@ -72,8 +73,8 @@ export default function Home() {
             <div className="text-left space-y-4 lg:space-y-6">
               <div className="space-y-3 lg:space-y-4">
                 <div className="flex items-center justify-center sm:justify-start">
-                  <Badge className="bg-gradient-to-r from-terracotta/10 to-saffron/10 text-terracotta border-terracotta/20 px-3 py-1.5 text-xs font-medium shadow-sm">
-                    <Sparkles className="h-3 w-3 mr-1.5 text-saffron" />
+                  <Badge className="bg-white/20 backdrop-blur-sm text-white border-white/30 px-3 py-1.5 text-xs font-medium shadow-sm">
+                    <Sparkles className="h-3 w-3 mr-1.5 text-yellow-300" />
                     <span className="hidden sm:inline">Handcrafted Excellence Since 1947</span>
                     <span className="sm:hidden">Heritage Since 1947</span>
                   </Badge>
@@ -81,14 +82,14 @@ export default function Home() {
                 
                 <div className="text-center sm:text-left">
                   <h1 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight">
-                    <span className="text-gray-900">{heroTitle}</span>
-                    <span className="text-terracotta block mt-1">{heroSubtitle}</span>
-                    <span className="text-saffron block mt-1">& Crafts</span>
+                    <span className="text-white">{heroTitle}</span>
+                    <span className="text-orange-300 block mt-1">{heroSubtitle}</span>
+                    <span className="text-yellow-300 block mt-1">& Crafts</span>
                   </h1>
                 </div>
                 
                 <div className="text-center sm:text-left">
-                  <p className="text-sm sm:text-base lg:text-lg text-gray-600 leading-relaxed max-w-lg mx-auto sm:mx-0">
+                  <p className="text-sm sm:text-base lg:text-lg text-gray-100 leading-relaxed max-w-lg mx-auto sm:mx-0">
                     {heroDescription}
                   </p>
                 </div>
@@ -101,7 +102,7 @@ export default function Home() {
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
-                <Button variant="outline" className="border-terracotta/20 text-terracotta hover:bg-terracotta/5 px-6 py-3 text-sm font-medium w-full sm:w-auto transition-all duration-300">
+                <Button variant="outline" className="border-white/30 text-white hover:bg-white/10 backdrop-blur-sm px-6 py-3 text-sm font-medium w-full sm:w-auto transition-all duration-300">
                   <Heart className="mr-2 h-4 w-4" />
                   <span className="hidden sm:inline">{heroButtonSecondaryText}</span>
                   <span className="sm:hidden">Our Story</span>
@@ -109,28 +110,28 @@ export default function Home() {
               </div>
               
               {/* Enhanced Stats */}
-              <div className="bg-gradient-to-r from-warm-cream/50 to-soft-beige/50 rounded-lg p-4 sm:p-6 border border-terracotta/10">
+              <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4 sm:p-6 border border-white/30">
                 <div className="grid grid-cols-3 gap-4">
                   <div className="text-center">
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-terracotta/10 rounded-full flex items-center justify-center mx-auto mb-2">
-                      <Users className="h-4 w-4 sm:h-5 sm:w-5 text-terracotta" />
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-2">
+                      <Users className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
                     </div>
-                    <div className="text-lg sm:text-xl font-bold text-terracotta">500+</div>
-                    <div className="text-xs text-gray-600">Artisans</div>
+                    <div className="text-lg sm:text-xl font-bold text-white">500+</div>
+                    <div className="text-xs text-gray-200">Artisans</div>
                   </div>
                   <div className="text-center">
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-saffron/10 rounded-full flex items-center justify-center mx-auto mb-2">
-                      <Heart className="h-4 w-4 sm:h-5 sm:w-5 text-saffron" />
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-2">
+                      <Heart className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
                     </div>
-                    <div className="text-lg sm:text-xl font-bold text-saffron">15K+</div>
-                    <div className="text-xs text-gray-600">Customers</div>
+                    <div className="text-lg sm:text-xl font-bold text-white">15K+</div>
+                    <div className="text-xs text-gray-200">Customers</div>
                   </div>
                   <div className="text-center">
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-terracotta/10 rounded-full flex items-center justify-center mx-auto mb-2">
-                      <Award className="h-4 w-4 sm:h-5 sm:w-5 text-terracotta" />
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-2">
+                      <Award className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
                     </div>
-                    <div className="text-lg sm:text-xl font-bold text-terracotta">25+</div>
-                    <div className="text-xs text-gray-600">States</div>
+                    <div className="text-lg sm:text-xl font-bold text-white">25+</div>
+                    <div className="text-xs text-gray-200">States</div>
                   </div>
                 </div>
               </div>
