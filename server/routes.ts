@@ -59,6 +59,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Serve static images
   app.use('/images', express.static(join(process.cwd(), 'data', 'images')));
 
+  // Serve logo specifically
+  app.get("/images/logo.png", (req, res) => {
+    res.sendFile(join(process.cwd(), "data", "images", "logo.png"));
+  });
+
   // Authentication middleware
   const requireAuth = async (req: any, res: any, next: any) => {
     const sessionId = req.headers.authorization?.replace('Bearer ', '');
@@ -87,12 +92,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin authentication middleware
   const requireAdminAuth = async (req: any, res: any, next: any) => {
     const authHeader = req.headers.authorization;
-    
+
     // Check for session token first
     if (authHeader && authHeader.startsWith('Bearer ')) {
       const sessionToken = authHeader.slice('Bearer '.length);
       const session = adminSessions.get(sessionToken);
-      
+
       if (session && session.expiresAt > Date.now()) {
         req.adminUser = session.username;
         return next();
@@ -109,7 +114,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
     const clientIP = req.ip || req.connection.remoteAddress || 'unknown';
     const attempts = adminLoginAttempts.get(clientIP);
-    
+
     if (attempts && attempts.count >= MAX_ADMIN_LOGIN_ATTEMPTS) {
       if (Date.now() - attempts.lastAttempt < ADMIN_LOGIN_TIMEOUT) {
         return res.status(429).json({ 
@@ -136,7 +141,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       // Check if the password hash is already bcrypt hashed or plain text
       let isValidPassword = false;
-      
+
       if (adminPasswordHash.startsWith('$2b$')) {
         // It's already a bcrypt hash, compare directly
         isValidPassword = await bcrypt.compare(password, adminPasswordHash);
@@ -144,7 +149,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // It's plain text, compare directly
         isValidPassword = password === adminPasswordHash;
       }
-      
+
       if (username !== adminUsername || !isValidPassword) {
         // Record failed attempt
         const currentAttempts = adminLoginAttempts.get(clientIP) || { count: 0, lastAttempt: 0 };
@@ -152,7 +157,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           count: currentAttempts.count + 1,
           lastAttempt: Date.now()
         });
-        
+
         return res.status(401).json({ message: "Invalid admin credentials" });
       }
 
@@ -169,11 +174,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/auth/register", async (req, res) => {
     try {
       const validatedData = registerSchema.parse(req.body);
-      
+
       // Hash password
       const saltRounds = 10;
       const passwordHash = await bcrypt.hash(validatedData.password, saltRounds);
-      
+
       const user = await storage.createUser({
         name: validatedData.name,
         email: validatedData.email,
@@ -199,7 +204,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/auth/login", async (req, res) => {
     try {
       const validatedData = loginSchema.parse(req.body);
-      
+
       const user = await storage.verifyPassword(validatedData.email, validatedData.password);
       if (!user) {
         return res.status(401).json({ message: "Invalid email or password" });
@@ -254,7 +259,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     // Generate session token
     const sessionToken = crypto.randomBytes(32).toString('hex');
     const sessionTimeout = parseInt(process.env.ADMIN_SESSION_TIMEOUT_HOURS || '8') * 60 * 60 * 1000;
-    
+
     adminSessions.set(sessionToken, {
       username: req.adminUser,
       expiresAt: Date.now() + sessionTimeout
@@ -671,16 +676,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Score products based on similarity
       const scoredProducts = otherProducts.map(p => {
         let score = 0;
-        
+
         // Same category gets highest score
         if (p.categoryId === product.categoryId) {
           score += 50;
         }
-        
+
         // Calculate feature similarity
         const productFeatures = product.features || [];
         const otherFeatures = p.features || [];
-        
+
         if (productFeatures.length > 0 && otherFeatures.length > 0) {
           const commonFeatures = productFeatures.filter(feature => 
             otherFeatures.some(otherFeature => 
@@ -690,7 +695,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           );
           score += (commonFeatures.length / Math.max(productFeatures.length, otherFeatures.length)) * 30;
         }
-        
+
         // Similar price range (within 20% gets points)
         const productPrice = parseFloat(product.price);
         const otherPrice = parseFloat(p.price);
@@ -700,12 +705,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         } else if (priceDiff <= 0.5) {
           score += 5;
         }
-        
+
         // Featured products get slight boost
         if (p.featured) {
           score += 5;
         }
-        
+
         // In stock products get slight boost
         if (p.stock > 0) {
           score += 3;
@@ -863,9 +868,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ...req.body,
         userId: req.user.id,
       };
-      
+
       console.log("Order data received:", orderData);
-      
+
       const validatedData = insertOrderSchema.parse(orderData);
       const order = await storage.createOrder(validatedData);
       res.status(201).json(order);
@@ -903,7 +908,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const trackingNumber = req.params.trackingNumber.toUpperCase();
       const order = await storage.getOrderByTrackingNumber(trackingNumber);
-      
+
       if (!order) {
         return res.status(404).json({ message: "Order not found with this tracking number" });
       }
@@ -965,7 +970,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (typeof value !== "string") {
         return res.status(400).json({ message: "Value must be a string" });
       }
-      
+
       const setting = await storage.updateSetting(req.params.key, value);
       if (!setting) {
         return res.status(404).json({ message: "Setting not found" });
