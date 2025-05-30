@@ -66,42 +66,42 @@ export function ProductCard({
 
   return (
     <Link href={`/products/${product.id}`}>
-      <Card className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-white h-full flex flex-col">
+      <Card className="group cursor-pointer transition-all duration-300 traditional-shadow hover:scale-105 craft-border h-full flex flex-col bg-gradient-to-br from-warm-cream to-sandalwood/10 paisley-pattern">
         <div className="relative aspect-[4/3] sm:aspect-[4/5] overflow-hidden rounded-t-lg">
           {/* Product Image */}
           <img
             src={product.images[0] || "/placeholder-image.jpg"}
             alt={product.name}
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
           />
 
-          {/* Badges */}
+          {/* Traditional Badges */}
           <div className="absolute top-2 sm:top-3 left-2 sm:left-3 flex flex-col space-y-1 sm:space-y-2">
             {product.featured && (
-              <Badge className="bg-saffron text-white text-xs">
-                Featured
+              <Badge className="bg-saffron/90 text-white text-xs font-serif traditional-shadow">
+                ⭐ विशेष
               </Badge>
             )}
             {product.stock === 0 && (
-              <Badge variant="destructive" className="text-xs">
-                Sold Out
+              <Badge variant="destructive" className="text-xs font-serif">
+                समाप्त
               </Badge>
             )}
             {product.stock > 0 && product.stock <= 5 && (
-              <Badge variant="outline" className="text-orange-600 border-orange-600 bg-white text-xs">
-                Limited
+              <Badge variant="outline" className="text-vermillion border-vermillion bg-warm-cream text-xs font-serif">
+                सीमित
               </Badge>
             )}
           </div>
 
-          {/* Add to Cart Button - More prominent on mobile */}
+          {/* Traditional Add to Cart Button */}
           {product.stock > 0 && (
             <div className="absolute bottom-2 sm:bottom-3 right-2 sm:right-3 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300">
               <Button
                 size="sm"
                 onClick={handleAddToCart}
                 disabled={isAddingToCart}
-                className="bg-terracotta hover:bg-terracotta/90 text-white shadow-lg h-8 w-8 sm:h-9 sm:w-9 p-0"
+                className="heritage-gradient hover:opacity-90 text-white traditional-shadow h-8 w-8 sm:h-9 sm:w-9 p-0 rounded-full"
               >
                 <ShoppingCart className="h-3 w-3 sm:h-4 sm:w-4" />
               </Button>
@@ -109,11 +109,11 @@ export function ProductCard({
           )}
         </div>
 
-        <CardContent className="p-1.5 sm:p-4 flex-1 flex flex-col">
+        <CardContent className="p-2 sm:p-4 flex-1 flex flex-col bg-gradient-to-br from-warm-cream to-soft-beige/50">
           <div className="space-y-1 sm:space-y-2 flex-1">
             <div className="flex items-center justify-between">
               {showCategory && category && (
-                <Badge variant="outline" className="text-xs hidden sm:block">
+                <Badge variant="outline" className="text-xs hidden sm:block bg-terracotta/10 text-henna border-terracotta/30 font-serif">
                   {category.name}
                 </Badge>
               )}
@@ -121,32 +121,32 @@ export function ProductCard({
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="h-2.5 w-2.5 sm:h-3 sm:w-3 fill-saffron text-saffron" />
                 ))}
-                <span className="text-xs text-gray-500 ml-1 hidden sm:inline">4.8</span>
+                <span className="text-xs text-copper ml-1 hidden sm:inline font-serif">4.8</span>
               </div>
             </div>
 
-            <h3 className="font-semibold text-gray-900 line-clamp-2 min-h-[1.5rem] sm:min-h-[2.5rem] text-xs sm:text-base leading-tight">
+            <h3 className="font-serif font-semibold text-henna line-clamp-2 min-h-[1.5rem] sm:min-h-[2.5rem] text-xs sm:text-base leading-tight">
               {product.name}
             </h3>
 
-            <p className="text-xs sm:text-sm text-gray-600 line-clamp-1 sm:line-clamp-2 min-h-[1rem] sm:min-h-[2.5rem] leading-tight">
+            <p className="text-xs sm:text-sm text-copper/80 line-clamp-1 sm:line-clamp-2 min-h-[1rem] sm:min-h-[2.5rem] leading-tight font-serif">
               {product.description}
             </p>
 
-            {/* Features - Simplified for mobile */}
+            {/* Traditional Features */}
             {matchingFeatures.length > 0 && (
               <div className="space-y-1 hidden sm:block">
-                <div className="text-xs text-gray-500">Features:</div>
+                <div className="text-xs text-henna font-serif">विशेषताएं • Features:</div>
                 <div className="flex flex-wrap gap-1">
                   {matchingFeatures.map((feature, index) => (
                     <Badge 
                       key={index} 
                       variant="secondary" 
-                      className={`text-xs ${
+                      className={`text-xs font-serif ${
                         highlightFeatures.some(h => 
                           feature.toLowerCase().includes(h.toLowerCase()) ||
                           h.toLowerCase().includes(feature.toLowerCase())
-                        ) ? 'bg-saffron/20 text-saffron border-saffron' : ''
+                        ) ? 'bg-saffron/20 text-saffron border-saffron' : 'bg-sandalwood/20 text-henna border-terracotta/20'
                       }`}
                     >
                       {feature}
@@ -157,15 +157,15 @@ export function ProductCard({
             )}
           </div>
 
-          <div className="flex items-center justify-between pt-1.5 sm:pt-3 mt-auto">
+          <div className="flex items-center justify-between pt-2 sm:pt-3 mt-auto bg-saffron/10 rounded-lg p-2 craft-border">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between w-full">
-              <span className="text-sm sm:text-lg font-bold text-terracotta">
+              <span className="text-sm sm:text-lg font-bold text-terracotta font-serif">
                 ₹{parseFloat(product.price).toLocaleString()}
               </span>
               
               <div className="flex items-center justify-between sm:justify-end space-x-1 sm:space-x-2 mt-1 sm:mt-0">
-                <div className="text-xs text-gray-500 hidden sm:block">
-                  {product.stock > 0 ? `${product.stock} left` : 'Out of stock'}
+                <div className="text-xs text-copper hidden sm:block font-serif">
+                  {product.stock > 0 ? `${product.stock} उपलब्ध` : 'स्टॉक समाप्त'}
                 </div>
                 <Button
                   variant="ghost"
@@ -175,10 +175,10 @@ export function ProductCard({
                     e.stopPropagation();
                     toggleWishlist(product.id);
                   }}
-                  className={`p-1 sm:p-2 transition-colors h-6 w-6 sm:h-8 sm:w-8 ${
+                  className={`p-1 sm:p-2 transition-colors h-6 w-6 sm:h-8 sm:w-8 rounded-full traditional-shadow ${
                     isInWishlist(product.id) 
-                      ? "bg-red-50 text-red-500 hover:bg-red-100" 
-                      : "hover:bg-red-50 text-gray-400 hover:text-red-500"
+                      ? "bg-vermillion/20 text-vermillion hover:bg-vermillion/30" 
+                      : "hover:bg-lotus/30 text-henna hover:text-vermillion"
                   }`}
                   aria-label={isInWishlist(product.id) ? "Remove from wishlist" : "Add to wishlist"}
                 >

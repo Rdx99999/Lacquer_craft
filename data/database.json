@@ -147,6 +147,13 @@
       "productId": 11,
       "quantity": 1,
       "createdAt": "2025-05-30T02:02:51.301Z"
+    },
+    {
+      "id": 6,
+      "sessionId": "session-1748576800946-oi9mwvjpl",
+      "productId": 11,
+      "quantity": 1,
+      "createdAt": "2025-05-30T03:57:45.768Z"
     }
   ],
   "orders": [
@@ -312,7 +319,7 @@
   "counters": {
     "categoryId": 12,
     "productId": 14,
-    "cartItemId": 6,
+    "cartItemId": 7,
     "orderId": 9,
     "userId": 2,
     "reviewId": 2
