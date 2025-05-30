@@ -454,18 +454,18 @@ export default function ProductDetail() {
 
             {/* Product Features */}
             {product.features && product.features.length > 0 && (
-              <div className="bg-gradient-to-br from-sage/10 to-soft-beige/30 rounded-xl p-6 border border-sage/20 backdrop-blur-sm">
-                <h4 className="font-semibold text-gray-900 mb-4 flex items-center">
-                  <svg className="h-5 w-5 mr-2 text-sage" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="bg-gradient-to-br from-sage/10 to-soft-beige/30 rounded-xl p-4 sm:p-6 border border-sage/20 backdrop-blur-sm">
+                <h4 className="font-semibold text-gray-900 mb-3 sm:mb-4 flex items-center text-sm sm:text-base">
+                  <svg className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-sage" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   Key Features
                 </h4>
-                <div className="grid grid-cols-1 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2 sm:gap-3">
                   {product.features.map((feature, index) => (
-                    <div key={index} className="flex items-center text-sm text-gray-700 bg-white/50 px-4 py-2 rounded-lg border border-gray-100">
-                      <div className="w-2 h-2 bg-terracotta rounded-full mr-3 flex-shrink-0"></div>
-                      <span>{feature}</span>
+                    <div key={index} className="flex items-center text-xs sm:text-sm text-gray-700 bg-white/50 px-3 sm:px-4 py-2 rounded-lg border border-gray-100">
+                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-terracotta rounded-full mr-2 sm:mr-3 flex-shrink-0"></div>
+                      <span className="leading-tight">{feature}</span>
                     </div>
                   ))}
                 </div>
