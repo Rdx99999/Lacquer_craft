@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Search, ShoppingCart, Menu, X, Settings, User, LogOut, Package, Heart } from "lucide-react";
+import logoImage from "@assets/SNEHA LOGO 1.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -51,7 +52,7 @@ export function Navigation() {
               <div className="flex items-center space-x-2 sm:space-x-3">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-heritage-gradient rounded-lg flex items-center justify-center traditional-shadow overflow-hidden">
                   <img 
-                    src="/logo/SNEHA LOGO 1.png" 
+                    src={logoImage} 
                     alt="Hastkala Logo" 
                     className="w-full h-full object-contain p-1"
                   />
