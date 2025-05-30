@@ -49,8 +49,12 @@ export function Navigation() {
             {/* Logo */}
             <Link href="/" className="flex items-center group">
               <div className="flex items-center space-x-2 sm:space-x-3">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-heritage-gradient rounded-lg flex items-center justify-center traditional-shadow">
-                  <span className="text-white font-display font-bold text-sm sm:text-lg md:text-xl">🕉</span>
+                <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-heritage-gradient rounded-lg flex items-center justify-center traditional-shadow overflow-hidden">
+                  <img 
+                    src="/logo/SNEHA LOGO 1.png" 
+                    alt="Hastkala Logo" 
+                    className="w-full h-full object-contain p-1"
+                  />
                 </div>
                 <div className="flex flex-col">
                   <span className="font-display text-lg sm:text-xl md:text-2xl font-bold text-henna group-hover:text-terracotta transition-colors">
