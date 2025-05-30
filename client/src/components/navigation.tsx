@@ -51,7 +51,7 @@ export function Navigation() {
               <h1 className="font-display text-lg sm:text-2xl font-bold text-terracotta">
                 Hastkala
               </h1>
-              <span className="ml-1 sm:ml-2 text-xs sm:text-sm text-gray-600 hidden sm:inline">Authentic Crafts</span>
+              <span className="ml-1 sm:ml-2 text-xs sm:text-sm text-gray-600 hidden sm:inline">Crafts</span>
             </Link>
 
             {/* Desktop Navigation */}
