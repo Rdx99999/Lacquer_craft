@@ -40,6 +40,8 @@
   --sandalwood: 30 30% 70%; /* #D2B48C - sandalwood beige */
   --ivory: 60 20% 95%; /* #F5F5DC - ivory white */
   --copper: 30 60% 40%; /* #B87333 - copper bronze */
+  --golden: 45 100% 50%; /* #FFD700 - golden yellow */
+  --antique-gold: 43 74% 49%; /* #DAA520 - antique gold */
   
   /* Background variations */
   --warm-cream: 37 36% 96%; /* #F7F3E9 */
@@ -175,6 +177,30 @@
 
   .bg-copper {
     background-color: hsl(var(--copper));
+  }
+
+  .text-golden {
+    color: hsl(var(--golden));
+  }
+
+  .bg-golden {
+    background-color: hsl(var(--golden));
+  }
+
+  .border-golden {
+    border-color: hsl(var(--golden));
+  }
+
+  .text-antique-gold {
+    color: hsl(var(--antique-gold));
+  }
+
+  .bg-antique-gold {
+    background-color: hsl(var(--antique-gold));
+  }
+
+  .border-antique-gold {
+    border-color: hsl(var(--antique-gold));
   }
 
   .bg-warm-cream {
