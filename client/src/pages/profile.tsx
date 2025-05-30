@@ -259,7 +259,7 @@ export default function Profile() {
                   <span>Loyalty Status</span>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="p-3 sm:p-6"></div>
+              <CardContent className="p-3 sm:p-6">
                 <div className="text-center mb-4">
                   <div className="text-3xl font-bold text-warm-gold mb-2">{loyaltyLevel}</div>
                   <div className="text-sm text-gray-600">
