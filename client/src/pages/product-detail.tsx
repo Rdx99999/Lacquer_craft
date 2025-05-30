@@ -544,6 +544,67 @@ export default function ProductDetail() {
                   </div>
                 </div>
 
+                {/* Compact Quantity and Actions for Mobile */}
+                {product.stock > 0 && (
+                  <div className="bg-gradient-to-r from-terracotta/5 to-saffron/5 rounded-lg p-3 border border-terracotta/20">
+                    <div className="flex items-center justify-between gap-3 mb-3">
+                      <span className="text-sm font-medium text-gray-700">Qty:</span>
+                      <div className="flex items-center bg-white rounded-lg border border-gray-200">
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => handleQuantityChange(quantity - 1)}
+                          disabled={quantity <= 1}
+                          className="h-8 w-8 p-0 hover:bg-terracotta hover:text-white rounded-l-lg"
+                        >
+                          <Minus className="h-3 w-3" />
+                        </Button>
+                        <span className="font-medium min-w-[2.5rem] text-center text-sm bg-gray-50 px-2 py-1 border-x">
+                          {quantity}
+                        </span>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => handleQuantityChange(quantity + 1)}
+                          disabled={quantity >= product.stock}
+                          className="h-8 w-8 p-0 hover:bg-terracotta hover:text-white rounded-r-lg"
+                        >
+                          <Plus className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-3 gap-2">
+                      <Button
+                        onClick={handleAddToCart}
+                        disabled={isAddingToCart}
+                        className="bg-terracotta hover:bg-terracotta/90 text-white text-xs py-2 h-9"
+                      >
+                        <ShoppingCart className="h-3 w-3 mr-1" />
+                        {isAddingToCart ? "Adding..." : "Add"}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        onClick={handleWishlist}
+                        className={`border-terracotta text-terracotta hover:bg-terracotta hover:text-white text-xs py-2 h-9 ${
+                          isInWishlist(product.id) ? 'bg-terracotta text-white' : ''
+                        }`}
+                      >
+                        <Heart className={`h-3 w-3 mr-1 ${isInWishlist(product.id) ? 'fill-current' : ''}`} />
+                        {isInWishlist(product.id) ? "Saved" : "Save"}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        onClick={handleBuyNow}
+                        disabled={isBuyingNow}
+                        className="border-saffron text-saffron hover:bg-saffron hover:text-white text-xs py-2 h-9"
+                      >
+                        {isBuyingNow ? "..." : "Buy"}
+                      </Button>
+                    </div>
+                  </div>
+                )}
+
                 {reviewStats && reviewStats.totalReviews > 0 && (
                   <div className="flex items-center space-x-2 bg-saffron/10 px-3 sm:px-4 py-2 rounded-full self-start">
                     <div className="flex items-center space-x-1">
@@ -643,90 +704,7 @@ export default function ProductDetail() {
               )}
             </div>
 
-            {/* Add to Cart */}
-            {product.stock > 0 && (
-              <div className="space-y-4 sm:space-y-6 bg-gradient-to-br from-terracotta/5 to-saffron/5 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-terracotta/20">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-0">
-                  <label className="font-semibold text-gray-900 text-base sm:text-lg">Quantity:</label>
-                  <div className="flex items-center bg-white rounded-lg sm:rounded-xl border-2 border-gray-200 shadow-sm self-end sm:self-auto">
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      onClick={() => handleQuantityChange(quantity - 1)}
-                      disabled={quantity <= 1}
-                      className="h-10 w-10 sm:h-12 sm:w-12 p-0 hover:bg-terracotta hover:text-white transition-all duration-200 rounded-l-lg sm:rounded-l-xl touch-target"
-                    >
-                      <Minus className="h-4 w-4" />
-                    </Button>
-                    <span className="font-bold min-w-[3rem] sm:min-w-[4rem] text-center text-base sm:text-lg bg-gray-50 px-3 sm:px-4 py-2 sm:py-3 border-x">
-                      {quantity}
-                    </span>
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      onClick={() => handleQuantityChange(quantity + 1)}
-                      disabled={quantity >= product.stock}
-                      className="h-10 w-10 sm:h-12 sm:w-12 p-0 hover:bg-terracotta hover:text-white transition-all duration-200 rounded-r-lg sm:rounded-r-xl touch-target"
-                    >
-                      <Plus className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-
-                <Button
-                  size="lg"
-                  onClick={handleAddToCart}
-                  disabled={isAddingToCart}
-                  className="w-full bg-gradient-to-r from-terracotta to-terracotta/90 hover:from-terracotta/90 hover:to-terracotta text-white font-semibold py-3 sm:py-4 px-6 sm:px-8 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 text-base sm:text-lg touch-target"
-                >
-                  <ShoppingCart className="h-5 w-5 sm:h-6 sm:w-6 mr-2 sm:mr-3" />
-                  {isAddingToCart ? (
-                    <div className="flex items-center">
-                      <svg className="animate-spin -ml-1 mr-2 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                      <span className="hidden sm:inline">Adding to Cart...</span>
-                      <span className="sm:hidden">Adding...</span>
-                    </div>
-                  ) : (
-                    <span>Add to Cart</span>
-                  )}
-                </Button>
-
-                {/* Quick Actions */}
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <Button
-                    variant="outline"
-                    onClick={handleWishlist}
-                    className={`flex-1 border-terracotta text-terracotta hover:bg-terracotta hover:text-white transition-all duration-200 py-2 sm:py-3 touch-target ${
-                      isInWishlist(product.id) ? 'bg-terracotta text-white' : ''
-                    }`}
-                  >
-                    <Heart className={`h-4 w-4 mr-2 ${isInWishlist(product.id) ? 'fill-current' : ''}`} />
-                    <span className="text-sm sm:text-base">{isInWishlist(product.id) ? 'Wishlisted' : 'Wishlist'}</span>
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={handleBuyNow}
-                    disabled={isBuyingNow}
-                    className="flex-1 border-saffron text-saffron hover:bg-saffron hover:text-white transition-all duration-200 py-2 sm:py-3 touch-target"
-                  >
-                    {isBuyingNow ? (
-                      <div className="flex items-center">
-                        <svg className="animate-spin -ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        <span className="text-sm sm:text-base">Processing...</span>
-                      </div>
-                    ) : (
-                      <span className="text-sm sm:text-base">Buy Now</span>
-                    )}
-                  </Button>
-                </div>
-              </div>
-            )}
+            
 
             {/* Product Details */}
             <div className="bg-gradient-to-br from-white to-warm-cream/30 rounded-xl sm:rounded-2xl border border-gray-200 shadow-lg overflow-hidden">
