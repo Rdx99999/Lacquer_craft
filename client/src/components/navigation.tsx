@@ -48,10 +48,10 @@ export function Navigation() {
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center">
-              <h1 className="font-display text-xl sm:text-2xl font-bold text-terracotta">
+              <h1 className="font-display text-lg sm:text-2xl font-bold text-terracotta">
                 Hastkala
               </h1>
-              <span className="ml-1 sm:ml-2 text-xs sm:text-sm text-gray-600 hidden xs:inline">Authentic Crafts</span>
+              <span className="ml-1 sm:ml-2 text-xs sm:text-sm text-gray-600 hidden sm:inline">Authentic Crafts</span>
             </Link>
 
             {/* Desktop Navigation */}
@@ -114,21 +114,21 @@ export function Navigation() {
               </form>
 
               {/* Mobile Search Button */}
-              <Button variant="ghost" size="sm" className="lg:hidden hover:bg-warm-cream/50 p-2">
-                <Search className="h-5 w-5" />
+              <Button variant="ghost" size="sm" className="lg:hidden hover:bg-warm-cream/50 p-1.5 sm:p-2">
+                <Search className="h-4 w-4 sm:h-5 sm:w-5" />
               </Button>
 
               <Link href="/wishlist" className="relative hidden sm:block">
-                <Button variant="ghost" size="sm" className="relative hover:bg-warm-cream/50 p-2">
+                <Button variant="ghost" size="sm" className="relative hover:bg-warm-cream/50 p-1.5 sm:p-2">
                   <Heart className="h-4 w-4 sm:h-5 sm:w-5" />
                 </Button>
               </Link>
 
               <Link href="/cart" className="relative">
-                <Button variant="ghost" size="sm" className="relative hover:bg-warm-cream/50 p-2">
+                <Button variant="ghost" size="sm" className="relative hover:bg-warm-cream/50 p-1.5 sm:p-2">
                   <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />
                   {itemCount > 0 && (
-                    <Badge className="absolute -top-1 -right-1 h-4 w-4 sm:h-5 sm:w-5 flex items-center justify-center p-0 bg-saffron text-white text-xs">
+                    <Badge className="absolute -top-0.5 -right-0.5 h-3.5 w-3.5 sm:h-5 sm:w-5 flex items-center justify-center p-0 bg-saffron text-white text-xs">
                       {itemCount}
                     </Badge>
                   )}
@@ -137,45 +137,45 @@ export function Navigation() {
 
               {/* Authentication */}
               {isAuthenticated ? (
-                <div className="flex items-center space-x-2">
-                  <span className="text-sm text-gray-700">Hello, {user?.name}</span>
+                <div className="flex items-center space-x-1 sm:space-x-2">
+                  <span className="text-xs sm:text-sm text-gray-700 hidden sm:block">Hello, {user?.name}</span>
                   <Link href="/profile">
                     <Button 
                       variant="ghost" 
                       size="sm" 
-                      className="text-terracotta hover:bg-terracotta/10"
+                      className="text-terracotta hover:bg-terracotta/10 p-1 sm:p-2"
                     >
-                      <User className="h-4 w-4 mr-2" />
-                      Profile
+                      <User className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
+                      <span className="hidden sm:inline">Profile</span>
                     </Button>
                   </Link>
                   <Button 
                     variant="outline" 
                     size="sm" 
-                    className="bg-terracotta text-white border-terracotta hover:bg-terracotta/90"
+                    className="bg-terracotta text-white border-terracotta hover:bg-terracotta/90 p-1 sm:p-2"
                     onClick={logout}
                   >
-                    <LogOut className="h-4 w-4 mr-2" />
-                    Logout
+                    <LogOut className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
+                    <span className="hidden sm:inline">Logout</span>
                   </Button>
                 </div>
               ) : (
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className="bg-terracotta text-white border-terracotta hover:bg-terracotta/90"
+                  className="bg-terracotta text-white border-terracotta hover:bg-terracotta/90 p-1 sm:p-2 text-xs sm:text-sm"
                   onClick={() => setShowAuthDialog(true)}
                 >
-                  <User className="h-4 w-4 mr-2" />
-                  Login
+                  <User className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
+                  <span className="hidden xs:inline">Login</span>
                 </Button>
               )}
 
               {/* Mobile Menu */}
               <Sheet>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" size="sm" className="md:hidden">
-                    <Menu className="h-5 w-5" />
+                  <Button variant="ghost" size="sm" className="md:hidden p-1.5">
+                    <Menu className="h-4 w-4 sm:h-5 sm:w-5" />
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="right" className="w-80">
