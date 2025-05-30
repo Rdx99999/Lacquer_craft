@@ -98,117 +98,123 @@ export function AuthDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>Authentication Required</DialogTitle>
+      <DialogContent className="sm:max-w-md max-w-[95vw] p-4 sm:p-6">
+        <DialogHeader className="pb-2">
+          <DialogTitle className="text-lg sm:text-xl">Authentication Required</DialogTitle>
         </DialogHeader>
         
         <Tabs defaultValue="login" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="login">Login</TabsTrigger>
-            <TabsTrigger value="register">Register</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2 h-8 sm:h-10">
+            <TabsTrigger value="login" className="text-xs sm:text-sm">Login</TabsTrigger>
+            <TabsTrigger value="register" className="text-xs sm:text-sm">Register</TabsTrigger>
           </TabsList>
           
-          <TabsContent value="login">
-            <form onSubmit={loginForm.handleSubmit(handleLogin)} className="space-y-4">
-              <div>
-                <Label htmlFor="login-email">Email</Label>
+          <TabsContent value="login" className="mt-3">
+            <form onSubmit={loginForm.handleSubmit(handleLogin)} className="space-y-3 sm:space-y-4">
+              <div className="space-y-1">
+                <Label htmlFor="login-email" className="text-xs sm:text-sm">Email</Label>
                 <Input
                   id="login-email"
                   type="email"
                   {...loginForm.register("email")}
                   placeholder="Enter your email"
+                  className="h-8 sm:h-10 text-sm"
                 />
                 {loginForm.formState.errors.email && (
-                  <p className="text-sm text-red-500 mt-1">
+                  <p className="text-xs text-red-500 mt-0.5">
                     {loginForm.formState.errors.email.message}
                   </p>
                 )}
               </div>
               
-              <div>
-                <Label htmlFor="login-password">Password</Label>
+              <div className="space-y-1">
+                <Label htmlFor="login-password" className="text-xs sm:text-sm">Password</Label>
                 <Input
                   id="login-password"
                   type="password"
                   {...loginForm.register("password")}
                   placeholder="Enter your password"
+                  className="h-8 sm:h-10 text-sm"
                 />
                 {loginForm.formState.errors.password && (
-                  <p className="text-sm text-red-500 mt-1">
+                  <p className="text-xs text-red-500 mt-0.5">
                     {loginForm.formState.errors.password.message}
                   </p>
                 )}
               </div>
               
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button type="submit" className="w-full h-8 sm:h-10 text-sm" disabled={isLoading}>
                 {isLoading ? "Logging in..." : "Login"}
               </Button>
             </form>
           </TabsContent>
           
-          <TabsContent value="register">
-            <form onSubmit={registerForm.handleSubmit(handleRegister)} className="space-y-4">
-              <div>
-                <Label htmlFor="register-name">Full Name</Label>
+          <TabsContent value="register" className="mt-3">
+            <form onSubmit={registerForm.handleSubmit(handleRegister)} className="space-y-3 sm:space-y-4">
+              <div className="space-y-1">
+                <Label htmlFor="register-name" className="text-xs sm:text-sm">Full Name</Label>
                 <Input
                   id="register-name"
                   {...registerForm.register("name")}
                   placeholder="Enter your full name"
+                  className="h-8 sm:h-10 text-sm"
                 />
                 {registerForm.formState.errors.name && (
-                  <p className="text-sm text-red-500 mt-1">
+                  <p className="text-xs text-red-500 mt-0.5">
                     {registerForm.formState.errors.name.message}
                   </p>
                 )}
               </div>
               
-              <div>
-                <Label htmlFor="register-email">Email</Label>
+              <div className="space-y-1">
+                <Label htmlFor="register-email" className="text-xs sm:text-sm">Email</Label>
                 <Input
                   id="register-email"
                   type="email"
                   {...registerForm.register("email")}
                   placeholder="Enter your email"
+                  className="h-8 sm:h-10 text-sm"
                 />
                 {registerForm.formState.errors.email && (
-                  <p className="text-sm text-red-500 mt-1">
+                  <p className="text-xs text-red-500 mt-0.5">
                     {registerForm.formState.errors.email.message}
                   </p>
                 )}
               </div>
               
-              <div>
-                <Label htmlFor="register-password">Password</Label>
+              <div className="space-y-1">
+                <Label htmlFor="register-password" className="text-xs sm:text-sm">Password</Label>
                 <Input
                   id="register-password"
                   type="password"
                   {...registerForm.register("password")}
                   placeholder="Enter your password"
+                  className="h-8 sm:h-10 text-sm"
                 />
                 {registerForm.formState.errors.password && (
-                  <p className="text-sm text-red-500 mt-1">
+                  <p className="text-xs text-red-500 mt-0.5">
                     {registerForm.formState.errors.password.message}
                   </p>
                 )}
               </div>
               
-              <div>
-                <Label htmlFor="register-confirm">Confirm Password</Label>
+              <div className="space-y-1">
+                <Label htmlFor="register-confirm" className="text-xs sm:text-sm">Confirm Password</Label>
                 <Input
                   id="register-confirm"
                   type="password"
                   {...registerForm.register("confirmPassword")}
                   placeholder="Confirm your password"
+                  className="h-8 sm:h-10 text-sm"
                 />
                 {registerForm.formState.errors.confirmPassword && (
-                  <p className="text-sm text-red-500 mt-1">
+                  <p className="text-xs text-red-500 mt-0.5">
                     {registerForm.formState.errors.confirmPassword.message}
                   </p>
                 )}
               </div>
               
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button type="submit" className="w-full h-8 sm:h-10 text-sm" disabled={isLoading}>
                 {isLoading ? "Creating Account..." : "Create Account"}
               </Button>
             </form>
