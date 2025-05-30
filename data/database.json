@@ -140,7 +140,15 @@
       "createdAt": "2025-05-29T22:05:15.358Z"
     }
   ],
-  "cartItems": [],
+  "cartItems": [
+    {
+      "id": 5,
+      "sessionId": "session-1748569966725-agwdjuylg",
+      "productId": 11,
+      "quantity": 1,
+      "createdAt": "2025-05-30T02:02:51.301Z"
+    }
+  ],
   "orders": [
     {
       "id": 7,
@@ -304,7 +312,7 @@
   "counters": {
     "categoryId": 12,
     "productId": 14,
-    "cartItemId": 5,
+    "cartItemId": 6,
     "orderId": 9,
     "userId": 2,
     "reviewId": 2
