@@ -266,6 +266,24 @@
       "sessionId": "b4f19wmba12fl5",
       "userId": 1,
       "expiresAt": "2025-06-28T23:51:10.697Z"
+    },
+    {
+      "sessionId": "113tgomba1ye52",
+      "userId": 1,
+      "expiresAt": "2025-06-29T00:16:01.814Z"
+    }
+  ],
+  "reviews": [
+    {
+      "id": 1,
+      "productId": 10,
+      "userId": 1,
+      "rating": 5,
+      "comment": "great product",
+      "title": "great ",
+      "userName": "aman",
+      "createdAt": "2025-05-30T00:16:25.265Z",
+      "updatedAt": "2025-05-30T00:16:25.265Z"
     }
   ],
   "counters": {
@@ -273,6 +291,7 @@
     "productId": 14,
     "cartItemId": 5,
     "orderId": 9,
-    "userId": 2
+    "userId": 2,
+    "reviewId": 2
   }
 }
