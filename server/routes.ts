@@ -133,7 +133,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
 
     try {
-      const isValidPassword = await bcrypt.compare(password, adminPasswordHash);
+      // Check if the password hash is already bcrypt hashed or plain text
+      let isValidPassword = false;
+      
+      if (adminPasswordHash.startsWith('$2b$')) {
+        // It's already a bcrypt hash, compare directly
+        isValidPassword = await bcrypt.compare(password, adminPasswordHash);
+      } else {
+        // It's plain text, compare directly
+        isValidPassword = password === adminPasswordHash;
+      }
       
       if (username !== adminUsername || !isValidPassword) {
         // Record failed attempt
