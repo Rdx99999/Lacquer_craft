@@ -802,30 +802,30 @@ export default function ProductDetail() {
         </div>
 
         {/* Reviews Section */}
-        <div className="mt-16 border-t pt-12">
+        <div className="mt-8 sm:mt-16 border-t pt-6 sm:pt-12">
           <Reviews productId={productId} />
         </div>
 
         {/* Recommended Products Section */}
         {recommendedProducts.length > 0 && (
-          <div className="mt-16 border-t pt-12">
-            <div className="mb-8">
-              <h2 className="font-display text-2xl font-bold text-gray-900 mb-2">
+          <div className="mt-8 sm:mt-16 border-t pt-6 sm:pt-12">
+            <div className="mb-4 sm:mb-8">
+              <h2 className="font-display text-lg sm:text-2xl font-bold text-gray-900 mb-1 sm:mb-2">
                 You might also like
               </h2>
-              <p className="text-gray-600">
+              <p className="text-sm sm:text-base text-gray-600 hidden sm:block">
                 Products with similar features and from related categories
               </p>
             </div>
 
             {/* Same Category Products */}
             {recommendedProducts.filter(p => p.categoryId === product.categoryId).length > 0 && (
-              <div className="mb-12">
-                <h3 className="font-semibold text-lg text-gray-900 mb-4 flex items-center">
-                  <Badge variant="outline" className="mr-2">{product.category.name}</Badge>
-                  More from this category
+              <div className="mb-6 sm:mb-12">
+                <h3 className="font-semibold text-sm sm:text-lg text-gray-900 mb-2 sm:mb-4 flex items-center flex-wrap">
+                  <Badge variant="outline" className="mr-1 sm:mr-2 text-xs">{product.category.name}</Badge>
+                  <span className="text-xs sm:text-base">More from this category</span>
                 </h3>
-                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 lg:gap-6">
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1.5 sm:gap-3 lg:gap-6">
                   {recommendedProducts
                     .filter(p => p.categoryId === product.categoryId)
                     .slice(0, 4)
@@ -842,12 +842,12 @@ export default function ProductDetail() {
 
             {/* Similar Features Products */}
             {recommendedProducts.filter(p => p.categoryId !== product.categoryId).length > 0 && (
-              <div className="mb-8">
-                <h3 className="font-semibold text-lg text-gray-900 mb-4 flex items-center">
-                  <Badge variant="outline" className="mr-2 bg-saffron/10 text-saffron border-saffron">Similar Features</Badge>
-                  Products with similar characteristics
+              <div className="mb-4 sm:mb-8">
+                <h3 className="font-semibold text-sm sm:text-lg text-gray-900 mb-2 sm:mb-4 flex items-center flex-wrap">
+                  <Badge variant="outline" className="mr-1 sm:mr-2 bg-saffron/10 text-saffron border-saffron text-xs">Similar Features</Badge>
+                  <span className="text-xs sm:text-base">Products with similar characteristics</span>
                 </h3>
-                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 lg:gap-6">
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1.5 sm:gap-3 lg:gap-6">
                   {recommendedProducts
                     .filter(p => p.categoryId !== product.categoryId)
                     .slice(0, 4)
@@ -863,17 +863,17 @@ export default function ProductDetail() {
             )}
 
             {/* View More Links */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center">
               <Link href={`/products?category=${product?.category?.slug}`}>
-                <Button variant="outline" className="border-terracotta text-terracotta hover:bg-terracotta hover:text-white">
+                <Button variant="outline" className="border-terracotta text-terracotta hover:bg-terracotta hover:text-white text-sm py-2 w-full sm:w-auto">
                   View all {product?.category?.name}
-                  <ArrowRight className="h-4 w-4 ml-2" />
+                  <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4 ml-1 sm:ml-2" />
                 </Button>
               </Link>
               <Link href="/products">
-                <Button variant="outline" className="border-gray-300 text-gray-700 hover:bg-gray-50">
+                <Button variant="outline" className="border-gray-300 text-gray-700 hover:bg-gray-50 text-sm py-2 w-full sm:w-auto">
                   Browse all products
-                  <ArrowRight className="h-4 w-4 ml-2" />
+                  <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4 ml-1 sm:ml-2" />
                 </Button>
               </Link>
             </div>
