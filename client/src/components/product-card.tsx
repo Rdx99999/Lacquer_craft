@@ -125,11 +125,11 @@ export function ProductCard({
               </div>
             </div>
 
-            <h3 className="font-semibold text-gray-900 line-clamp-2 min-h-[2.5rem] text-sm sm:text-base">
+            <h3 className="font-semibold text-gray-900 line-clamp-2 min-h-[2rem] sm:min-h-[2.5rem] text-xs sm:text-base leading-tight">
               {product.name}
             </h3>
 
-            <p className="text-xs sm:text-sm text-gray-600 line-clamp-2 min-h-[2rem] sm:min-h-[2.5rem]">
+            <p className="text-xs sm:text-sm text-gray-600 line-clamp-2 min-h-[1.5rem] sm:min-h-[2.5rem] leading-tight">
               {product.description}
             </p>
 

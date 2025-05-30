@@ -743,7 +743,7 @@ export default function ProductDetail() {
                   <Badge variant="outline" className="mr-2">{product.category.name}</Badge>
                   More from this category
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
                   {recommendedProducts
                     .filter(p => p.categoryId === product.categoryId)
                     .slice(0, 4)
@@ -765,7 +765,7 @@ export default function ProductDetail() {
                   <Badge variant="outline" className="mr-2 bg-saffron/10 text-saffron border-saffron">Similar Features</Badge>
                   Products with similar characteristics
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
                   {recommendedProducts
                     .filter(p => p.categoryId !== product.categoryId)
                     .slice(0, 4)
