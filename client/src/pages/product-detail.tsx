@@ -528,14 +528,14 @@ export default function ProductDetail() {
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-white to-soft-beige/20 rounded-xl p-6 border border-gray-100">
-              <h3 className="font-semibold text-gray-900 mb-4 flex items-center">
-                <svg className="h-5 w-5 mr-2 text-terracotta" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-gradient-to-br from-white to-soft-beige/20 rounded-xl p-4 sm:p-6 border border-gray-100">
+              <h3 className="font-semibold text-gray-900 mb-3 sm:mb-4 flex items-center text-base sm:text-lg">
+                <svg className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-terracotta" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
                 Product Description
               </h3>
-              <p className="text-gray-700 leading-relaxed text-lg">{product.description}</p>
+              <p className="text-gray-700 leading-relaxed text-sm sm:text-base lg:text-lg">{product.description}</p>
             </div>
 
             {/* Stock Status */}
