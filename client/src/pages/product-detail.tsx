@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams, Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
-import { getProduct, getRecommendedProducts, addToCart } from "@/lib/api";
+import { getProduct, getRecommendedProducts, addToCart, getProductReviewStats } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -14,6 +14,7 @@ import { CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { ProductCard } from "@/components/product-card";
+import { Reviews } from "@/components/reviews";
 
 export default function ProductDetail() {
   const params = useParams();
@@ -45,6 +46,13 @@ export default function ProductDetail() {
   const { data: recommendedProducts = [] } = useQuery({
     queryKey: ["/api/products", productId, "recommendations"],
     queryFn: () => getRecommendedProducts(productId),
+    enabled: !isNaN(productId) && !!product,
+  });
+
+  // Get review stats
+  const { data: reviewStats } = useQuery({
+    queryKey: ["/api/products", productId, "review-stats"],
+    queryFn: () => getProductReviewStats(productId),
     enabled: !isNaN(productId) && !!product,
   });
 
@@ -495,15 +503,28 @@ export default function ProductDetail() {
                   </Badge>
                 </div>
 
-                <div className="flex items-center space-x-2 bg-saffron/10 px-4 py-2 rounded-full">
-                  <div className="flex items-center space-x-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-5 w-5 fill-saffron text-saffron" />
-                    ))}
+                {reviewStats && reviewStats.totalReviews > 0 && (
+                  <div className="flex items-center space-x-2 bg-saffron/10 px-4 py-2 rounded-full">
+                    <div className="flex items-center space-x-1">
+                      {[...Array(5)].map((_, i) => (
+                        <Star 
+                          key={i} 
+                          className={`h-5 w-5 ${
+                            i < Math.round(reviewStats.averageRating)
+                              ? "fill-saffron text-saffron"
+                              : "text-gray-300"
+                          }`} 
+                        />
+                      ))}
+                    </div>
+                    <span className="text-sm font-medium text-gray-700">
+                      {reviewStats.averageRating}
+                    </span>
+                    <span className="text-sm text-gray-500">
+                      ({reviewStats.totalReviews} review{reviewStats.totalReviews !== 1 ? 's' : ''})
+                    </span>
                   </div>
-                  <span className="text-sm font-medium text-gray-700">4.8</span>
-                  <span className="text-sm text-gray-500">(127 reviews)</span>
-                </div>
+                )}
               </div>
             </div>
 
@@ -696,6 +717,11 @@ export default function ProductDetail() {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Reviews Section */}
+        <div className="mt-16 border-t pt-12">
+          <Reviews productId={productId} />
         </div>
 
         {/* Recommended Products Section */}

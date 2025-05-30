@@ -106,14 +106,86 @@ export async function deleteImage(imageUrl: string) {
   return response.json();
 }
 
-export async function deleteProduct(id: number): Promise<void> {
-  const response = await fetch(`/api/products/${id}`, {
-    method: "DELETE",
-  });
+export async function deleteProduct(id: number) {
+  const response = await fetch(`/api/products/${id}`, { method: "DELETE" });
+  if (!response.ok) throw new Error("Failed to delete product");
+  return response.json();
+}
 
+// Reviews
+export async function getProductReviews(productId: number) {
+  const response = await fetch(`/api/products/${productId}/reviews`);
+  if (!response.ok) throw new Error("Failed to fetch reviews");
+  return response.json();
+}
+
+export async function getProductReviewStats(productId: number) {
+  const response = await fetch(`/api/products/${productId}/review-stats`);
+  if (!response.ok) throw new Error("Failed to fetch review stats");
+  return response.json();
+}
+
+export async function createReview(reviewData: {
+  productId: number;
+  rating: number;
+  title: string;
+  comment: string;
+}) {
+  const token = localStorage.getItem("auth_token");
+  const response = await fetch("/api/reviews", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(reviewData),
+  });
   if (!response.ok) {
-    throw new Error("Failed to delete product");
+    const error = await response.json();
+    throw new Error(error.message || "Failed to create review");
   }
+  return response.json();
+}
+
+export async function getUserReviews() {
+  const token = localStorage.getItem("auth_token");
+  const response = await fetch("/api/users/reviews", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!response.ok) throw new Error("Failed to fetch user reviews");
+  return response.json();
+}
+
+export async function updateReview(id: number, reviewData: {
+  rating?: number;
+  title?: string;
+  comment?: string;
+}) {
+  const token = localStorage.getItem("auth_token");
+  const response = await fetch(`/api/reviews/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(reviewData),
+  });
+  if (!response.ok) throw new Error("Failed to update review");
+  return response.json();
+}
+
+export async function deleteReview(id: number) {
+  const token = localStorage.getItem("auth_token");
+  const response = await fetch(`/api/reviews/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!response.ok) throw new Error("Failed to delete review");
+  return response.json();
 }
 
 export async function uploadImage(file: File): Promise<{ imageUrl: string }> {
@@ -186,7 +258,7 @@ export const getOrder = async (id: number): Promise<Order> => {
 export const createOrder = async (order: InsertOrder, sessionId: string): Promise<Order> => {
   console.log("Creating order with data:", order);
   console.log("Using session ID:", sessionId);
-  
+
   const res = await fetch("/api/orders", {
     method: "POST",
     headers: { 
@@ -226,7 +298,7 @@ export async function updateOrderStatus(id: number, status: string) {
 
 export async function trackOrder(trackingNumber: string) {
   const response = await fetch(`/api/track/${trackingNumber}`);
-  
+
   if (!response.ok) {
     const error = await response.json();
     throw new Error(error.message || "Failed to track order");

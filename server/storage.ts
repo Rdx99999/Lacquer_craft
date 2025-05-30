@@ -14,7 +14,9 @@ import {
   type ProductWithCategory,
   type CartItemWithProduct,
   Setting,
-  InsertSetting
+  InsertSetting,
+  Review,
+  InsertReview
 } from "@shared/schema";
 import type { User, InsertUser } from "@shared/auth-schema";
 

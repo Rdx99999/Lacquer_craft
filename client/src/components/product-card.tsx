@@ -15,10 +15,20 @@ interface ProductCardProps {
   highlightFeatures?: string[];
 }
 
-export function ProductCard({ product, showCategory = true, highlightFeatures = [] }: ProductCardProps) {
+export function ProductCard({ 
+  product, 
+  showCategory = true,
+  highlightFeatures = [] 
+}: ProductCardProps) {
   const { addToCart, isAddingToCart } = useCart();
   const { isInWishlist, toggleWishlist } = useWishlist();
   const { toast } = useToast();
+
+  // Fetch review stats
+  // const { data: reviewStats } = useQuery({
+  //   queryKey: ["/api/products", product.id, "review-stats"],
+  //   queryFn: () => getProductReviewStats(product.id),
+  // });
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();

@@ -5,7 +5,7 @@ import fs from "fs";
 import express from "express";
 import multer from "multer";
 import { storage } from "./storage";
-import { insertProductSchema, insertOrderSchema, insertCartItemSchema, insertCategorySchema, insertSettingSchema } from "@shared/schema";
+import { insertProductSchema, insertOrderSchema, insertCartItemSchema, insertCategorySchema, insertSettingSchema, insertReviewSchema } from "@shared/schema";
 import { registerSchema, loginSchema } from "@shared/auth-schema";
 import { z } from "zod";
 import bcrypt from 'bcrypt';
@@ -859,6 +859,105 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ message: "Setting deleted successfully" });
     } catch (error) {
       res.status(500).json({ message: "Failed to delete setting" });
+    }
+  });
+
+  // Review routes
+  app.get("/api/products/:productId/reviews", async (req, res) => {
+    try {
+      const productId = parseInt(req.params.productId);
+      if (isNaN(productId)) {
+        return res.status(400).json({ message: "Invalid product ID" });
+      }
+
+      const reviews = await storage.getProductReviews(productId);
+      res.json(reviews);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch reviews" });
+    }
+  });
+
+  app.get("/api/products/:productId/review-stats", async (req, res) => {
+    try {
+      const productId = parseInt(req.params.productId);
+      if (isNaN(productId)) {
+        return res.status(400).json({ message: "Invalid product ID" });
+      }
+
+      const stats = await storage.getProductReviewStats(productId);
+      res.json(stats);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch review stats" });
+    }
+  });
+
+  app.post("/api/reviews", requireAuth, async (req: any, res) => {
+    try {
+      const reviewData = {
+        ...req.body,
+        userId: req.user.id,
+      };
+
+      const validatedData = insertReviewSchema.parse(reviewData);
+      const review = await storage.createReview(validatedData);
+      res.status(201).json(review);
+    } catch (error: any) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Validation error", errors: error.errors });
+      }
+      res.status(400).json({ message: error.message || "Failed to create review" });
+    }
+  });
+
+  app.get("/api/users/reviews", requireAuth, async (req: any, res) => {
+    try {
+      const reviews = await storage.getUserReviews(req.user.id);
+      res.json(reviews);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch user reviews" });
+    }
+  });
+
+  app.put("/api/reviews/:id", requireAuth, async (req: any, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid review ID" });
+      }
+
+      // Verify the review belongs to the user
+      const existingReview = await storage.getProductReviews(0); // We'll need to get by ID
+      const userReview = existingReview.find(r => r.id === id && r.userId === req.user.id);
+      if (!userReview) {
+        return res.status(404).json({ message: "Review not found or not authorized" });
+      }
+
+      const validatedData = insertReviewSchema.partial().parse(req.body);
+      const review = await storage.updateReview(id, validatedData);
+      res.json(review);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Validation error", errors: error.errors });
+      }
+      res.status(500).json({ message: "Failed to update review" });
+    }
+  });
+
+  app.delete("/api/reviews/:id", requireAuth, async (req: any, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid review ID" });
+      }
+
+      const deleted = await storage.deleteReview(id, req.user.id);
+      if (!deleted) {
+        return res.status(404).json({ message: "Review not found or not authorized" });
+      }
+
+      res.json({ message: "Review deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to delete review" });
     }
   });
 

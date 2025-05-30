@@ -104,3 +104,36 @@ export const settingSchema = z.object({
 
 export type InsertSetting = z.infer<typeof insertSettingSchema>;
 export type Setting = z.infer<typeof settingSchema>;
+
+// Reviews schema
+export const insertReviewSchema = z.object({
+  productId: z.number().min(1, "Product ID is required"),
+  userId: z.number().min(1, "User ID is required"),
+  rating: z.number().min(1).max(5, "Rating must be between 1 and 5"),
+  comment: z.string().min(1, "Comment is required").max(1000, "Comment must be less than 1000 characters"),
+  title: z.string().min(1, "Title is required").max(100, "Title must be less than 100 characters"),
+});
+
+export const reviewSchema = z.object({
+  id: z.number(),
+  productId: z.number(),
+  userId: z.number(),
+  rating: z.number(),
+  comment: z.string(),
+  title: z.string(),
+  userName: z.string(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+
+export type InsertReview = z.infer<typeof insertReviewSchema>;
+export type Review = z.infer<typeof reviewSchema>;
+
+// Product with review stats
+export type ProductWithReviews = Product & {
+  reviewStats: {
+    averageRating: number;
+    totalReviews: number;
+    ratingDistribution: { [key: number]: number };
+  };
+};

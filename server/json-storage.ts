@@ -12,7 +12,9 @@ import type {
   ProductWithCategory,
   CartItemWithProduct,
   Setting,
-  InsertSetting
+  InsertSetting,
+  Review,
+  InsertReview
 } from "@shared/schema";
 import type { User, InsertUser } from "@shared/auth-schema";
 import bcrypt from 'bcrypt';
@@ -26,12 +28,14 @@ interface DatabaseData {
   settings: Setting[];
   users: User[];
   sessions: { sessionId: string; userId: number; expiresAt: string }[];
+  reviews: Review[];
   counters: {
     categoryId: number;
     productId: number;
     cartItemId: number;
     orderId: number;
     userId: number;
+    reviewId: number;
   };
 }
 
@@ -49,12 +53,14 @@ export class JsonStorage implements IStorage {
       settings: [],
       users: [],
       sessions: [],
+      reviews: [],
       counters: {
         categoryId: 1,
         productId: 1,
         cartItemId: 1,
         orderId: 1,
-        userId: 1
+        userId: 1,
+        reviewId: 1
       }
     };
     this.ensureDataDirectory();
@@ -87,12 +93,14 @@ export class JsonStorage implements IStorage {
           settings: loadedData.settings || [],
           users: loadedData.users || [],
           sessions: loadedData.sessions || [],
+          reviews: loadedData.reviews || [],
           counters: {
             categoryId: loadedData.counters?.categoryId || 1,
             productId: loadedData.counters?.productId || 1,
             cartItemId: loadedData.counters?.cartItemId || 1,
             orderId: loadedData.counters?.orderId || 1,
-            userId: loadedData.counters?.userId || 1
+            userId: loadedData.counters?.userId || 1,
+            reviewId: loadedData.counters?.reviewId || 1
           }
         };
       } else {
@@ -699,7 +707,113 @@ export class JsonStorage implements IStorage {
     return wishlistProducts;
   }
 
-  private getNextId(table: 'products' | 'categories' | 'cartItems' | 'orders' | 'settings' | 'users'): number {
+  // Reviews
+  async createReview(review: InsertReview): Promise<Review> {
+    // Check if user has already reviewed this product
+    const existingReview = this.data.reviews.find(
+      r => r.productId === review.productId && r.userId === review.userId
+    );
+    
+    if (existingReview) {
+      throw new Error("You have already reviewed this product");
+    }
+
+    // Get user name
+    const user = await this.getUserById(review.userId);
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // Verify product exists
+    const product = await this.getProduct(review.productId);
+    if (!product) {
+      throw new Error("Product not found");
+    }
+
+    const newReview: Review = {
+      id: this.data.counters.reviewId++,
+      productId: review.productId,
+      userId: review.userId,
+      rating: review.rating,
+      comment: review.comment,
+      title: review.title,
+      userName: user.name,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    this.data.reviews.push(newReview);
+    await this.saveData();
+    return newReview;
+  }
+
+  async getProductReviews(productId: number): Promise<Review[]> {
+    return this.data.reviews
+      .filter(review => review.productId === productId)
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
+  async getUserReviews(userId: number): Promise<Review[]> {
+    return this.data.reviews
+      .filter(review => review.userId === userId)
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
+  async updateReview(id: number, review: Partial<InsertReview>): Promise<Review | undefined> {
+    const index = this.data.reviews.findIndex(r => r.id === id);
+    if (index === -1) return undefined;
+
+    const updated: Review = {
+      ...this.data.reviews[index],
+      ...review,
+      updatedAt: new Date().toISOString(),
+    };
+    
+    this.data.reviews[index] = updated;
+    await this.saveData();
+    return updated;
+  }
+
+  async deleteReview(id: number, userId: number): Promise<boolean> {
+    const index = this.data.reviews.findIndex(r => r.id === id && r.userId === userId);
+    if (index === -1) return false;
+
+    this.data.reviews.splice(index, 1);
+    await this.saveData();
+    return true;
+  }
+
+  async getProductReviewStats(productId: number): Promise<{
+    averageRating: number;
+    totalReviews: number;
+    ratingDistribution: { [key: number]: number };
+  }> {
+    const reviews = await this.getProductReviews(productId);
+    
+    if (reviews.length === 0) {
+      return {
+        averageRating: 0,
+        totalReviews: 0,
+        ratingDistribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
+      };
+    }
+
+    const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+    const averageRating = totalRating / reviews.length;
+
+    const ratingDistribution = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+    reviews.forEach(review => {
+      ratingDistribution[review.rating]++;
+    });
+
+    return {
+      averageRating: Math.round(averageRating * 10) / 10, // Round to 1 decimal place
+      totalReviews: reviews.length,
+      ratingDistribution
+    };
+  }
+
+  private getNextId(table: 'products' | 'categories' | 'cartItems' | 'orders' | 'settings' | 'users' | 'reviews'): number {
     if (table === 'products') {
       return this.data.counters.productId++;
     } else if (table === 'categories') {
@@ -712,6 +826,8 @@ export class JsonStorage implements IStorage {
         return this.data.counters.orderId++; //Using orderId as settings id.
     } else if (table === 'users') {
         return this.data.counters.userId++;
+    } else if (table === 'reviews') {
+        return this.data.counters.reviewId++;
     }
     throw new Error(`Invalid table name: ${table}`);
   }
