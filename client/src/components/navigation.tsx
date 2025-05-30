@@ -173,7 +173,7 @@ export function Navigation() {
                   className="bg-terracotta text-white border-terracotta hover:bg-terracotta/90 p-1 sm:p-2 text-xs sm:text-sm"
                   onClick={() => setShowAuthDialog(true)}
                 >
-                  <User className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
+                  <User className="h-3 w-3 sm:h-4 w-4 sm:mr-2" />
                   <span className="hidden xs:inline">Login</span>
                 </Button>
               )}
