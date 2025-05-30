@@ -131,12 +131,12 @@ export async function createReview(reviewData: {
   title: string;
   comment: string;
 }) {
-  const token = localStorage.getItem("auth_token");
+  const sessionId = localStorage.getItem("sessionId");
   const response = await fetch("/api/reviews", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${sessionId}`,
     },
     body: JSON.stringify(reviewData),
   });
@@ -163,12 +163,12 @@ export async function updateReview(id: number, reviewData: {
   title?: string;
   comment?: string;
 }) {
-  const token = localStorage.getItem("auth_token");
+  const sessionId = localStorage.getItem("sessionId");
   const response = await fetch(`/api/reviews/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${sessionId}`,
     },
     body: JSON.stringify(reviewData),
   });
@@ -177,11 +177,11 @@ export async function updateReview(id: number, reviewData: {
 }
 
 export async function deleteReview(id: number) {
-  const token = localStorage.getItem("auth_token");
+  const sessionId = localStorage.getItem("sessionId");
   const response = await fetch(`/api/reviews/${id}`, {
     method: "DELETE",
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${sessionId}`,
     },
   });
   if (!response.ok) throw new Error("Failed to delete review");
