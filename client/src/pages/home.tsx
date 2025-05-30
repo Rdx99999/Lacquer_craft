@@ -91,9 +91,9 @@ export default function Home() {
               
               <div className="flex flex-col sm:flex-row gap-4 sm:gap-4 pt-4">
                 <Link href="/products" className="w-full sm:w-auto">
-                  <Button className="heritage-gradient hover:opacity-90 text-white px-8 py-4 text-base font-serif font-semibold w-full sm:w-auto traditional-shadow hover:scale-105 transition-all duration-300 craft-border border-0">
-                    संग्रह देखें • {heroButtonText}
-                    <ArrowRight className="ml-2 h-4 w-4" />
+                  <Button className="heritage-gradient hover:opacity-90 text-white px-8 py-4 text-base font-serif font-semibold w-full sm:w-auto traditional-shadow hover:scale-105 transition-all duration-300 craft-border border-0 [&]:text-white [&]:text-shadow-lg">
+                    <span className="text-white drop-shadow-lg">संग्रह देखें • {heroButtonText}</span>
+                    <ArrowRight className="ml-2 h-4 w-4 text-white drop-shadow-lg" />
                   </Button>
                 </Link>
                 <Button variant="outline" className="border-white/50 text-white hover:bg-white/20 backdrop-blur-sm px-6 py-3 text-sm font-medium w-full sm:w-auto transition-all duration-300 bg-white/10">
