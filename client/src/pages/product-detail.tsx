@@ -29,6 +29,7 @@ export default function ProductDetail() {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [isBuyingNow, setIsBuyingNow] = useState(false);
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+  const [isFeaturesExpanded, setIsFeaturesExpanded] = useState(false);
   const imageRef = useRef<HTMLImageElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -466,13 +467,43 @@ export default function ProductDetail() {
                   </svg>
                   Key Features
                 </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2 sm:gap-3">
-                  {product.features.map((feature, index) => (
-                    <div key={index} className="flex items-center text-xs sm:text-sm text-gray-700 bg-white/50 px-3 sm:px-4 py-2 rounded-lg border border-gray-100">
-                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-terracotta rounded-full mr-2 sm:mr-3 flex-shrink-0"></div>
-                      <span className="leading-tight">{feature}</span>
+                <div className="space-y-3">
+                  <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2 sm:gap-3 transition-all duration-300 ${
+                    isFeaturesExpanded 
+                      ? '' 
+                      : 'max-h-24 sm:max-h-none overflow-hidden'
+                  }`}>
+                    {product.features.map((feature, index) => (
+                      <div key={index} className="flex items-center text-xs sm:text-sm text-gray-700 bg-white/50 px-3 sm:px-4 py-2 rounded-lg border border-gray-100">
+                        <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-terracotta rounded-full mr-2 sm:mr-3 flex-shrink-0"></div>
+                        <span className="leading-tight">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  {/* Show More/Less button - only visible on mobile when features are many */}
+                  {product.features.length > 2 && (
+                    <div className="block sm:hidden">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setIsFeaturesExpanded(!isFeaturesExpanded)}
+                        className="text-sage hover:text-sage/80 hover:bg-sage/10 p-0 h-auto font-medium"
+                      >
+                        {isFeaturesExpanded ? (
+                          <>
+                            <span className="mr-1">Show less</span>
+                            <ChevronUp className="h-4 w-4" />
+                          </>
+                        ) : (
+                          <>
+                            <span className="mr-1">Show more features</span>
+                            <ChevronDown className="h-4 w-4" />
+                          </>
+                        )}
+                      </Button>
                     </div>
-                  ))}
+                  )}
                 </div>
               </div>
             )}
