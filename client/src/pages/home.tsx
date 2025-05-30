@@ -138,8 +138,6 @@ export default function Home() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/10" />
                 
-                
-                
                 {/* Bottom overlay with authentic touch */}
                 <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-sm rounded-lg p-3 shadow-lg">
                   <div className="flex items-center justify-between">
