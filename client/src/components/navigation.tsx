@@ -114,7 +114,12 @@ export function Navigation() {
               </form>
 
               {/* Mobile Search Button */}
-              <Button variant="ghost" size="sm" className="lg:hidden hover:bg-warm-cream/50 p-1.5 sm:p-2">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="lg:hidden hover:bg-warm-cream/50 p-1.5 sm:p-2"
+                onClick={() => window.location.href = '/products'}
+              >
                 <Search className="h-4 w-4 sm:h-5 sm:w-5" />
               </Button>
 
