@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { ProductCard } from "@/components/product-card";
 import { getProducts, getCategories, getSettings } from "@/lib/api";
 import artisanImage from "@assets/image29.png";
+import craftWorkshopImage from "@assets/image30.png";
 
 export default function Home() {
   const { data: featuredProducts = [] } = useQuery({
@@ -300,7 +301,7 @@ export default function Home() {
                       className="w-full h-24 sm:h-32 object-cover rounded-lg sm:rounded-xl shadow-lg"
                     />
                     <img
-                      src="https://images.unsplash.com/photo-1609887461110-46dc7516de27?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300"
+                      src={craftWorkshopImage}
                       alt="Craft workshop"
                       className="w-full h-32 sm:h-48 object-cover rounded-lg sm:rounded-xl shadow-lg"
                     />
