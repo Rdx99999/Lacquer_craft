@@ -57,67 +57,108 @@ export default function Home() {
                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
              }} />
         
-        <div className="relative max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-12 lg:py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-12 items-center">
+        <div className="relative max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-12 lg:py-24">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center">
             {/* Left Content */}
-            <div className="text-left space-y-3 lg:space-y-6">
-              <div className="space-y-2 lg:space-y-4">
-                <Badge className="bg-terracotta/10 text-terracotta border-terracotta/20 px-2 py-1 sm:px-3 sm:py-1.5 text-xs">
-                  <Sparkles className="h-3 w-3 mr-1" />
-                  <span className="hidden sm:inline">Handcrafted Excellence Since 1947</span>
-                  <span className="sm:hidden">Since 1947</span>
-                </Badge>
-                <h1 className="font-display text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight">
-                  {heroTitle}
-                  <span className="text-terracotta block">{heroSubtitle}</span>
-                  <span className="text-gray-700">& Crafts</span>
-                </h1>
-                <p className="text-xs sm:text-base lg:text-lg text-gray-600 leading-relaxed max-w-lg">
-                  {heroDescription}
-                </p>
+            <div className="text-left space-y-4 lg:space-y-6">
+              <div className="space-y-3 lg:space-y-4">
+                <div className="flex items-center justify-center sm:justify-start">
+                  <Badge className="bg-gradient-to-r from-terracotta/10 to-saffron/10 text-terracotta border-terracotta/20 px-3 py-1.5 text-xs font-medium shadow-sm">
+                    <Sparkles className="h-3 w-3 mr-1.5 text-saffron" />
+                    <span className="hidden sm:inline">Handcrafted Excellence Since 1947</span>
+                    <span className="sm:hidden">Heritage Since 1947</span>
+                  </Badge>
+                </div>
+                
+                <div className="text-center sm:text-left">
+                  <h1 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight">
+                    <span className="text-gray-900">{heroTitle}</span>
+                    <span className="text-terracotta block mt-1">{heroSubtitle}</span>
+                    <span className="text-saffron block mt-1">& Crafts</span>
+                  </h1>
+                </div>
+                
+                <div className="text-center sm:text-left">
+                  <p className="text-sm sm:text-base lg:text-lg text-gray-600 leading-relaxed max-w-lg mx-auto sm:mx-0">
+                    {heroDescription}
+                  </p>
+                </div>
               </div>
               
-              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-3 pt-2">
                 <Link href="/products" className="w-full sm:w-auto">
-                  <Button className="bg-terracotta hover:bg-terracotta/90 text-white px-4 sm:px-6 py-2 sm:py-3 text-sm w-full sm:w-auto">
+                  <Button className="bg-gradient-to-r from-terracotta to-saffron hover:from-terracotta/90 hover:to-saffron/90 text-white px-6 py-3 text-sm font-medium w-full sm:w-auto shadow-lg hover:shadow-xl transition-all duration-300">
                     {heroButtonText}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
-                <Button variant="outline" className="border-gray-300 text-gray-700 hover:bg-gray-50 px-4 sm:px-6 py-2 sm:py-3 text-sm w-full sm:w-auto">
+                <Button variant="outline" className="border-terracotta/20 text-terracotta hover:bg-terracotta/5 px-6 py-3 text-sm font-medium w-full sm:w-auto transition-all duration-300">
                   <Heart className="mr-2 h-4 w-4" />
                   <span className="hidden sm:inline">{heroButtonSecondaryText}</span>
-                  <span className="sm:hidden">Story</span>
+                  <span className="sm:hidden">Our Story</span>
                 </Button>
               </div>
               
-              {/* Stats */}
-              <div className="grid grid-cols-3 gap-2 sm:gap-4 pt-3 sm:pt-6 border-t border-gray-200">
-                <div className="text-center">
-                  <div className="text-sm sm:text-lg lg:text-xl font-bold text-terracotta">500+</div>
-                  <div className="text-xs text-gray-600">Artisans</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-sm sm:text-lg lg:text-xl font-bold text-terracotta">15K+</div>
-                  <div className="text-xs text-gray-600">Customers</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-sm sm:text-lg lg:text-xl font-bold text-terracotta">25+</div>
-                  <div className="text-xs text-gray-600">States</div>
+              {/* Enhanced Stats */}
+              <div className="bg-gradient-to-r from-warm-cream/50 to-soft-beige/50 rounded-lg p-4 sm:p-6 border border-terracotta/10">
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="text-center">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-terracotta/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                      <Users className="h-4 w-4 sm:h-5 sm:w-5 text-terracotta" />
+                    </div>
+                    <div className="text-lg sm:text-xl font-bold text-terracotta">500+</div>
+                    <div className="text-xs text-gray-600">Artisans</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-saffron/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                      <Heart className="h-4 w-4 sm:h-5 sm:w-5 text-saffron" />
+                    </div>
+                    <div className="text-lg sm:text-xl font-bold text-saffron">15K+</div>
+                    <div className="text-xs text-gray-600">Customers</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-terracotta/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                      <Award className="h-4 w-4 sm:h-5 sm:w-5 text-terracotta" />
+                    </div>
+                    <div className="text-lg sm:text-xl font-bold text-terracotta">25+</div>
+                    <div className="text-xs text-gray-600">States</div>
+                  </div>
                 </div>
               </div>
             </div>
             
-            {/* Right Visual */}
-            <div className="relative mt-3 lg:mt-0">
-              {/* Main Image */}
-              <div className="relative rounded-lg lg:rounded-xl overflow-hidden shadow-lg lg:shadow-xl">
+            {/* Enhanced Right Visual */}
+            <div className="relative mt-6 lg:mt-0 order-first lg:order-last">
+              {/* Main Image with Enhanced Styling */}
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
                 <img
                   src={heroImage}
                   alt="Traditional Indian Craftsmanship"
-                  className="w-full h-[200px] sm:h-[300px] lg:h-[400px] object-cover"
+                  className="w-full h-[280px] sm:h-[320px] lg:h-[420px] object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/10" />
+                
+                {/* Mobile-friendly floating badge */}
+                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-2 shadow-lg">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <span className="text-xs font-medium text-gray-800">Live Crafting</span>
+                  </div>
+                </div>
+                
+                {/* Bottom overlay with authentic touch */}
+                <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-sm rounded-lg p-3 shadow-lg">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-xs font-medium text-gray-800">Master Craftsman</p>
+                      <p className="text-xs text-gray-600">Creating heritage pieces</p>
+                    </div>
+                    <div className="flex items-center space-x-1">
+                      <Star className="h-3 w-3 text-saffron fill-current" />
+                      <span className="text-xs font-medium text-gray-800">4.9</span>
+                    </div>
+                  </div>
+                </div>
               </div>
               
               {/* Floating Cards - Hidden on mobile for cleaner look */}
