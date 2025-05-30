@@ -192,41 +192,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Trust Indicators */}
-      <section className="py-4 sm:py-8 bg-gray-50 border-t border-gray-200">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 lg:gap-6">
-            <div className="text-center">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-terracotta/10 rounded-full flex items-center justify-center mx-auto mb-1 sm:mb-2">
-                <Truck className="h-4 w-4 sm:h-5 sm:w-5 text-terracotta" />
-              </div>
-              <div className="font-semibold text-gray-900 text-xs sm:text-sm">Free Shipping</div>
-              <div className="text-xs text-gray-600">Orders ₹2000+</div>
-            </div>
-            <div className="text-center">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-saffron/10 rounded-full flex items-center justify-center mx-auto mb-1 sm:mb-2">
-                <Award className="h-4 w-4 sm:h-5 sm:w-5 text-saffron" />
-              </div>
-              <div className="font-semibold text-gray-900 text-xs sm:text-sm">Authentic</div>
-              <div className="text-xs text-gray-600">100% handmade</div>
-            </div>
-            <div className="text-center">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-terracotta/10 rounded-full flex items-center justify-center mx-auto mb-1 sm:mb-2">
-                <Shield className="h-4 w-4 sm:h-5 sm:w-5 text-terracotta" />
-              </div>
-              <div className="font-semibold text-gray-900 text-xs sm:text-sm">Secure</div>
-              <div className="text-xs text-gray-600">Safe payment</div>
-            </div>
-            <div className="text-center">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-saffron/10 rounded-full flex items-center justify-center mx-auto mb-1 sm:mb-2">
-                <Users className="h-4 w-4 sm:h-5 sm:w-5 text-saffron" />
-              </div>
-              <div className="font-semibold text-gray-900 text-xs sm:text-sm">Direct Support</div>
-              <div className="text-xs text-gray-600">To craftsman</div>
-            </div>
-          </div>
-        </div>
-      </section>
+      
 
       {/* Categories Section */}
       <section className="py-6 sm:py-12 lg:py-16 bg-white">
