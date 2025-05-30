@@ -9,7 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useCart } from "@/hooks/use-cart";
 import { useAuth } from "@/hooks/use-auth";
 import { useWishlist } from "@/hooks/use-wishlist";
-import { ChevronLeft, ChevronRight, Star, Plus, Minus, Heart, Share2, X, ArrowRight, ArrowLeft, ShoppingCart } from "lucide-react";
+import { ChevronLeft, ChevronRight, Star, Plus, Minus, Heart, Share2, X, ArrowRight, ArrowLeft, ShoppingCart, ChevronDown, ChevronUp } from "lucide-react";
 import { CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -28,6 +28,7 @@ export default function ProductDetail() {
   const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [isBuyingNow, setIsBuyingNow] = useState(false);
+  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
   const imageRef = useRef<HTMLImageElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -543,7 +544,39 @@ export default function ProductDetail() {
                 </svg>
                 Product Description
               </h3>
-              <p className="text-gray-700 leading-relaxed text-sm sm:text-base lg:text-lg">{product.description}</p>
+              <div className="space-y-3">
+                <p className={`text-gray-700 leading-relaxed text-sm sm:text-base lg:text-lg transition-all duration-300 ${
+                  isDescriptionExpanded 
+                    ? '' 
+                    : 'line-clamp-3 sm:line-clamp-none'
+                }`}>
+                  {product.description}
+                </p>
+                
+                {/* Show More/Less button - only visible on mobile when description is long */}
+                {product.description && product.description.length > 150 && (
+                  <div className="block sm:hidden">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setIsDescriptionExpanded(!isDescriptionExpanded)}
+                      className="text-terracotta hover:text-terracotta/80 hover:bg-terracotta/10 p-0 h-auto font-medium"
+                    >
+                      {isDescriptionExpanded ? (
+                        <>
+                          <span className="mr-1">Show less</span>
+                          <ChevronUp className="h-4 w-4" />
+                        </>
+                      ) : (
+                        <>
+                          <span className="mr-1">Show more details</span>
+                          <ChevronDown className="h-4 w-4" />
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Stock Status */}
