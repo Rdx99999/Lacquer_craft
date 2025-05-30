@@ -207,7 +207,7 @@
     {
       "id": 4,
       "key": "heroImage",
-      "value": "/images/homepage/hero/2025/05/29/hero_banner_mithila-page-banner_1748553874916-3070228.jpg",
+      "value": "/images/hero-banner.png",
       "type": "image",
       "description": "Homepage heroImage setting",
       "createdAt": "2025-05-29T21:24:37.102Z",
