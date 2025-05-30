@@ -46,58 +46,52 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-warm-cream">
-      {/* Hero Section - Hidden on mobile, visible on desktop */}
-      <section className="relative overflow-hidden hidden lg:block">
-        {/* Main Background Image */}
-        <div className="absolute inset-0" 
-             style={{
-               backgroundImage: `url("${heroImage}")`,
-               backgroundSize: 'cover',
-               backgroundPosition: 'center',
-               backgroundRepeat: 'no-repeat',
-             }} />
+    <div className="min-h-screen bg-warm-cream ethnic-pattern">
+      {/* Hero Section - Enhanced Indian Design */}
+      <section className="relative overflow-hidden">
+        {/* Traditional Indian Pattern Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-warm-cream via-soft-beige to-sandalwood" />
         
-        {/* Dark overlay for better text readability */}
-        <div className="absolute inset-0 bg-black/40" />
+        {/* Decorative overlay with traditional motifs */}
+        <div className="absolute inset-0 paisley-pattern opacity-30" />
         
-        {/* Subtle pattern overlay */}
-        <div className="absolute inset-0 opacity-10" 
-             style={{
-               backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-             }} />
+        {/* Decorative border elements */}
+        <div className="absolute top-0 left-0 w-full h-2 heritage-gradient"></div>
+        <div className="absolute bottom-0 left-0 w-full h-2 heritage-gradient"></div>
         
-        <div className="relative max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-12 lg:py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center">
+        <div className="relative max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 sm:py-16 lg:py-24">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             {/* Left Content */}
-            <div className="text-left space-y-4 lg:space-y-6">
-              <div className="space-y-3 lg:space-y-4">
+            <div className="text-left space-y-6 lg:space-y-8">
+              <div className="space-y-4 lg:space-y-6">
                 <div className="flex items-center justify-center sm:justify-start">
-                  <Badge className="bg-white/20 backdrop-blur-sm text-white border-white/30 px-3 py-1.5 text-xs font-medium shadow-sm">
-                    <Sparkles className="h-3 w-3 mr-1.5 text-yellow-300" />
-                    <span className="hidden sm:inline">Handcrafted Excellence Since 1947</span>
-                    <span className="sm:hidden">Heritage Since 1947</span>
+                  <Badge className="bg-saffron/20 backdrop-blur-sm text-henna border-terracotta/30 px-4 py-2 text-sm font-serif traditional-shadow">
+                    <span className="hidden sm:inline">🏺 प्रामाणिक भारतीय शिल्प • Authentic Indian Crafts</span>
+                    <span className="sm:hidden">🏺 प्रामाणिक शिल्प</span>
                   </Badge>
                 </div>
                 
                 <div className="text-center sm:text-left">
-                  <h1 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight">
-                    <span className="text-white">{heroTitle}</span>
-                    <span className="text-orange-300 block mt-1">{heroSubtitle}</span>
-                    <span className="text-yellow-300 block mt-1">& Crafts</span>
+                  <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight">
+                    <span className="text-henna block">भारतीय</span>
+                    <span className="text-terracotta block mt-2">हस्तकला</span>
+                    <span className="text-saffron block mt-2 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif italic">Heritage Collection</span>
                   </h1>
                 </div>
                 
                 <div className="text-center sm:text-left">
-                  <p className="text-sm sm:text-base lg:text-lg text-gray-100 leading-relaxed max-w-lg mx-auto sm:mx-0">
+                  <p className="text-base sm:text-lg lg:text-xl text-henna leading-relaxed max-w-lg mx-auto sm:mx-0 font-serif">
+                    सदियों पुरानी परंपराओं का खजाना। प्रत्येक वस्तु में भारत की समृद्ध सांस्कृतिक विरासत की कहानी है।
+                  </p>
+                  <p className="text-sm sm:text-base lg:text-lg text-copper/80 leading-relaxed max-w-lg mx-auto sm:mx-0 mt-3">
                     {heroDescription}
                   </p>
                 </div>
               </div>
               
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-3 pt-2">
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-4 pt-4">
                 <Link href="/products" className="w-full sm:w-auto">
-                  <Button className="bg-gradient-to-r from-terracotta to-saffron hover:from-terracotta/90 hover:to-saffron/90 text-white px-6 py-3 text-sm font-medium w-full sm:w-auto shadow-lg hover:shadow-xl transition-all duration-300">
+                  <Button className="heritage-gradient hover:opacity-90 text-white px-8 py-4 text-base font-serif font-semibold w-full sm:w-auto traditional-shadow hover:scale-105 transition-all duration-300 craft-border border-0">
                     {heroButtonText}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>

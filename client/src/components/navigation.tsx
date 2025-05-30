@@ -43,38 +43,45 @@ export function Navigation() {
 
   return (
     <>
-      <nav className="bg-white shadow-lg sticky top-0 z-50">
+      <nav className="bg-warm-cream border-b-2 border-terracotta/20 traditional-shadow sticky top-0 z-50 ethnic-pattern">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
-            <Link href="/" className="flex items-center">
-              <img 
-                src="/images/logo.png" 
-                alt="Hastkala Logo" 
-                className="h-8 w-auto sm:h-10 md:h-12"
-              />
-              <span className="ml-2 sm:ml-3 text-xs sm:text-sm text-gray-600 hidden sm:inline">Crafts</span>
+            <Link href="/" className="flex items-center group">
+              <div className="flex items-center space-x-2 sm:space-x-3">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-heritage-gradient rounded-lg flex items-center justify-center traditional-shadow">
+                  <span className="text-white font-display font-bold text-sm sm:text-lg md:text-xl">🕉</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-display text-lg sm:text-xl md:text-2xl font-bold text-henna group-hover:text-terracotta transition-colors">
+                    हस्तकला
+                  </span>
+                  <span className="text-xs sm:text-sm text-copper font-serif italic hidden sm:inline">
+                    Heritage Crafts
+                  </span>
+                </div>
+              </div>
             </Link>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
-              <Link href="/" className={`text-gray-700 hover:text-terracotta transition-colors ${location === "/" ? "text-terracotta font-medium" : ""}`}>
-                Home
+              <Link href="/" className={`font-serif text-henna hover:text-terracotta transition-colors ${location === "/" ? "text-terracotta font-semibold" : ""}`}>
+                गृह
               </Link>
 
               <NavigationMenu>
                 <NavigationMenuList>
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger className="text-gray-700 hover:text-terracotta transition-colors">
-                      Categories
+                    <NavigationMenuTrigger className="font-serif text-henna hover:text-terracotta transition-colors">
+                      श्रेणियाँ
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
-                      <div className="w-48 p-2">
+                      <div className="w-48 p-2 bg-warm-cream border border-terracotta/20">
                         {categories.map((category) => (
                           <Link
                             key={category.slug}
                             href={`/products?category=${category.slug}`}
-                            className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-md"
+                            className="block px-4 py-2 text-henna hover:bg-saffron/10 hover:text-terracotta rounded-md font-serif transition-colors"
                           >
                             {category.name}
                           </Link>
@@ -85,12 +92,12 @@ export function Navigation() {
                 </NavigationMenuList>
               </NavigationMenu>
 
-              <Link href="/products" className={`text-gray-700 hover:text-terracotta transition-colors ${location === "/products" ? "text-terracotta font-medium" : ""}`}>
-                Products
+              <Link href="/products" className={`font-serif text-henna hover:text-terracotta transition-colors ${location === "/products" ? "text-terracotta font-semibold" : ""}`}>
+                उत्पाद
               </Link>
 
-              <Link href="/track" className={`text-gray-700 hover:text-terracotta transition-colors ${location === "/track" ? "text-terracotta font-medium" : ""}`}>
-                Track
+              <Link href="/track" className={`font-serif text-henna hover:text-terracotta transition-colors ${location === "/track" ? "text-terracotta font-semibold" : ""}`}>
+                ट्रैक
               </Link>
             </div>
 

@@ -1,41 +1,50 @@
-/* Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+/* Google Fonts - Enhanced for Indian aesthetic */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Cinzel:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: 48 23% 97%; /* #FDF5E6 - warm cream */
-  --foreground: 20 14% 4%; /* #0A0A0A */
-  --muted: 43 13% 90%; /* #F5F5DC - soft beige */
-  --muted-foreground: 25 5% 45%; /* #737373 */
-  --popover: 0 0% 100%; /* #FFFFFF */
-  --popover-foreground: 20 14% 4%; /* #0A0A0A */
-  --card: 0 0% 100%; /* #FFFFFF */
-  --card-foreground: 20 14% 4%; /* #0A0A0A */
-  --border: 20 6% 90%; /* #E5E5E5 */
-  --input: 20 6% 90%; /* #E5E5E5 */
-  --primary: 25 62% 47%; /* #D2691E - terracotta */
+  --background: 37 36% 96%; /* #F7F3E9 - warm paper */
+  --foreground: 30 20% 15%; /* #332B24 - dark brown */
+  --muted: 35 25% 90%; /* #F0EAE2 - light beige */
+  --muted-foreground: 30 15% 40%; /* #6B5B50 */
+  --popover: 37 50% 98%; /* #FEFBF6 */
+  --popover-foreground: 30 20% 15%; /* #332B24 */
+  --card: 40 45% 98%; /* #FEFCF7 */
+  --card-foreground: 30 20% 15%; /* #332B24 */
+  --border: 35 20% 85%; /* #E0D5CC */
+  --input: 35 20% 85%; /* #E0D5CC */
+  --primary: 22 69% 50%; /* #D2691E - traditional terracotta */
   --primary-foreground: 0 0% 100%; /* #FFFFFF */
-  --secondary: 48 23% 97%; /* #FDF5E6 - warm cream */
-  --secondary-foreground: 20 14% 4%; /* #0A0A0A */
-  --accent: 36 100% 58%; /* #FF9933 - saffron */
+  --secondary: 45 60% 90%; /* #F4F0E8 */
+  --secondary-foreground: 30 20% 15%; /* #332B24 */
+  --accent: 39 100% 60%; /* #FF9F00 - vibrant saffron */
   --accent-foreground: 0 0% 100%; /* #FFFFFF */
-  --destructive: 0 84% 60%; /* #EF4444 */
+  --destructive: 0 70% 50%; /* #DC2626 */
   --destructive-foreground: 0 0% 100%; /* #FFFFFF */
-  --ring: 25 62% 47%; /* #D2691E - terracotta */
-  --radius: 0.5rem;
+  --ring: 22 69% 50%; /* #D2691E */
+  --radius: 0.75rem;
 
-  /* Custom craft colors */
-  --terracotta: 25 62% 47%; /* #D2691E */
-  --saffron: 36 100% 58%; /* #FF9933 */
-  --warm-gold: 43 76% 45%; /* #DAA520 */
-  --maroon: 343 100% 25%; /* #800020 */
-  --forest: 120 61% 34%; /* #228B22 */
-  --royal-blue: 225 73% 57%; /* #4169E1 */
-  --warm-cream: 48 23% 97%; /* #FDF5E6 */
-  --soft-beige: 43 13% 90%; /* #F5F5DC */
+  /* Enhanced Indian craft colors */
+  --terracotta: 22 69% 50%; /* #D2691E - traditional clay */
+  --saffron: 39 100% 60%; /* #FF9F00 - sacred saffron */
+  --turmeric: 45 95% 55%; /* #F5D920 - turmeric yellow */
+  --henna: 15 60% 35%; /* #8B4513 - henna brown */
+  --indigo: 240 100% 25%; /* #000080 - traditional indigo */
+  --vermillion: 14 100% 50%; /* #FF4500 - vermillion red */
+  --peacock: 180 100% 25%; /* #008080 - peacock green */
+  --marigold: 40 100% 50%; /* #FFA500 - marigold orange */
+  --lotus: 330 100% 85%; /* #FFCCCB - lotus pink */
+  --sandalwood: 30 30% 70%; /* #D2B48C - sandalwood beige */
+  --ivory: 60 20% 95%; /* #F5F5DC - ivory white */
+  --copper: 30 60% 40%; /* #B87333 - copper bronze */
+  
+  /* Background variations */
+  --warm-cream: 37 36% 96%; /* #F7F3E9 */
+  --soft-beige: 35 25% 90%; /* #F0EAE2 */
+  --paper-texture: 40 30% 94%; /* #F2EDE6 */
 }
 
 .dark {
@@ -71,6 +80,7 @@
 }
 
 @layer utilities {
+  /* Traditional Indian color utilities */
   .text-terracotta {
     color: hsl(var(--terracotta));
   }
@@ -91,12 +101,80 @@
     background-color: hsl(var(--saffron));
   }
 
-  .text-warm-gold {
-    color: hsl(var(--warm-gold));
+  .border-saffron {
+    border-color: hsl(var(--saffron));
   }
 
-  .bg-warm-gold {
-    background-color: hsl(var(--warm-gold));
+  .text-turmeric {
+    color: hsl(var(--turmeric));
+  }
+
+  .bg-turmeric {
+    background-color: hsl(var(--turmeric));
+  }
+
+  .text-henna {
+    color: hsl(var(--henna));
+  }
+
+  .bg-henna {
+    background-color: hsl(var(--henna));
+  }
+
+  .text-indigo {
+    color: hsl(var(--indigo));
+  }
+
+  .bg-indigo {
+    background-color: hsl(var(--indigo));
+  }
+
+  .text-vermillion {
+    color: hsl(var(--vermillion));
+  }
+
+  .bg-vermillion {
+    background-color: hsl(var(--vermillion));
+  }
+
+  .text-peacock {
+    color: hsl(var(--peacock));
+  }
+
+  .bg-peacock {
+    background-color: hsl(var(--peacock));
+  }
+
+  .text-marigold {
+    color: hsl(var(--marigold));
+  }
+
+  .bg-marigold {
+    background-color: hsl(var(--marigold));
+  }
+
+  .text-lotus {
+    color: hsl(var(--lotus));
+  }
+
+  .bg-lotus {
+    background-color: hsl(var(--lotus));
+  }
+
+  .text-sandalwood {
+    color: hsl(var(--sandalwood));
+  }
+
+  .bg-sandalwood {
+    background-color: hsl(var(--sandalwood));
+  }
+
+  .text-copper {
+    color: hsl(var(--copper));
+  }
+
+  .bg-copper {
+    background-color: hsl(var(--copper));
   }
 
   .bg-warm-cream {
@@ -107,7 +185,20 @@
     background-color: hsl(var(--soft-beige));
   }
 
+  .bg-paper-texture {
+    background-color: hsl(var(--paper-texture));
+  }
+
+  /* Enhanced typography for Indian aesthetic */
   .font-display {
+    font-family: 'Cinzel', serif;
+  }
+
+  .font-serif {
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .font-playfair {
     font-family: 'Playfair Display', serif;
   }
 
@@ -125,6 +216,38 @@
 
   .font-inter {
     font-family: 'Inter', sans-serif;
+  }
+
+  /* Indian-inspired decorative elements */
+  .mandala-border {
+    border-image: radial-gradient(circle, hsl(var(--saffron)), hsl(var(--terracotta))) 1;
+  }
+
+  .paisley-pattern {
+    background-image: radial-gradient(circle at 25% 25%, hsl(var(--saffron) / 0.1) 0%, transparent 50%),
+                      radial-gradient(circle at 75% 75%, hsl(var(--terracotta) / 0.1) 0%, transparent 50%);
+  }
+
+  .heritage-gradient {
+    background: linear-gradient(135deg, 
+      hsl(var(--saffron)) 0%, 
+      hsl(var(--marigold)) 25%, 
+      hsl(var(--terracotta)) 50%, 
+      hsl(var(--henna)) 75%, 
+      hsl(var(--copper)) 100%);
+  }
+
+  .traditional-shadow {
+    box-shadow: 0 4px 20px hsl(var(--henna) / 0.2), 
+                0 8px 40px hsl(var(--terracotta) / 0.1);
+  }
+
+  .craft-border {
+    border: 2px solid hsl(var(--terracotta));
+    border-radius: 0.5rem;
+    background: linear-gradient(45deg, 
+      hsl(var(--warm-cream)), 
+      hsl(var(--soft-beige)));
   }
 }
 
@@ -263,9 +386,39 @@
   }
 }
 
-/* Apply the warm cream background to the body by default */
+/* Apply the warm cream background to the body by default with subtle pattern */
 body {
   background-color: hsl(var(--warm-cream));
+  background-image: 
+    radial-gradient(circle at 20% 50%, hsl(var(--saffron) / 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, hsl(var(--terracotta) / 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, hsl(var(--turmeric) / 0.02) 0%, transparent 50%);
+  background-size: 400px 400px, 350px 350px, 300px 300px;
+  background-position: 0 0, 40px 60px, 130px 270px;
+}
+
+/* Traditional Indian decorative patterns */
+.ethnic-pattern {
+  background-image: 
+    repeating-linear-gradient(45deg, transparent, transparent 2px, hsl(var(--terracotta) / 0.05) 2px, hsl(var(--terracotta) / 0.05) 4px),
+    repeating-linear-gradient(-45deg, transparent, transparent 2px, hsl(var(--saffron) / 0.05) 2px, hsl(var(--saffron) / 0.05) 4px);
+}
+
+.mandala-overlay {
+  position: relative;
+}
+
+.mandala-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at center, transparent 30%, hsl(var(--saffron) / 0.1) 31%, hsl(var(--saffron) / 0.1) 32%, transparent 33%),
+    radial-gradient(circle at center, transparent 50%, hsl(var(--terracotta) / 0.05) 51%, hsl(var(--terracotta) / 0.05) 52%, transparent 53%);
+  pointer-events: none;
 }
 
 /* Fullscreen modal styles */
