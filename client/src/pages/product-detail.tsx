@@ -250,28 +250,28 @@ export default function ProductDetail() {
     <div className="min-h-screen bg-gradient-to-br from-warm-cream via-soft-beige/30 to-sage/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Breadcrumb */}
-        <div className="flex items-center space-x-2 text-sm text-gray-600 mb-8 animate-fade-in">
-          <Link href="/" className="hover:text-terracotta transition-colors duration-200 flex items-center">
-            <svg className="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm text-gray-600 mb-4 sm:mb-8 animate-fade-in overflow-x-auto">
+          <Link href="/" className="hover:text-terracotta transition-colors duration-200 flex items-center flex-shrink-0">
+            <svg className="h-3 w-3 sm:h-4 sm:w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
             </svg>
-            Home
+            <span className="hidden sm:inline">Home</span>
           </Link>
-          <span className="text-gray-400">›</span>
-          <Link href="/products" className="hover:text-terracotta transition-colors duration-200">Products</Link>
-          <span className="text-gray-400">›</span>
-          <Link href={`/products?category=${product.category.slug}`} className="hover:text-terracotta transition-colors duration-200">
+          <span className="text-gray-400 flex-shrink-0">›</span>
+          <Link href="/products" className="hover:text-terracotta transition-colors duration-200 flex-shrink-0 hidden sm:inline">Products</Link>
+          <span className="text-gray-400 flex-shrink-0 hidden sm:inline">›</span>
+          <Link href={`/products?category=${product.category.slug}`} className="hover:text-terracotta transition-colors duration-200 flex-shrink-0 truncate max-w-[100px] sm:max-w-none">
             {product.category.name}
           </Link>
-          <span className="text-gray-400">›</span>
-          <span className="text-gray-900 font-medium">{product.name}</span>
+          <span className="text-gray-400 flex-shrink-0">›</span>
+          <span className="text-gray-900 font-medium truncate">{product.name}</span>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 animate-fade-in-up">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 animate-fade-in-up">
           {/* Product Images */}
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {/* Main Image Container */}
-            <div className="relative bg-gradient-to-br from-white to-gray-50 rounded-2xl overflow-hidden shadow-2xl border border-gray-100/50 backdrop-blur-sm">
+            <div className="relative bg-gradient-to-br from-white to-gray-50 rounded-xl sm:rounded-2xl overflow-hidden shadow-xl sm:shadow-2xl border border-gray-100/50 backdrop-blur-sm">
               {/* Image Counter */}
               {product.images.length > 1 && (
                 <div className="absolute top-4 right-4 bg-black/60 text-white text-sm px-3 py-1 rounded-full z-10">
@@ -366,17 +366,17 @@ export default function ProductDetail() {
                       onClick={() => setSelectedImageIndex(prev => 
                         prev === 0 ? product.images.length - 1 : prev - 1
                       )}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/20 hover:bg-black/40 text-white rounded-full flex items-center justify-center transition-colors duration-200 z-30"
+                      className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-12 h-12 sm:w-10 sm:h-10 bg-black/20 hover:bg-black/40 text-white rounded-full flex items-center justify-center transition-colors duration-200 z-30 touch-target"
                     >
-                      <ArrowLeft className="h-5 w-5" />
+                      <ArrowLeft className="h-6 w-6 sm:h-5 sm:w-5" />
                     </button>
                     <button
                       onClick={() => setSelectedImageIndex(prev => 
                         prev === product.images.length - 1 ? 0 : prev + 1
                       )}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/20 hover:bg-black/40 text-white rounded-full flex items-center justify-center transition-colors duration-200 z-30"
+                      className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-12 h-12 sm:w-10 sm:h-10 bg-black/20 hover:bg-black/40 text-white rounded-full flex items-center justify-center transition-colors duration-200 z-30 touch-target"
                     >
-                      <ChevronRight className="h-5 w-5" />
+                      <ChevronRight className="h-6 w-6 sm:h-5 sm:w-5" />
                     </button>
                   </>
                 )}
@@ -384,15 +384,15 @@ export default function ProductDetail() {
 
               {/* Thumbnail Navigation */}
               {product.images.length > 1 && (
-                <div className="bg-gradient-to-r from-white via-gray-50 to-white border-t border-gray-100 p-6">
-                  <div className="flex space-x-3 overflow-x-auto scrollbar-hide">
+                <div className="bg-gradient-to-r from-white via-gray-50 to-white border-t border-gray-100 p-3 sm:p-6">
+                  <div className="flex space-x-2 sm:space-x-3 overflow-x-auto scrollbar-hide mobile-scroll">
                     {product.images.map((image, index) => (
                       <button
                         key={index}
                         onClick={() => setSelectedImageIndex(index)}
-                        className={`flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-3 transition-all duration-300 transform hover:scale-105 hover:shadow-lg ${
+                        className={`flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-lg sm:rounded-xl overflow-hidden border-2 sm:border-3 transition-all duration-300 transform hover:scale-105 hover:shadow-lg touch-target ${
                           selectedImageIndex === index
-                            ? "border-terracotta shadow-lg scale-105 ring-2 ring-terracotta/30"
+                            ? "border-terracotta shadow-lg scale-105 ring-1 sm:ring-2 ring-terracotta/30"
                             : "border-gray-200 hover:border-gray-300"
                         }`}
                       >
@@ -409,46 +409,50 @@ export default function ProductDetail() {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex items-center justify-between bg-gradient-to-r from-white to-gray-50 rounded-xl p-4 border border-gray-100">
-              <div className="flex items-center space-x-3">
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  onClick={toggleZoomMode}
-                  className={`transition-all duration-200 hover:scale-105 ${
-                    zoomMode 
-                      ? 'bg-terracotta text-white border-terracotta hover:bg-terracotta/90' 
-                      : 'hover:bg-terracotta hover:text-white'
-                  }`}
-                >
-                  <svg className="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+            <div className="bg-gradient-to-r from-white to-gray-50 rounded-xl p-3 sm:p-4 border border-gray-100">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
+                <div className="flex items-center space-x-2 sm:space-x-3 overflow-x-auto">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={toggleZoomMode}
+                    className={`transition-all duration-200 hover:scale-105 mobile-button-spacing touch-target flex-shrink-0 ${
+                      zoomMode 
+                        ? 'bg-terracotta text-white border-terracotta hover:bg-terracotta/90' 
+                        : 'hover:bg-terracotta hover:text-white'
+                    }`}
+                  >
+                    <svg className="h-4 w-4 mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                    </svg>
+                    <span className="hidden sm:inline">{zoomMode ? 'Exit Zoom' : 'Zoom View'}</span>
+                    <span className="sm:hidden">{zoomMode ? 'Exit' : 'Zoom'}</span>
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={handleWishlist}
+                    className={`transition-all duration-200 hover:scale-105 mobile-button-spacing touch-target flex-shrink-0 ${
+                      isInWishlist(product.id)
+                        ? 'bg-saffron text-white border-saffron hover:bg-saffron/90'
+                        : 'hover:bg-saffron hover:text-white'
+                    }`}
+                  >
+                    <Heart className={`h-4 w-4 mr-1 sm:mr-2 ${isInWishlist(product.id) ? 'fill-current' : ''}`} />
+                    <span className="hidden sm:inline">{isInWishlist(product.id) ? 'Wishlisted' : 'Wishlist'}</span>
+                    <span className="sm:hidden">{isInWishlist(product.id) ? '♥' : '♡'}</span>
+                  </Button>
+                  <Button variant="outline" size="sm" className="hover:bg-sage hover:text-white transition-all duration-200 hover:scale-105 mobile-button-spacing touch-target flex-shrink-0">
+                    <Share2 className="h-4 w-4 mr-1 sm:mr-2" />
+                    <span className="hidden sm:inline">Share</span>
+                  </Button>
+                </div>
+                <div className="hidden lg:flex items-center text-xs sm:text-sm text-gray-500 bg-gray-100 px-2 sm:px-3 py-1 rounded-full">
+                  <svg className="h-3 w-3 sm:h-4 sm:w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  {zoomMode ? 'Exit Zoom' : 'Zoom View'}
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  onClick={handleWishlist}
-                  className={`transition-all duration-200 hover:scale-105 ${
-                    isInWishlist(product.id)
-                      ? 'bg-saffron text-white border-saffron hover:bg-saffron/90'
-                      : 'hover:bg-saffron hover:text-white'
-                  }`}
-                >
-                  <Heart className={`h-4 w-4 mr-2 ${isInWishlist(product.id) ? 'fill-current' : ''}`} />
-                  {isInWishlist(product.id) ? 'Wishlisted' : 'Wishlist'}
-                </Button>
-                <Button variant="outline" size="sm" className="hover:bg-sage hover:text-white transition-all duration-200 hover:scale-105">
-                  <Share2 className="h-4 w-4 mr-2" />
-                  Share
-                </Button>
-              </div>
-              <div className="hidden sm:flex items-center text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                <svg className="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                {zoomMode ? 'Hover to zoom • Double-click for fullscreen' : 'Double-click for fullscreen'}
+                  {zoomMode ? 'Hover to zoom • Double-click for fullscreen' : 'Double-click for fullscreen'}
+                </div>
               </div>
             </div>
 
@@ -474,42 +478,46 @@ export default function ProductDetail() {
           </div>
 
           {/* Product Info */}
-          <div className="space-y-8 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-            <div className="bg-gradient-to-br from-white to-gray-50/50 rounded-2xl p-8 border border-gray-100 shadow-lg backdrop-blur-sm">
-              <div className="flex items-center gap-3 mb-4">
-                <Badge variant="outline" className="bg-terracotta/10 text-terracotta border-terracotta/30 px-3 py-1">
-                  {product.category.name}
-                </Badge>
-                <div className="h-4 w-px bg-gray-300"></div>
-                <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+          <div className="space-y-6 sm:space-y-8 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            <div className="bg-gradient-to-br from-white to-gray-50/50 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 border border-gray-100 shadow-lg backdrop-blur-sm">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <Badge variant="outline" className="bg-terracotta/10 text-terracotta border-terracotta/30 px-2 sm:px-3 py-1 text-xs sm:text-sm">
+                    {product.category.name}
+                  </Badge>
+                  <div className="h-4 w-px bg-gray-300 hidden sm:block"></div>
+                </div>
+                <span className="text-xs sm:text-sm text-gray-500 bg-gray-100 px-2 sm:px-3 py-1 rounded-full self-start">
                   SKU: {product.sku}
                 </span>
               </div>
 
-              <h1 className="font-display text-4xl font-bold text-gray-900 mb-6 leading-tight">
+              <h1 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight mobile-text">
                 {product.name}
               </h1>
 
-              <div className="flex flex-col sm:flex-row sm:items-center gap-6 mb-6">
-                <div className="flex items-baseline gap-2">
-                  <span className="text-4xl font-bold text-terracotta">
+              <div className="flex flex-col gap-4 sm:gap-6 mb-4 sm:mb-6">
+                <div className="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-3">
+                  <span className="text-2xl sm:text-3xl lg:text-4xl font-bold text-terracotta">
                     ₹{parseFloat(product.price).toLocaleString()}
                   </span>
-                  <span className="text-lg text-gray-500 line-through">
-                    ₹{(parseFloat(product.price) * 1.2).toLocaleString()}
-                  </span>
-                  <Badge className="bg-green-100 text-green-700 hover:bg-green-100">
-                    Save 20%
-                  </Badge>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm sm:text-base lg:text-lg text-gray-500 line-through">
+                      ₹{(parseFloat(product.price) * 1.2).toLocaleString()}
+                    </span>
+                    <Badge className="bg-green-100 text-green-700 hover:bg-green-100 text-xs sm:text-sm">
+                      Save 20%
+                    </Badge>
+                  </div>
                 </div>
 
                 {reviewStats && reviewStats.totalReviews > 0 && (
-                  <div className="flex items-center space-x-2 bg-saffron/10 px-4 py-2 rounded-full">
+                  <div className="flex items-center space-x-2 bg-saffron/10 px-3 sm:px-4 py-2 rounded-full self-start">
                     <div className="flex items-center space-x-1">
                       {[...Array(5)].map((_, i) => (
                         <Star 
                           key={i} 
-                          className={`h-5 w-5 ${
+                          className={`h-4 w-4 sm:h-5 sm:w-5 ${
                             i < Math.round(reviewStats.averageRating)
                               ? "fill-saffron text-saffron"
                               : "text-gray-300"
@@ -517,10 +525,10 @@ export default function ProductDetail() {
                         />
                       ))}
                     </div>
-                    <span className="text-sm font-medium text-gray-700">
+                    <span className="text-xs sm:text-sm font-medium text-gray-700">
                       {reviewStats.averageRating}
                     </span>
-                    <span className="text-sm text-gray-500">
+                    <span className="text-xs sm:text-sm text-gray-500">
                       ({reviewStats.totalReviews} review{reviewStats.totalReviews !== 1 ? 's' : ''})
                     </span>
                   </div>
@@ -572,20 +580,20 @@ export default function ProductDetail() {
 
             {/* Add to Cart */}
             {product.stock > 0 && (
-              <div className="space-y-6 bg-gradient-to-br from-terracotta/5 to-saffron/5 rounded-2xl p-6 border border-terracotta/20">
-                <div className="flex items-center justify-between">
-                  <label className="font-semibold text-gray-900 text-lg">Quantity:</label>
-                  <div className="flex items-center bg-white rounded-xl border-2 border-gray-200 shadow-sm">
+              <div className="space-y-4 sm:space-y-6 bg-gradient-to-br from-terracotta/5 to-saffron/5 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-terracotta/20">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-0">
+                  <label className="font-semibold text-gray-900 text-base sm:text-lg">Quantity:</label>
+                  <div className="flex items-center bg-white rounded-lg sm:rounded-xl border-2 border-gray-200 shadow-sm self-end sm:self-auto">
                     <Button
                       size="sm"
                       variant="ghost"
                       onClick={() => handleQuantityChange(quantity - 1)}
                       disabled={quantity <= 1}
-                      className="h-12 w-12 p-0 hover:bg-terracotta hover:text-white transition-all duration-200 rounded-l-xl"
+                      className="h-10 w-10 sm:h-12 sm:w-12 p-0 hover:bg-terracotta hover:text-white transition-all duration-200 rounded-l-lg sm:rounded-l-xl touch-target"
                     >
                       <Minus className="h-4 w-4" />
                     </Button>
-                    <span className="font-bold min-w-[4rem] text-center text-lg bg-gray-50 px-4 py-3 border-x">
+                    <span className="font-bold min-w-[3rem] sm:min-w-[4rem] text-center text-base sm:text-lg bg-gray-50 px-3 sm:px-4 py-2 sm:py-3 border-x">
                       {quantity}
                     </span>
                     <Button
@@ -593,7 +601,7 @@ export default function ProductDetail() {
                       variant="ghost"
                       onClick={() => handleQuantityChange(quantity + 1)}
                       disabled={quantity >= product.stock}
-                      className="h-12 w-12 p-0 hover:bg-terracotta hover:text-white transition-all duration-200 rounded-r-xl"
+                      className="h-10 w-10 sm:h-12 sm:w-12 p-0 hover:bg-terracotta hover:text-white transition-all duration-200 rounded-r-lg sm:rounded-r-xl touch-target"
                     >
                       <Plus className="h-4 w-4" />
                     </Button>
@@ -604,39 +612,40 @@ export default function ProductDetail() {
                   size="lg"
                   onClick={handleAddToCart}
                   disabled={isAddingToCart}
-                  className="w-full bg-gradient-to-r from-terracotta to-terracotta/90 hover:from-terracotta/90 hover:to-terracotta text-white font-semibold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 text-lg"
+                  className="w-full bg-gradient-to-r from-terracotta to-terracotta/90 hover:from-terracotta/90 hover:to-terracotta text-white font-semibold py-3 sm:py-4 px-6 sm:px-8 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 text-base sm:text-lg touch-target"
                 >
-                  <ShoppingCart className="h-6 w-6 mr-3" />
+                  <ShoppingCart className="h-5 w-5 sm:h-6 sm:w-6 mr-2 sm:mr-3" />
                   {isAddingToCart ? (
                     <div className="flex items-center">
-                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <svg className="animate-spin -ml-1 mr-2 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>
-                      Adding to Cart...
+                      <span className="hidden sm:inline">Adding to Cart...</span>
+                      <span className="sm:hidden">Adding...</span>
                     </div>
                   ) : (
-                    "Add to Cart"
+                    <span>Add to Cart</span>
                   )}
                 </Button>
 
                 {/* Quick Actions */}
-                <div className="flex gap-3">
+                <div className="flex flex-col sm:flex-row gap-3">
                   <Button
                     variant="outline"
                     onClick={handleWishlist}
-                    className={`flex-1 border-terracotta text-terracotta hover:bg-terracotta hover:text-white transition-all duration-200 ${
+                    className={`flex-1 border-terracotta text-terracotta hover:bg-terracotta hover:text-white transition-all duration-200 py-2 sm:py-3 touch-target ${
                       isInWishlist(product.id) ? 'bg-terracotta text-white' : ''
                     }`}
                   >
                     <Heart className={`h-4 w-4 mr-2 ${isInWishlist(product.id) ? 'fill-current' : ''}`} />
-                    {isInWishlist(product.id) ? 'Wishlisted' : 'Wishlist'}
+                    <span className="text-sm sm:text-base">{isInWishlist(product.id) ? 'Wishlisted' : 'Wishlist'}</span>
                   </Button>
                   <Button
                     variant="outline"
                     onClick={handleBuyNow}
                     disabled={isBuyingNow}
-                    className="flex-1 border-saffron text-saffron hover:bg-saffron hover:text-white transition-all duration-200"
+                    className="flex-1 border-saffron text-saffron hover:bg-saffron hover:text-white transition-all duration-200 py-2 sm:py-3 touch-target"
                   >
                     {isBuyingNow ? (
                       <div className="flex items-center">
@@ -644,10 +653,10 @@ export default function ProductDetail() {
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
-                        Processing...
+                        <span className="text-sm sm:text-base">Processing...</span>
                       </div>
                     ) : (
-                      "Buy Now"
+                      <span className="text-sm sm:text-base">Buy Now</span>
                     )}
                   </Button>
                 </div>
@@ -743,7 +752,7 @@ export default function ProductDetail() {
                   <Badge variant="outline" className="mr-2">{product.category.name}</Badge>
                   More from this category
                 </h3>
-                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 lg:gap-6">
                   {recommendedProducts
                     .filter(p => p.categoryId === product.categoryId)
                     .slice(0, 4)
@@ -765,7 +774,7 @@ export default function ProductDetail() {
                   <Badge variant="outline" className="mr-2 bg-saffron/10 text-saffron border-saffron">Similar Features</Badge>
                   Products with similar characteristics
                 </h3>
-                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 lg:gap-6">
                   {recommendedProducts
                     .filter(p => p.categoryId !== product.categoryId)
                     .slice(0, 4)
