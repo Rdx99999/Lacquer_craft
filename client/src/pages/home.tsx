@@ -102,7 +102,7 @@ export default function Home() {
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
-                <Button variant="outline" className="border-white/30 text-white hover:bg-white/10 backdrop-blur-sm px-6 py-3 text-sm font-medium w-full sm:w-auto transition-all duration-300">
+                <Button variant="outline" className="border-white/50 text-white hover:bg-white/20 backdrop-blur-sm px-6 py-3 text-sm font-medium w-full sm:w-auto transition-all duration-300 bg-white/10">
                   <Heart className="mr-2 h-4 w-4" />
                   <span className="hidden sm:inline">{heroButtonSecondaryText}</span>
                   <span className="sm:hidden">Our Story</span>
