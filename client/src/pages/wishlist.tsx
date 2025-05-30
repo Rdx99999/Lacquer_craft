@@ -121,14 +121,14 @@ export default function Wishlist() {
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
             {wishlistItems.map((item) => (
               <Card key={item.id} className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
                 <div className="relative">
                   <img
                     src={item.images?.[0] || '/placeholder-image.jpg'}
                     alt={item.name}
-                    className="w-full h-48 object-cover"
+                    className="w-full h-32 sm:h-48 object-cover"
                   />
                   <button
                     onClick={() => toggleWishlist(item.id)}
@@ -137,31 +137,26 @@ export default function Wishlist() {
                     <Trash2 className="h-4 w-4" />
                   </button>
                 </div>
-                <CardContent className="p-4">
-                  <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">{item.name}</h3>
-                  <p className="text-gray-600 text-sm mb-3 line-clamp-2">{item.description}</p>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-2xl font-bold text-terracotta">
+                <CardContent className="p-3 sm:p-4">
+                  <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2 text-sm sm:text-base">{item.name}</h3>
+                  <p className="text-gray-600 text-xs sm:text-sm mb-3 line-clamp-2">{item.description}</p>
+                  <div className="flex items-center justify-between mb-3 sm:mb-4">
+                    <span className="text-lg sm:text-2xl font-bold text-terracotta">
                       ₹{parseFloat(item.price).toLocaleString()}
                     </span>
-                    {item.originalPrice && parseFloat(item.originalPrice) > parseFloat(item.price) && (
-                      <span className="text-sm text-gray-500 line-through">
-                        ₹{parseFloat(item.originalPrice).toLocaleString()}
-                      </span>
-                    )}
                   </div>
-                  <div className="flex space-x-2">
+                  <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
                     <Link href={`/products/${item.id}`} className="flex-1">
-                      <Button variant="outline" className="w-full border-terracotta text-terracotta hover:bg-terracotta hover:text-white">
+                      <Button variant="outline" className="w-full border-terracotta text-terracotta hover:bg-terracotta hover:text-white text-xs sm:text-sm">
                         View Details
                       </Button>
                     </Link>
                     <Button
                       onClick={() => addToCartFromWishlist(item)}
                       disabled={isAddingToCart}
-                      className="flex-1 bg-terracotta hover:bg-terracotta/90 text-white"
+                      className="flex-1 bg-terracotta hover:bg-terracotta/90 text-white text-xs sm:text-sm"
                     >
-                      <Plus className="h-4 w-4 mr-1" />
+                      <Plus className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
                       Add to Cart
                     </Button>
                   </div>
