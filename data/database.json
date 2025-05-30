@@ -207,7 +207,7 @@
     {
       "id": 4,
       "key": "heroImage",
-      "value": "/images/hero-banner.png",
+      "value": "/images/hero-banner-greek.jpg",
       "type": "image",
       "description": "Homepage heroImage setting",
       "createdAt": "2025-05-29T21:24:37.102Z",
