@@ -250,34 +250,33 @@ export default function ProductDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-warm-cream via-soft-beige/30 to-sage/10">
+    <div className="min-h-screen bg-warm-cream ethnic-pattern">
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-4 sm:py-8">
-        {/* Breadcrumb */}
-        <div className="flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm text-gray-600 mb-2 sm:mb-8 animate-fade-in overflow-x-auto">
-          <Link href="/" className="hover:text-terracotta transition-colors duration-200 flex items-center flex-shrink-0">
-            <svg className="h-3 w-3 sm:h-4 sm:w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-            </svg>
-            <span className="hidden sm:inline">Home</span>
+        {/* Traditional Breadcrumb */}
+        <div className="flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm text-henna mb-2 sm:mb-8 animate-fade-in overflow-x-auto bg-sandalwood/10 rounded-lg px-3 py-2 craft-border">
+          <Link href="/" className="hover:text-terracotta transition-colors duration-200 flex items-center flex-shrink-0 font-serif">
+            <span className="text-saffron mr-1">🏠</span>
+            <span className="hidden sm:inline">गृह • Home</span>
+            <span className="sm:hidden">गृह</span>
           </Link>
-          <span className="text-gray-400 flex-shrink-0">›</span>
-          <Link href="/products" className="hover:text-terracotta transition-colors duration-200 flex-shrink-0 hidden sm:inline">Products</Link>
-          <span className="text-gray-400 flex-shrink-0 hidden sm:inline">›</span>
-          <Link href={`/products?category=${product.category.slug}`} className="hover:text-terracotta transition-colors duration-200 flex-shrink-0 truncate max-w-[100px] sm:max-w-none">
+          <span className="text-copper flex-shrink-0">▸</span>
+          <Link href="/products" className="hover:text-terracotta transition-colors duration-200 flex-shrink-0 hidden sm:inline font-serif">उत्पाद • Products</Link>
+          <span className="text-copper flex-shrink-0 hidden sm:inline">▸</span>
+          <Link href={`/products?category=${product.category.slug}`} className="hover:text-terracotta transition-colors duration-200 flex-shrink-0 truncate max-w-[100px] sm:max-w-none font-serif">
             {product.category.name}
           </Link>
-          <span className="text-gray-400 flex-shrink-0">›</span>
-          <span className="text-gray-900 font-medium truncate">{product.name}</span>
+          <span className="text-copper flex-shrink-0">▸</span>
+          <span className="text-henna font-medium truncate font-serif">{product.name}</span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-8 lg:gap-12 animate-fade-in-up">
           {/* Product Images */}
           <div className="space-y-2 sm:space-y-6">
-            {/* Main Image Container */}
-            <div className="relative bg-gradient-to-br from-white to-gray-50 rounded-xl sm:rounded-2xl overflow-hidden shadow-xl sm:shadow-2xl border border-gray-100/50 backdrop-blur-sm">
+            {/* Main Image Container - Enhanced Indian Style */}
+            <div className="relative bg-gradient-to-br from-warm-cream to-sandalwood/20 rounded-xl sm:rounded-2xl overflow-hidden traditional-shadow craft-border paisley-pattern">
               {/* Image Counter */}
               {product.images.length > 1 && (
-                <div className="absolute top-4 right-4 bg-black/60 text-white text-sm px-3 py-1 rounded-full z-10">
+                <div className="absolute top-4 right-4 bg-henna/80 text-white text-sm px-3 py-1 rounded-full z-10 font-serif backdrop-blur-sm">
                   {selectedImageIndex + 1} / {product.images.length}
                 </div>
               )}
@@ -385,24 +384,24 @@ export default function ProductDetail() {
                 )}
               </div>
 
-              {/* Thumbnail Navigation */}
+              {/* Thumbnail Navigation - Enhanced Indian Style */}
               {product.images.length > 1 && (
-                <div className="bg-gradient-to-r from-white via-gray-50 to-white border-t border-gray-100 p-2 sm:p-6">
+                <div className="bg-gradient-to-r from-warm-cream via-sandalwood/10 to-warm-cream border-t-2 border-terracotta/20 p-2 sm:p-6 paisley-pattern">
                   <div className="flex space-x-1.5 sm:space-x-3 overflow-x-auto scrollbar-hide mobile-scroll">
                     {product.images.map((image, index) => (
                       <button
                         key={index}
                         onClick={() => setSelectedImageIndex(index)}
-                        className={`flex-shrink-0 w-12 h-12 sm:w-20 sm:h-20 rounded-lg sm:rounded-xl overflow-hidden border-2 sm:border-3 transition-all duration-300 transform hover:scale-105 hover:shadow-lg touch-target ${
+                        className={`flex-shrink-0 w-12 h-12 sm:w-20 sm:h-20 rounded-lg sm:rounded-xl overflow-hidden border-2 sm:border-3 transition-all duration-300 transform hover:scale-105 traditional-shadow touch-target ${
                           selectedImageIndex === index
-                            ? "border-terracotta shadow-lg scale-105 ring-1 sm:ring-2 ring-terracotta/30"
-                            : "border-gray-200 hover:border-gray-300"
+                            ? "border-saffron shadow-lg scale-105 ring-1 sm:ring-2 ring-saffron/30 bg-heritage-gradient p-0.5"
+                            : "border-terracotta/30 hover:border-terracotta craft-border"
                         }`}
                       >
                         <img
                           src={image}
                           alt={`${product.name} ${index + 1}`}
-                          className="w-full h-full object-cover transition-transform duration-200"
+                          className="w-full h-full object-cover transition-transform duration-200 rounded-md"
                         />
                       </button>
                     ))}
@@ -462,21 +461,21 @@ export default function ProductDetail() {
             
           </div>
 
-          {/* Product Info */}
+          {/* Product Info - Enhanced Indian Style */}
           <div className="space-y-3 sm:space-y-8 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-            <div className="bg-gradient-to-br from-white to-gray-50/50 rounded-xl sm:rounded-2xl p-3 sm:p-6 lg:p-8 border border-gray-100 shadow-lg backdrop-blur-sm">
-              {/* Compact Header with Category and SKU */}
+            <div className="bg-gradient-to-br from-warm-cream to-sandalwood/20 rounded-xl sm:rounded-2xl p-3 sm:p-6 lg:p-8 craft-border traditional-shadow paisley-pattern">
+              {/* Traditional Header with Category and SKU */}
               <div className="flex items-center justify-between gap-2 mb-3 sm:mb-4">
-                <Badge variant="outline" className="bg-terracotta/10 text-terracotta border-terracotta/30 px-2 py-0.5 text-xs">
-                  {product.category.name}
+                <Badge variant="outline" className="bg-saffron/20 text-henna border-terracotta/30 px-3 py-1 text-xs font-serif">
+                  🎨 {product.category.name}
                 </Badge>
-                <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
+                <span className="text-xs text-copper bg-sandalwood/30 px-3 py-1 rounded-full font-serif">
                   {product.sku}
                 </span>
               </div>
 
-              {/* Compact Title */}
-              <h1 className="font-display text-lg sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-6 leading-tight">
+              {/* Traditional Title */}
+              <h1 className="font-display text-lg sm:text-3xl lg:text-4xl font-bold text-henna mb-3 sm:mb-6 leading-tight">
                 {product.name}
               </h1>
 
@@ -512,13 +511,13 @@ export default function ProductDetail() {
                 )}
               </div>
 
-              {/* Compact Price Section */}
-              <div className="flex items-center justify-between mb-3 sm:mb-4">
+              {/* Traditional Price Section */}
+              <div className="flex items-center justify-between mb-4 sm:mb-6 bg-saffron/10 rounded-lg p-3 craft-border">
                 <div className="flex items-baseline gap-2">
-                  <span className="text-xl sm:text-3xl lg:text-4xl font-bold text-terracotta">
+                  <span className="text-xl sm:text-3xl lg:text-4xl font-bold text-terracotta font-serif">
                     ₹{parseFloat(product.price).toLocaleString()}
                   </span>
-                  <span className="text-sm text-gray-500 line-through">
+                  <span className="text-sm text-copper line-through font-serif">
                     ₹{(parseFloat(product.price) * 1.2).toLocaleString()}
                   </span>
                 </div>
@@ -527,22 +526,22 @@ export default function ProductDetail() {
                 </Badge>
               </div>
 
-              {/* Ultra Compact Actions Section */}
+              {/* Traditional Actions Section */}
               {product.stock > 0 && (
-                <div className="bg-gradient-to-r from-terracotta/5 to-saffron/5 rounded-lg p-2 sm:p-3 border border-terracotta/20 mb-3 sm:mb-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs font-medium text-gray-700 flex-shrink-0">Qty:</span>
-                    <div className="flex items-center bg-white rounded border border-gray-200">
+                <div className="bg-gradient-to-r from-saffron/10 to-turmeric/10 rounded-lg p-3 sm:p-4 craft-border traditional-shadow mb-4 sm:mb-6">
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-sm font-serif font-medium text-henna flex-shrink-0">मात्रा • Qty:</span>
+                    <div className="flex items-center bg-warm-cream rounded craft-border">
                       <Button
                         size="sm"
                         variant="ghost"
                         onClick={() => handleQuantityChange(quantity - 1)}
                         disabled={quantity <= 1}
-                        className="h-6 w-6 p-0 hover:bg-terracotta hover:text-white rounded-l text-xs"
+                        className="h-8 w-8 p-0 hover:bg-terracotta hover:text-white rounded-l text-xs font-serif"
                       >
-                        <Minus className="h-2.5 w-2.5" />
+                        <Minus className="h-3 w-3" />
                       </Button>
-                      <span className="font-medium w-8 text-center text-xs bg-gray-50 py-1 border-x">
+                      <span className="font-serif font-medium w-10 text-center text-sm bg-sandalwood/20 py-1.5 border-x border-terracotta/20">
                         {quantity}
                       </span>
                       <Button
@@ -550,39 +549,39 @@ export default function ProductDetail() {
                         variant="ghost"
                         onClick={() => handleQuantityChange(quantity + 1)}
                         disabled={quantity >= product.stock}
-                        className="h-6 w-6 p-0 hover:bg-terracotta hover:text-white rounded-r text-xs"
+                        className="h-8 w-8 p-0 hover:bg-terracotta hover:text-white rounded-r text-xs font-serif"
                       >
-                        <Plus className="h-2.5 w-2.5" />
+                        <Plus className="h-3 w-3" />
                       </Button>
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
+                  <div className="grid grid-cols-3 gap-2 sm:gap-3">
                     <Button
                       onClick={handleAddToCart}
                       disabled={isAddingToCart}
-                      className="bg-terracotta hover:bg-terracotta/90 text-white text-xs py-1.5 h-7 sm:h-9"
+                      className="heritage-gradient hover:opacity-90 text-white text-xs py-2 h-8 sm:h-10 font-serif traditional-shadow"
                     >
-                      <ShoppingCart className="h-2.5 w-2.5 sm:h-3 sm:w-3 mr-0.5 sm:mr-1" />
-                      {isAddingToCart ? "..." : "Add"}
+                      <ShoppingCart className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+                      {isAddingToCart ? "..." : "कार्ट"}
                     </Button>
                     <Button
                       variant="outline"
                       onClick={handleWishlist}
-                      className={`border-terracotta text-terracotta hover:bg-terracotta hover:text-white text-xs py-1.5 h-7 sm:h-9 ${
+                      className={`border-terracotta text-terracotta hover:bg-terracotta hover:text-white text-xs py-2 h-8 sm:h-10 font-serif traditional-shadow ${
                         isInWishlist(product.id) ? 'bg-terracotta text-white' : ''
                       }`}
                     >
-                      <Heart className={`h-2.5 w-2.5 sm:h-3 sm:w-3 mr-0.5 sm:mr-1 ${isInWishlist(product.id) ? 'fill-current' : ''}`} />
-                      {isInWishlist(product.id) ? "♥" : "♡"}
+                      <Heart className={`h-3 w-3 sm:h-4 sm:w-4 mr-1 ${isInWishlist(product.id) ? 'fill-current' : ''}`} />
+                      {isInWishlist(product.id) ? "💝" : "💖"}
                     </Button>
                     <Button
                       variant="outline"
                       onClick={handleBuyNow}
                       disabled={isBuyingNow}
-                      className="border-saffron text-saffron hover:bg-saffron hover:text-white text-xs py-1.5 h-7 sm:h-9"
+                      className="border-saffron text-saffron hover:bg-saffron hover:text-white text-xs py-2 h-8 sm:h-10 font-serif traditional-shadow"
                     >
-                      {isBuyingNow ? "..." : "Buy"}
+                      {isBuyingNow ? "..." : "खरीदें"}
                     </Button>
                   </div>
                 </div>
