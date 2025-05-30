@@ -148,19 +148,7 @@ export default function Home() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/10" />
                 
-                {/* Bottom overlay with authentic touch */}
-                <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-sm rounded-lg p-3 shadow-lg">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-xs font-medium text-gray-800">Master Craftsman</p>
-                      <p className="text-xs text-gray-600">Creating heritage pieces</p>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Star className="h-3 w-3 text-saffron fill-current" />
-                      <span className="text-xs font-medium text-gray-800">4.9</span>
-                    </div>
-                  </div>
-                </div>
+                
               </div>
               
               {/* Floating Cards - Hidden on mobile for cleaner look */}
