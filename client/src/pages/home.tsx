@@ -9,6 +9,7 @@ import { getProducts, getCategories, getSettings } from "@/lib/api";
 import artisanImage from "@assets/image29.png";
 import craftWorkshopImage from "@assets/image30.png";
 import traditionalToolsImage from "@assets/image13.png";
+import handmadeCraftImage from "@assets/pic30.png";
 
 export default function Home() {
   const { data: featuredProducts = [] } = useQuery({
@@ -297,7 +298,7 @@ export default function Home() {
                   </div>
                   <div className="space-y-2 sm:space-y-4 mt-4 sm:mt-8">
                     <img
-                      src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200"
+                      src={handmadeCraftImage}
                       alt="Handmade pottery"
                       className="w-full h-24 sm:h-32 object-cover rounded-lg sm:rounded-xl shadow-lg"
                     />
