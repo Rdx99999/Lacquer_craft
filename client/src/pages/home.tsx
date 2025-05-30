@@ -49,7 +49,14 @@ export default function Home() {
     <div className="min-h-screen bg-warm-cream">
       {/* Hero Section - Hidden on mobile, visible on desktop */}
       <section className="relative overflow-hidden hidden lg:block">
-        
+        {/* Main Background Image */}
+        <div className="absolute inset-0" 
+             style={{
+               backgroundImage: `url("${heroImage}")`,
+               backgroundSize: 'cover',
+               backgroundPosition: 'center',
+               backgroundRepeat: 'no-repeat',
+             }} />
         
         {/* Dark overlay for better text readability */}
         <div className="absolute inset-0 bg-black/40" />
