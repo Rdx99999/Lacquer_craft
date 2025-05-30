@@ -75,12 +75,50 @@ export async function registerRoutes(app: Express): Promise<Server> {
     next();
   };
 
+  // Rate limiting for admin login attempts
+  const adminLoginAttempts = new Map<string, { count: number; lastAttempt: number }>();
+  const MAX_ADMIN_LOGIN_ATTEMPTS = 5;
+  const ADMIN_LOGIN_TIMEOUT = 15 * 60 * 1000; // 15 minutes
+
+  // Admin session storage
+  const adminSessions = new Map<string, { username: string; expiresAt: number }>();
+
   // Admin authentication middleware
-  const requireAdminAuth = (req: any, res: any, next: any) => {
+  const requireAdminAuth = async (req: any, res: any, next: any) => {
     const authHeader = req.headers.authorization;
+    
+    // Check for session token first
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const sessionToken = authHeader.slice('Bearer '.length);
+      const session = adminSessions.get(sessionToken);
+      
+      if (session && session.expiresAt > Date.now()) {
+        req.adminUser = session.username;
+        return next();
+      } else {
+        // Remove expired session
+        adminSessions.delete(sessionToken);
+      }
+    }
+
+    // Fallback to basic auth for initial login
     if (!authHeader || !authHeader.startsWith('Basic ')) {
-      res.setHeader('WWW-Authenticate', 'Basic realm="Admin Panel"');
       return res.status(401).json({ message: "Admin authentication required" });
+    }
+
+    const clientIP = req.ip || req.connection.remoteAddress || 'unknown';
+    const attempts = adminLoginAttempts.get(clientIP);
+    
+    if (attempts && attempts.count >= MAX_ADMIN_LOGIN_ATTEMPTS) {
+      if (Date.now() - attempts.lastAttempt < ADMIN_LOGIN_TIMEOUT) {
+        return res.status(429).json({ 
+          message: "Too many login attempts. Please try again later.",
+          retryAfter: Math.ceil((ADMIN_LOGIN_TIMEOUT - (Date.now() - attempts.lastAttempt)) / 1000)
+        });
+      } else {
+        // Reset after timeout
+        adminLoginAttempts.delete(clientIP);
+      }
     }
 
     const base64Credentials = authHeader.slice('Basic '.length);
@@ -88,14 +126,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
     const [username, password] = credentials.split(':');
 
     const adminUsername = process.env.ADMIN_USERNAME || 'admin';
-    const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
+    const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH;
 
-    if (username !== adminUsername || password !== adminPassword) {
-      res.setHeader('WWW-Authenticate', 'Basic realm="Admin Panel"');
-      return res.status(401).json({ message: "Invalid admin credentials" });
+    if (!adminPasswordHash) {
+      return res.status(500).json({ message: "Admin authentication not configured properly" });
     }
 
-    next();
+    try {
+      const isValidPassword = await bcrypt.compare(password, adminPasswordHash);
+      
+      if (username !== adminUsername || !isValidPassword) {
+        // Record failed attempt
+        const currentAttempts = adminLoginAttempts.get(clientIP) || { count: 0, lastAttempt: 0 };
+        adminLoginAttempts.set(clientIP, {
+          count: currentAttempts.count + 1,
+          lastAttempt: Date.now()
+        });
+        
+        return res.status(401).json({ message: "Invalid admin credentials" });
+      }
+
+      // Reset login attempts on successful login
+      adminLoginAttempts.delete(clientIP);
+      req.adminUser = username;
+      next();
+    } catch (error) {
+      return res.status(500).json({ message: "Authentication error" });
+    }
   };
 
   // Auth routes
@@ -182,9 +239,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Admin authentication route
-  app.post("/api/admin/auth", requireAdminAuth, (req, res) => {
-    res.json({ message: "Admin authenticated successfully" });
+  // Admin authentication route with session creation
+  app.post("/api/admin/auth", requireAdminAuth, (req: any, res) => {
+    // Generate session token
+    const sessionToken = require('crypto').randomBytes(32).toString('hex');
+    const sessionTimeout = parseInt(process.env.ADMIN_SESSION_TIMEOUT_HOURS || '8') * 60 * 60 * 1000;
+    
+    adminSessions.set(sessionToken, {
+      username: req.adminUser,
+      expiresAt: Date.now() + sessionTimeout
+    });
+
+    res.json({ 
+      message: "Admin authenticated successfully",
+      sessionToken,
+      expiresAt: Date.now() + sessionTimeout
+    });
+  });
+
+  // Admin logout route
+  app.post("/api/admin/logout", (req, res) => {
+    const authHeader = req.headers.authorization;
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const sessionToken = authHeader.slice('Bearer '.length);
+      adminSessions.delete(sessionToken);
+    }
+    res.json({ message: "Admin logged out successfully" });
+  });
+
+  // Admin session validation route
+  app.get("/api/admin/me", requireAdminAuth, (req: any, res) => {
+    res.json({ 
+      username: req.adminUser,
+      authenticated: true 
+    });
   });
 
   // Wishlist routes

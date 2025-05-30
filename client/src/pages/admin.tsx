@@ -74,7 +74,7 @@ const navigation = [
 ];
 
 export default function Admin() {
-  const { isAuthenticated, login, logout, isLoading } = useAdminAuth();
+  const { isAuthenticated, login, logout, isLoading, username } = useAdminAuth();
   const params = useParams();
   const [location] = useLocation();
   const activeTab = params.tab || "products";
@@ -699,7 +699,7 @@ export default function Admin() {
               {navigation.map((item) => {
                 const Icon = item.icon;
                 const isActive = activeTab === item.tab;
-                
+
                 return (
                   <Link key={item.name} href={`/admin/${item.tab}`}>
                     <Button
@@ -718,20 +718,20 @@ export default function Admin() {
               })}
             </nav>
           </div>
-          
+
           <div className="absolute bottom-4 left-4 space-y-2">
+            <Button 
+              variant="ghost" 
+              className="text-gray-400 hover:text-white w-full mb-2"
+              onClick={logout}
+            >
+              🚪 Logout {username ? `(${username})` : ''}
+            </Button>
             <Link href="/">
               <Button variant="ghost" className="text-gray-400 hover:text-white w-full">
                 ← Back to Store
               </Button>
             </Link>
-            <Button 
-              variant="ghost" 
-              className="text-red-400 hover:text-red-300 w-full"
-              onClick={logout}
-            >
-              Logout
-            </Button>
           </div>
         </div>
 
@@ -743,7 +743,7 @@ export default function Admin() {
                 {navigation.find(n => n.tab === activeTab)?.name || "Admin Dashboard"}
               </h1>
             </div>
-            
+
             {renderTabContent()}
           </div>
         </div>

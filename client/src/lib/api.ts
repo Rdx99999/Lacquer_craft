@@ -431,3 +431,18 @@ export async function removeFromWishlist(productId: number): Promise<void> {
     throw new Error("Failed to remove from wishlist");
   }
 }
+
+// Function to get admin auth header for API calls
+export function getAdminAuthHeader(): { Authorization: string } | {} {
+  const sessionToken = localStorage.getItem('admin_session_token');
+  const expiresAt = localStorage.getItem('admin_session_expires');
+
+  if (sessionToken && expiresAt && Date.now() < parseInt(expiresAt)) {
+    return { Authorization: `Bearer ${sessionToken}` };
+  }
+
+  // Clear expired session
+  localStorage.removeItem('admin_session_token');
+  localStorage.removeItem('admin_session_expires');
+  return {};
+}
