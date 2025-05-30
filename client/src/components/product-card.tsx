@@ -109,27 +109,27 @@ export function ProductCard({
           )}
         </div>
 
-        <CardContent className="p-2 sm:p-4 flex-1 flex flex-col">
+        <CardContent className="p-1.5 sm:p-4 flex-1 flex flex-col">
           <div className="space-y-1 sm:space-y-2 flex-1">
             <div className="flex items-center justify-between">
               {showCategory && category && (
-                <Badge variant="outline" className="text-xs">
+                <Badge variant="outline" className="text-xs hidden sm:block">
                   {category.name}
                 </Badge>
               )}
               <div className="flex items-center space-x-1">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="h-3 w-3 fill-saffron text-saffron" />
+                  <Star key={i} className="h-2.5 w-2.5 sm:h-3 sm:w-3 fill-saffron text-saffron" />
                 ))}
-                <span className="text-xs text-gray-500 ml-1">4.8</span>
+                <span className="text-xs text-gray-500 ml-1 hidden sm:inline">4.8</span>
               </div>
             </div>
 
-            <h3 className="font-semibold text-gray-900 line-clamp-2 min-h-[2rem] sm:min-h-[2.5rem] text-xs sm:text-base leading-tight">
+            <h3 className="font-semibold text-gray-900 line-clamp-2 min-h-[1.5rem] sm:min-h-[2.5rem] text-xs sm:text-base leading-tight">
               {product.name}
             </h3>
 
-            <p className="text-xs sm:text-sm text-gray-600 line-clamp-2 min-h-[1.5rem] sm:min-h-[2.5rem] leading-tight">
+            <p className="text-xs sm:text-sm text-gray-600 line-clamp-1 sm:line-clamp-2 min-h-[1rem] sm:min-h-[2.5rem] leading-tight">
               {product.description}
             </p>
 
@@ -157,34 +157,34 @@ export function ProductCard({
             )}
           </div>
 
-          <div className="flex items-center justify-between pt-2 sm:pt-3 mt-auto">
-            <span className="text-base sm:text-lg font-bold text-terracotta">
-              ₹{parseFloat(product.price).toLocaleString()}
-            </span>
-
-            <div className="flex items-center space-x-2">
-              <div className="text-right">
-                <div className="text-xs text-gray-500">
+          <div className="flex items-center justify-between pt-1.5 sm:pt-3 mt-auto">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between w-full">
+              <span className="text-sm sm:text-lg font-bold text-terracotta">
+                ₹{parseFloat(product.price).toLocaleString()}
+              </span>
+              
+              <div className="flex items-center justify-between sm:justify-end space-x-1 sm:space-x-2 mt-1 sm:mt-0">
+                <div className="text-xs text-gray-500 hidden sm:block">
                   {product.stock > 0 ? `${product.stock} left` : 'Out of stock'}
                 </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleWishlist(product.id);
+                  }}
+                  className={`p-1 sm:p-2 transition-colors h-6 w-6 sm:h-8 sm:w-8 ${
+                    isInWishlist(product.id) 
+                      ? "bg-red-50 text-red-500 hover:bg-red-100" 
+                      : "hover:bg-red-50 text-gray-400 hover:text-red-500"
+                  }`}
+                  aria-label={isInWishlist(product.id) ? "Remove from wishlist" : "Add to wishlist"}
+                >
+                  <Heart className={`h-2.5 w-2.5 sm:h-4 sm:w-4 ${isInWishlist(product.id) ? "fill-current" : ""}`} />
+                </Button>
               </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  toggleWishlist(product.id);
-                }}
-                className={`p-1 sm:p-2 transition-colors h-8 w-8 ${
-                  isInWishlist(product.id) 
-                    ? "bg-red-50 text-red-500 hover:bg-red-100" 
-                    : "hover:bg-red-50 text-gray-400 hover:text-red-500"
-                }`}
-                aria-label={isInWishlist(product.id) ? "Remove from wishlist" : "Add to wishlist"}
-              >
-                <Heart className={`h-3 w-3 sm:h-4 sm:w-4 ${isInWishlist(product.id) ? "fill-current" : ""}`} />
-              </Button>
             </div>
           </div>
         </CardContent>

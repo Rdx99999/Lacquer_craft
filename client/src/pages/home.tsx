@@ -255,9 +255,9 @@ export default function Home() {
             </p>
           </div>
           
-          {/* Mobile: Single column for better readability */}
-          <div className="block sm:hidden mb-8">
-            <div className="space-y-4">
+          {/* Mobile: Compact 2-column grid */}
+          <div className="block sm:hidden mb-6">
+            <div className="grid grid-cols-2 gap-2">
               {featuredProducts.slice(0, 4).map((product) => (
                 <div key={product.id} className="transform hover:scale-[1.02] transition-transform duration-300">
                   <ProductCard product={product} />
