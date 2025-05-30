@@ -664,17 +664,18 @@ export default function ProductDetail() {
             )}
 
             {/* Product Details */}
-            <div className="bg-gradient-to-br from-white to-warm-cream/30 rounded-2xl border border-gray-200 shadow-lg overflow-hidden">
-              <div className="bg-gradient-to-r from-terracotta to-saffron p-6">
-                <h3 className="font-semibold text-white text-xl flex items-center">
-                  <svg className="h-6 w-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-gradient-to-br from-white to-warm-cream/30 rounded-xl sm:rounded-2xl border border-gray-200 shadow-lg overflow-hidden">
+              <div className="bg-gradient-to-r from-terracotta to-saffron p-3 sm:p-4 lg:p-6">
+                <h3 className="font-semibold text-white text-lg sm:text-xl flex items-center">
+                  <svg className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 mr-2 sm:mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  Product Details
+                  <span className="hidden sm:inline">Product Details</span>
+                  <span className="sm:hidden">Details</span>
                 </h3>
               </div>
-              <div className="p-6">
-                <div className="space-y-4">
+              <div className="p-3 sm:p-4 lg:p-6">
+                <div className="space-y-2 sm:space-y-3 lg:space-y-4">
                   {[
                     { label: "Category", value: product.category.name, icon: "📂" },
                     { label: "SKU", value: product.sku, icon: "🏷️" },
@@ -684,42 +685,42 @@ export default function ProductDetail() {
                     { label: "Material", value: "Premium Quality", icon: "✨" },
                     { label: "Care Instructions", value: "Handle with care", icon: "💝" }
                   ].map((detail, index) => (
-                    <div key={index} className="flex items-center justify-between py-3 px-4 bg-gray-50/50 rounded-lg hover:bg-gray-100/50 transition-colors duration-200">
-                      <div className="flex items-center space-x-3">
-                        <span className="text-lg">{detail.icon}</span>
-                        <span className="text-gray-700 font-medium">{detail.label}:</span>
+                    <div key={index} className="flex items-center justify-between py-2 sm:py-2.5 lg:py-3 px-2 sm:px-3 lg:px-4 bg-gray-50/50 rounded-lg hover:bg-gray-100/50 transition-colors duration-200">
+                      <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
+                        <span className="text-sm sm:text-base lg:text-lg flex-shrink-0">{detail.icon}</span>
+                        <span className="text-gray-700 font-medium text-xs sm:text-sm lg:text-base truncate">{detail.label}:</span>
                       </div>
-                      <span className="font-semibold text-gray-900">{detail.value}</span>
+                      <span className="font-semibold text-gray-900 text-xs sm:text-sm lg:text-base ml-2 text-right flex-shrink-0">{detail.value}</span>
                     </div>
                   ))}
                 </div>
 
                 {/* Trust Badges */}
-                <div className="mt-6 pt-6 border-t border-gray-200">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="flex items-center space-x-2 text-sm text-gray-600 bg-green-50 px-3 py-2 rounded-lg">
-                      <svg className="h-4 w-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="mt-4 sm:mt-5 lg:mt-6 pt-4 sm:pt-5 lg:pt-6 border-t border-gray-200">
+                  <div className="grid grid-cols-2 gap-2 sm:gap-3 lg:gap-4">
+                    <div className="flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm text-gray-600 bg-green-50 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg">
+                      <svg className="h-3 w-3 sm:h-4 sm:w-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
-                      <span>Authentic Product</span>
+                      <span className="truncate">Authentic Product</span>
                     </div>
-                    <div className="flex items-center space-x-2 text-sm text-gray-600 bg-blue-50 px-3 py-2 rounded-lg">
-                      <svg className="h-4 w-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm text-gray-600 bg-blue-50 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg">
+                      <svg className="h-3 w-3 sm:h-4 sm:w-4 text-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
-                      <span>Fast Delivery</span>
+                      <span className="truncate">Fast Delivery</span>
                     </div>
-                    <div className="flex items-center space-x-2 text-sm text-gray-600 bg-purple-50 px-3 py-2 rounded-lg">
-                      <svg className="h-4 w-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm text-gray-600 bg-purple-50 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg">
+                      <svg className="h-3 w-3 sm:h-4 sm:w-4 text-purple-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                       </svg>
-                      <span>Quality Assured</span>
+                      <span className="truncate">Quality Assured</span>
                     </div>
-                    <div className="flex items-center space-x-2 text-sm text-gray-600 bg-orange-50 px-3 py-2 rounded-lg">
-                      <svg className="h-4 w-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm text-gray-600 bg-orange-50 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg">
+                      <svg className="h-3 w-3 sm:h-4 sm:w-4 text-orange-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                       </svg>
-                      <span>Made with Love</span>
+                      <span className="truncate">Made with Love</span>
                     </div>
                   </div>
                 </div>
