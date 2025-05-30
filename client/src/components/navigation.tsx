@@ -93,15 +93,15 @@ export function Navigation() {
             </div>
 
             {/* Search and Actions */}
-            <div className="flex items-center space-x-4">
-              {/* Search */}
-              <form onSubmit={handleSearch} className="relative hidden sm:block">
+            <div className="flex items-center space-x-2 sm:space-x-4">
+              {/* Search - Desktop only */}
+              <form onSubmit={handleSearch} className="relative hidden lg:block">
                 <Input
                   type="text"
                   placeholder="Search crafts..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-64 pr-10"
+                  className="w-48 xl:w-64 pr-10"
                 />
                 <Button
                   type="submit"
@@ -113,22 +113,27 @@ export function Navigation() {
                 </Button>
               </form>
 
-              <Link href="/wishlist" className="relative">
-              <Button variant="ghost" size="sm" className="relative hover:bg-warm-cream/50">
-                <Heart className="h-5 w-5" />
+              {/* Mobile Search Button */}
+              <Button variant="ghost" size="sm" className="lg:hidden hover:bg-warm-cream/50 p-2">
+                <Search className="h-5 w-5" />
               </Button>
-            </Link>
 
-            <Link href="/cart" className="relative">
-              <Button variant="ghost" size="sm" className="relative hover:bg-warm-cream/50">
-                <ShoppingCart className="h-5 w-5" />
-                {itemCount > 0 && (
-                  <Badge className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 bg-saffron text-white text-xs">
-                    {itemCount}
-                  </Badge>
-                )}
-              </Button>
-            </Link>
+              <Link href="/wishlist" className="relative hidden sm:block">
+                <Button variant="ghost" size="sm" className="relative hover:bg-warm-cream/50 p-2">
+                  <Heart className="h-4 w-4 sm:h-5 sm:w-5" />
+                </Button>
+              </Link>
+
+              <Link href="/cart" className="relative">
+                <Button variant="ghost" size="sm" className="relative hover:bg-warm-cream/50 p-2">
+                  <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />
+                  {itemCount > 0 && (
+                    <Badge className="absolute -top-1 -right-1 h-4 w-4 sm:h-5 sm:w-5 flex items-center justify-center p-0 bg-saffron text-white text-xs">
+                      {itemCount}
+                    </Badge>
+                  )}
+                </Button>
+              </Link>
 
               {/* Authentication */}
               {isAuthenticated ? (
