@@ -275,94 +275,95 @@ export default function Home() {
       </section>
 
       {/* Artisan Story Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <section className="py-8 sm:py-16 lg:py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-12 lg:gap-16 items-center">
             <div className="order-2 lg:order-1">
-              <Badge className="bg-terracotta/10 text-terracotta border-terracotta/20 px-4 py-2 mb-6">
+              <Badge className="bg-terracotta/10 text-terracotta border-terracotta/20 px-2 py-1 sm:px-4 sm:py-2 mb-3 sm:mb-6 text-xs sm:text-sm">
                 Our Heritage
               </Badge>
-              <h2 className="font-display text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-                Preserving <span className="text-terracotta">Traditions</span><br />
-                Supporting <span className="text-saffron">Artisans</span>
+              <h2 className="font-display text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-6 leading-tight">
+                Preserving <span className="text-terracotta">Traditions</span><br className="hidden sm:block" />
+                <span className="sm:hidden"> & </span>Supporting <span className="text-saffron">Artisans</span>
               </h2>
-              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+              <p className="text-sm sm:text-lg text-gray-600 mb-4 sm:mb-8 leading-relaxed">
                 Every purchase directly supports traditional artisan families across India. We work closely with skilled craftspeople, ensuring fair wages and preserving age-old techniques for future generations.
               </p>
               
-              <div className="space-y-6 mb-8">
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-terracotta/10 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <Heart className="h-6 w-6 text-terracotta" />
+              <div className="space-y-3 sm:space-y-6 mb-4 sm:mb-8">
+                <div className="flex items-start space-x-2 sm:space-x-4">
+                  <div className="w-8 h-8 sm:w-12 sm:h-12 bg-terracotta/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 sm:mt-1">
+                    <Heart className="h-4 w-4 sm:h-6 sm:w-6 text-terracotta" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-2">Direct Impact</h3>
-                    <p className="text-gray-600">Your purchase directly supports artisan families and helps preserve traditional crafts.</p>
+                    <h3 className="font-semibold text-gray-900 mb-1 sm:mb-2 text-sm sm:text-base">Direct Impact</h3>
+                    <p className="text-gray-600 text-xs sm:text-base">Your purchase directly supports artisan families and helps preserve traditional crafts.</p>
                   </div>
                 </div>
                 
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-saffron/10 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <Award className="h-6 w-6 text-saffron" />
+                <div className="flex items-start space-x-2 sm:space-x-4">
+                  <div className="w-8 h-8 sm:w-12 sm:h-12 bg-saffron/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 sm:mt-1">
+                    <Award className="h-4 w-4 sm:h-6 sm:w-6 text-saffron" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-2">Quality Assurance</h3>
-                    <p className="text-gray-600">Every piece is carefully inspected and comes with authenticity certification.</p>
+                    <h3 className="font-semibold text-gray-900 mb-1 sm:mb-2 text-sm sm:text-base">Quality Assurance</h3>
+                    <p className="text-gray-600 text-xs sm:text-base">Every piece is carefully inspected and comes with authenticity certification.</p>
                   </div>
                 </div>
                 
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-terracotta/10 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <Users className="h-6 w-6 text-terracotta" />
+                <div className="flex items-start space-x-2 sm:space-x-4">
+                  <div className="w-8 h-8 sm:w-12 sm:h-12 bg-terracotta/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 sm:mt-1">
+                    <Users className="h-4 w-4 sm:h-6 sm:w-6 text-terracotta" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-2">Community Building</h3>
-                    <p className="text-gray-600">We foster a community that values authentic craftsmanship and cultural heritage.</p>
+                    <h3 className="font-semibold text-gray-900 mb-1 sm:mb-2 text-sm sm:text-base">Community Building</h3>
+                    <p className="text-gray-600 text-xs sm:text-base">We foster a community that values authentic craftsmanship and cultural heritage.</p>
                   </div>
                 </div>
               </div>
               
-              <Button size="lg" variant="outline" className="border-terracotta text-terracotta hover:bg-terracotta hover:text-white px-8 py-4 text-lg">
-                Learn Our Story
-                <ArrowRight className="ml-2 h-5 w-5" />
+              <Button size="lg" variant="outline" className="border-terracotta text-terracotta hover:bg-terracotta hover:text-white px-4 sm:px-8 py-2.5 sm:py-4 text-sm sm:text-lg w-full sm:w-auto">
+                <span className="hidden sm:inline">Learn Our Story</span>
+                <span className="sm:hidden">Our Story</span>
+                <ArrowRight className="ml-2 h-3 w-3 sm:h-5 sm:w-5" />
               </Button>
             </div>
             
             <div className="order-1 lg:order-2">
               <div className="relative">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-2 sm:gap-4">
+                  <div className="space-y-2 sm:space-y-4">
                     <img
                       src="https://images.unsplash.com/photo-1594736797933-d0da6ac65bce?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300"
                       alt="Artisan at work"
-                      className="w-full h-48 object-cover rounded-xl shadow-lg"
+                      className="w-full h-32 sm:h-48 object-cover rounded-lg sm:rounded-xl shadow-lg"
                     />
                     <img
                       src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200"
                       alt="Traditional tools"
-                      className="w-full h-32 object-cover rounded-xl shadow-lg"
+                      className="w-full h-24 sm:h-32 object-cover rounded-lg sm:rounded-xl shadow-lg"
                     />
                   </div>
-                  <div className="space-y-4 mt-8">
+                  <div className="space-y-2 sm:space-y-4 mt-4 sm:mt-8">
                     <img
                       src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200"
                       alt="Handmade pottery"
-                      className="w-full h-32 object-cover rounded-xl shadow-lg"
+                      className="w-full h-24 sm:h-32 object-cover rounded-lg sm:rounded-xl shadow-lg"
                     />
                     <img
                       src="https://images.unsplash.com/photo-1609887461110-46dc7516de27?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300"
                       alt="Craft workshop"
-                      className="w-full h-48 object-cover rounded-xl shadow-lg"
+                      className="w-full h-32 sm:h-48 object-cover rounded-lg sm:rounded-xl shadow-lg"
                     />
                   </div>
                 </div>
                 
-                {/* Floating Achievement Card */}
-                <div className="absolute -bottom-6 -left-6 bg-white rounded-xl shadow-xl p-6 border border-gray-100">
+                {/* Floating Achievement Card - Hidden on mobile for space */}
+                <div className="hidden sm:block absolute -bottom-6 -left-6 bg-white rounded-xl shadow-xl p-4 sm:p-6 border border-gray-100">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-terracotta mb-1">500+</div>
-                    <div className="text-sm text-gray-600">Artisan Families</div>
-                    <div className="text-sm text-gray-600">Supported</div>
+                    <div className="text-xl sm:text-2xl font-bold text-terracotta mb-1">500+</div>
+                    <div className="text-xs sm:text-sm text-gray-600">Artisan Families</div>
+                    <div className="text-xs sm:text-sm text-gray-600">Supported</div>
                   </div>
                 </div>
               </div>
