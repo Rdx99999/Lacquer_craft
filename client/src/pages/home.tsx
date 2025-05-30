@@ -374,7 +374,7 @@ export default function Home() {
               </Button>
             </div>
             
-            <div className="order-1 lg:order-2">
+            <div className="order-1 lg:order-2 hidden lg:block">
               <div className="relative">
                 <div className="grid grid-cols-2 gap-2 sm:gap-4">
                   <div className="space-y-2 sm:space-y-4">
