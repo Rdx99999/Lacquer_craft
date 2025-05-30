@@ -7,6 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { useCart } from "@/hooks/use-cart";
+import { useAuth } from "@/hooks/use-auth";
+import { useWishlist } from "@/hooks/use-wishlist";
 import { ChevronLeft, ChevronRight, Star, Plus, Minus, Heart, Share2, X, ArrowRight, ArrowLeft, ShoppingCart } from "lucide-react";
 import { CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -29,6 +31,8 @@ export default function ProductDetail() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const { addToCart, isAddingToCart } = useCart();
+  const { isAuthenticated } = useAuth();
+  const { isInWishlist, toggleWishlist } = useWishlist();
   const { toast } = useToast();
 
   const { data: product, isLoading, error } = useQuery({
@@ -96,12 +100,12 @@ export default function ProductDetail() {
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!containerRef.current || !imageRef.current || !zoomMode) return;
-    
+
     const container = containerRef.current;
     const rect = container.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
     const y = ((e.clientY - rect.top) / rect.height) * 100;
-    
+
     setZoomPosition({ x, y });
   };
 
@@ -124,61 +128,46 @@ export default function ProductDetail() {
     }
   };
 
-  const handleWishlist = () => {
+  const handleWishlist = async () => {
     if (!product) return;
-    
-    setIsWishlisted(!isWishlisted);
-    
-    // Get existing wishlist from localStorage
-    const existingWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
-    
-    if (!isWishlisted) {
-      // Add to wishlist
-      const wishlistItem = {
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        image: product.images[0],
-        addedAt: new Date().toISOString()
-      };
-      
-      const updatedWishlist = [...existingWishlist, wishlistItem];
-      localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
-      
+  
+    try {
+      await toggleWishlist(product.id);
+      // No need to manually update local storage or state here
+      // useWishlist hook handles it
+  
       toast({
-        title: "Added to Wishlist",
-        description: `${product.name} has been added to your wishlist.`,
+        title: isInWishlist(product.id) ? "Removed from Wishlist" : "Added to Wishlist",
+        description: `${product.name} has been ${isInWishlist(product.id) ? 'removed from' : 'added to'} your wishlist.`,
       });
-    } else {
-      // Remove from wishlist
-      const updatedWishlist = existingWishlist.filter((item: any) => item.id !== product.id);
-      localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
-      
+    } catch (error) {
+      console.error("Error toggling wishlist:", error);
       toast({
-        title: "Removed from Wishlist",
-        description: `${product.name} has been removed from your wishlist.`,
+        title: "Error",
+        description: "Failed to update wishlist. Please try again.",
+        variant: "destructive",
       });
     }
   };
 
   const handleBuyNow = async () => {
     if (!product) return;
-    
+
     setIsBuyingNow(true);
-    
+
     try {
       // First add to cart
       await addToCart({
         productId: product.id,
         quantity,
       });
-      
+
       // Simulate processing time
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
       // Redirect to cart page for immediate checkout
       window.location.href = '/cart?checkout=true';
-      
+
       toast({
         title: "Redirecting to Checkout",
         description: `${quantity} × ${product.name} added to cart. Redirecting to checkout...`,
@@ -323,7 +312,7 @@ export default function ProductDetail() {
                   }}
                   draggable={false}
                 />
-                
+
                 {/* Zoom lens overlay */}
                 {isZooming && (
                   <div 
@@ -338,10 +327,10 @@ export default function ProductDetail() {
                     }}
                   />
                 )}
-                
+
                 {/* Hover overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                
+
                 {/* Zoom indicator */}
                 {zoomMode && (
                   <div className="absolute bottom-4 right-4 bg-black/60 text-white text-xs px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center z-20">
@@ -351,7 +340,7 @@ export default function ProductDetail() {
                     Hover to zoom
                   </div>
                 )}
-                
+
                 {/* Zoom mode indicator */}
                 {zoomMode && (
                   <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-terracotta/90 text-white text-xs px-3 py-1 rounded-full z-20 flex items-center">
@@ -434,13 +423,13 @@ export default function ProductDetail() {
                   size="sm" 
                   onClick={handleWishlist}
                   className={`transition-all duration-200 hover:scale-105 ${
-                    isWishlisted 
-                      ? 'bg-saffron text-white border-saffron hover:bg-saffron/90' 
+                    isInWishlist(product.id)
+                      ? 'bg-saffron text-white border-saffron hover:bg-saffron/90'
                       : 'hover:bg-saffron hover:text-white'
                   }`}
                 >
-                  <Heart className={`h-4 w-4 mr-2 ${isWishlisted ? 'fill-current' : ''}`} />
-                  {isWishlisted ? 'Wishlisted' : 'Wishlist'}
+                  <Heart className={`h-4 w-4 mr-2 ${isInWishlist(product.id) ? 'fill-current' : ''}`} />
+                  {isInWishlist(product.id) ? 'Wishlisted' : 'Wishlist'}
                 </Button>
                 <Button variant="outline" size="sm" className="hover:bg-sage hover:text-white transition-all duration-200 hover:scale-105">
                   <Share2 className="h-4 w-4 mr-2" />
@@ -488,11 +477,11 @@ export default function ProductDetail() {
                   SKU: {product.sku}
                 </span>
               </div>
-              
+
               <h1 className="font-display text-4xl font-bold text-gray-900 mb-6 leading-tight">
                 {product.name}
               </h1>
-              
+
               <div className="flex flex-col sm:flex-row sm:items-center gap-6 mb-6">
                 <div className="flex items-baseline gap-2">
                   <span className="text-4xl font-bold text-terracotta">
@@ -505,7 +494,7 @@ export default function ProductDetail() {
                     Save 20%
                   </Badge>
                 </div>
-                
+
                 <div className="flex items-center space-x-2 bg-saffron/10 px-4 py-2 rounded-full">
                   <div className="flex items-center space-x-1">
                     {[...Array(5)].map((_, i) => (
@@ -609,18 +598,18 @@ export default function ProductDetail() {
                     "Add to Cart"
                   )}
                 </Button>
-                
+
                 {/* Quick Actions */}
                 <div className="flex gap-3">
                   <Button
                     variant="outline"
                     onClick={handleWishlist}
                     className={`flex-1 border-terracotta text-terracotta hover:bg-terracotta hover:text-white transition-all duration-200 ${
-                      isWishlisted ? 'bg-terracotta text-white' : ''
+                      isInWishlist(product.id) ? 'bg-terracotta text-white' : ''
                     }`}
                   >
-                    <Heart className={`h-4 w-4 mr-2 ${isWishlisted ? 'fill-current' : ''}`} />
-                    {isWishlisted ? 'Wishlisted' : 'Wishlist'}
+                    <Heart className={`h-4 w-4 mr-2 ${isInWishlist(product.id) ? 'fill-current' : ''}`} />
+                    {isInWishlist(product.id) ? 'Wishlisted' : 'Wishlist'}
                   </Button>
                   <Button
                     variant="outline"
@@ -674,7 +663,7 @@ export default function ProductDetail() {
                     </div>
                   ))}
                 </div>
-                
+
                 {/* Trust Badges */}
                 <div className="mt-6 pt-6 border-t border-gray-200">
                   <div className="grid grid-cols-2 gap-4">

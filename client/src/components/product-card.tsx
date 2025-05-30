@@ -156,6 +156,23 @@ export function ProductCard({ product, showCategory = true, highlightFeatures = 
               <div className="text-xs text-gray-500">
                 {product.stock > 0 ? `${product.stock} left` : 'Out of stock'}
               </div>
+               <Button
+            variant="ghost"
+            size="sm"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              toggleWishlist(product.id);
+            }}
+            className={`p-2 transition-colors ${
+              isInWishlist(product.id) 
+                ? "bg-red-50 text-red-500 hover:bg-red-100" 
+                : "hover:bg-red-50 text-gray-400 hover:text-red-500"
+            }`}
+            aria-label={isInWishlist(product.id) ? "Remove from wishlist" : "Add to wishlist"}
+          >
+            <Heart className={`h-4 w-4 ${isInWishlist(product.id) ? "fill-current" : ""}`} />
+          </Button>
             </div>
           </div>
         </CardContent>
