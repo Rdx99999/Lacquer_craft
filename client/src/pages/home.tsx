@@ -176,17 +176,7 @@ export default function Home() {
                 </div>
               </div>
               
-              <div className="hidden sm:block absolute -bottom-4 lg:-bottom-6 -right-4 lg:-right-6 bg-white rounded-lg lg:rounded-xl shadow-lg p-3 lg:p-4 border border-gray-100">
-                <div className="flex items-center space-x-2 lg:space-x-3">
-                  <div className="w-8 h-8 lg:w-12 lg:h-12 bg-terracotta/10 rounded-full flex items-center justify-center">
-                    <Shield className="h-4 w-4 lg:h-6 lg:w-6 text-terracotta" />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-gray-900 text-sm lg:text-base">Lifetime Support</div>
-                    <div className="text-xs lg:text-sm text-gray-600">Artisan Care</div>
-                  </div>
-                </div>
-              </div>
+              
             </div>
           </div>
         </div>
