@@ -62,6 +62,15 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
       },
+      fontFamily: {
+        'sans': ['Inter', 'system-ui', 'sans-serif'],
+        'serif': ['Playfair Display', 'serif'],
+        'display': ['Playfair Display', 'serif'],
+        'poppins': ['Poppins', 'sans-serif'],
+        'crimson': ['Crimson Text', 'serif'],
+        'lora': ['Lora', 'serif'],
+        'inter': ['Inter', 'sans-serif'],
+      },
       keyframes: {
         "accordion-down": {
           from: {
