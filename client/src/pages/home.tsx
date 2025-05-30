@@ -255,12 +255,25 @@ export default function Home() {
             </p>
           </div>
           
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-6 lg:gap-8 mb-8 sm:mb-16">
+          {/* Mobile: Single column for better readability */}
+          <div className="block sm:hidden mb-8">
+            <div className="space-y-4">
+              {featuredProducts.slice(0, 4).map((product) => (
+                <div key={product.id} className="transform hover:scale-[1.02] transition-transform duration-300">
+                  <ProductCard product={product} />
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          {/* Desktop: Multi-column grid */}
+          <div className="hidden sm:grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-8 sm:mb-16">
             {featuredProducts.map((product) => (
               <div key={product.id} className="transform hover:scale-105 transition-transform duration-300">
                 <ProductCard product={product} />
               </div>
             ))}
+          </div>
           </div>
           
           <div className="text-center">

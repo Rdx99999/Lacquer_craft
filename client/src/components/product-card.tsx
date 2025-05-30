@@ -67,7 +67,7 @@ export function ProductCard({
   return (
     <Link href={`/products/${product.id}`}>
       <Card className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-white h-full flex flex-col">
-        <div className="relative aspect-[4/5] overflow-hidden rounded-t-lg">
+        <div className="relative aspect-[4/3] sm:aspect-[4/5] overflow-hidden rounded-t-lg">
           {/* Product Image */}
           <img
             src={product.images[0] || "/placeholder-image.jpg"}
@@ -109,8 +109,8 @@ export function ProductCard({
           )}
         </div>
 
-        <CardContent className="p-3 sm:p-4 flex-1 flex flex-col">
-          <div className="space-y-2 flex-1">
+        <CardContent className="p-2 sm:p-4 flex-1 flex flex-col">
+          <div className="space-y-1 sm:space-y-2 flex-1">
             <div className="flex items-center justify-between">
               {showCategory && category && (
                 <Badge variant="outline" className="text-xs">
