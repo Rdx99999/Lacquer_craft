@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useParams } from "wouter";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAdminAuth } from "@/hooks/use-admin-auth";
+import { AdminLogin } from "@/components/admin/admin-login";
 import { 
   Package, 
   ShoppingBag, 
@@ -72,6 +74,7 @@ const navigation = [
 ];
 
 export default function Admin() {
+  const { isAuthenticated, login, logout, isLoading } = useAdminAuth();
   const params = useParams();
   const [location] = useLocation();
   const activeTab = params.tab || "products";
@@ -664,6 +667,23 @@ export default function Admin() {
     }
   };
 
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-terracotta mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show login if not authenticated
+  if (!isAuthenticated) {
+    return <AdminLogin onLogin={login} />;
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="flex">
@@ -699,12 +719,19 @@ export default function Admin() {
             </nav>
           </div>
           
-          <div className="absolute bottom-4 left-4">
+          <div className="absolute bottom-4 left-4 space-y-2">
             <Link href="/">
-              <Button variant="ghost" className="text-gray-400 hover:text-white">
+              <Button variant="ghost" className="text-gray-400 hover:text-white w-full">
                 ← Back to Store
               </Button>
             </Link>
+            <Button 
+              variant="ghost" 
+              className="text-red-400 hover:text-red-300 w-full"
+              onClick={logout}
+            >
+              Logout
+            </Button>
           </div>
         </div>
 

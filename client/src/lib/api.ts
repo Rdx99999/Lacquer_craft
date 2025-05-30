@@ -11,6 +11,7 @@ import type {
   ProductWithCategory,
   CartItemWithProduct 
 } from "@shared/schema";
+import { getAdminAuthHeader } from "@/hooks/use-admin-auth";
 
 // Categories
 export const getCategories = async (): Promise<Category[]> => {
@@ -73,20 +74,35 @@ export async function getRecommendedProducts(productId: number): Promise<Product
   return response.json();
 }
 
-export const createProduct = async (product: InsertProduct): Promise<Product> => {
-  const res = await apiRequest("POST", "/api/products", product);
-  return res.json();
-};
-
-export async function updateProduct(id: number, data: Partial<InsertProduct>) {
-  const response = await fetch(`/api/products/${id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
+export async function createProduct(productData: InsertProduct) {
+  const response = await fetch("/api/products", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...getAdminAuthHeader(),
+    },
+    body: JSON.stringify(productData),
   });
 
   if (!response.ok) {
-    throw new Error(`Failed to update product: ${response.statusText}`);
+    throw new Error("Failed to create product");
+  }
+
+  return response.json();
+}
+
+export async function updateProduct(id: number, productData: Partial<InsertProduct>) {
+  const response = await fetch(`/api/products/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      ...getAdminAuthHeader(),
+    },
+    body: JSON.stringify(productData),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to update product");
   }
 
   return response.json();
@@ -107,7 +123,10 @@ export async function deleteImage(imageUrl: string) {
 }
 
 export async function deleteProduct(id: number) {
-  const response = await fetch(`/api/products/${id}`, { method: "DELETE" });
+  const response = await fetch(`/api/products/${id}`, {
+    method: "DELETE",
+    headers: getAdminAuthHeader(),
+  });
   if (!response.ok) throw new Error("Failed to delete product");
   return response.json();
 }
