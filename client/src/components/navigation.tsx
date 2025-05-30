@@ -48,10 +48,12 @@ export function Navigation() {
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center">
-              <h1 className="font-display text-lg sm:text-2xl font-bold text-terracotta">
-                Hastkala
-              </h1>
-              <span className="ml-1 sm:ml-2 text-xs sm:text-sm text-gray-600 hidden sm:inline">Crafts</span>
+              <img 
+                src="/images/logo.png" 
+                alt="Hastkala Logo" 
+                className="h-8 w-auto sm:h-10 md:h-12"
+              />
+              <span className="ml-2 sm:ml-3 text-xs sm:text-sm text-gray-600 hidden sm:inline">Crafts</span>
             </Link>
 
             {/* Desktop Navigation */}

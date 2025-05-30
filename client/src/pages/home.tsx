@@ -52,10 +52,10 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-br from-terracotta/20 via-saffron/10 to-warm-cream" />
         
         {/* Logo Background Pattern */}
-        <div className="absolute inset-0 opacity-5" 
+        <div className="absolute inset-0 opacity-3" 
              style={{
                backgroundImage: `url("/images/logo.png")`,
-               backgroundSize: '200px 200px',
+               backgroundSize: '150px 150px',
                backgroundRepeat: 'repeat',
                backgroundPosition: 'center',
              }} />
