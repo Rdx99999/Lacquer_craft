@@ -30,6 +30,7 @@ export default function ProductDetail() {
   const [isBuyingNow, setIsBuyingNow] = useState(false);
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
   const [isFeaturesExpanded, setIsFeaturesExpanded] = useState(false);
+  const [isDetailsExpanded, setIsDetailsExpanded] = useState(false);
   const imageRef = useRef<HTMLImageElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -739,24 +740,52 @@ export default function ProductDetail() {
                 </h3>
               </div>
               <div className="p-3 sm:p-4 lg:p-6">
-                <div className="space-y-2 sm:space-y-3 lg:space-y-4">
-                  {[
-                    { label: "Category", value: product.category.name, icon: "📂" },
-                    { label: "SKU", value: product.sku, icon: "🏷️" },
-                    { label: "Availability", value: product.stock > 0 ? `${product.stock} in stock` : "Out of stock", icon: "📦" },
-                    { label: "Handmade", value: "Yes", icon: "🎨" },
-                    { label: "Origin", value: "India", icon: "🇮🇳" },
-                    { label: "Material", value: "Premium Quality", icon: "✨" },
-                    { label: "Care Instructions", value: "Handle with care", icon: "💝" }
-                  ].map((detail, index) => (
-                    <div key={index} className="flex items-center justify-between py-2 sm:py-2.5 lg:py-3 px-2 sm:px-3 lg:px-4 bg-gray-50/50 rounded-lg hover:bg-gray-100/50 transition-colors duration-200">
-                      <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
-                        <span className="text-sm sm:text-base lg:text-lg flex-shrink-0">{detail.icon}</span>
-                        <span className="text-gray-700 font-medium text-xs sm:text-sm lg:text-base truncate">{detail.label}:</span>
+                <div className="space-y-3">
+                  <div className={`space-y-2 sm:space-y-3 lg:space-y-4 transition-all duration-300 ${
+                    isDetailsExpanded 
+                      ? '' 
+                      : 'max-h-32 sm:max-h-none overflow-hidden'
+                  }`}>
+                    {[
+                      { label: "Category", value: product.category.name, icon: "📂" },
+                      { label: "SKU", value: product.sku, icon: "🏷️" },
+                      { label: "Availability", value: product.stock > 0 ? `${product.stock} in stock` : "Out of stock", icon: "📦" },
+                      { label: "Handmade", value: "Yes", icon: "🎨" },
+                      { label: "Origin", value: "India", icon: "🇮🇳" },
+                      { label: "Material", value: "Premium Quality", icon: "✨" },
+                      { label: "Care Instructions", value: "Handle with care", icon: "💝" }
+                    ].map((detail, index) => (
+                      <div key={index} className="flex items-center justify-between py-2 sm:py-2.5 lg:py-3 px-2 sm:px-3 lg:px-4 bg-gray-50/50 rounded-lg hover:bg-gray-100/50 transition-colors duration-200">
+                        <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
+                          <span className="text-sm sm:text-base lg:text-lg flex-shrink-0">{detail.icon}</span>
+                          <span className="text-gray-700 font-medium text-xs sm:text-sm lg:text-base truncate">{detail.label}:</span>
+                        </div>
+                        <span className="font-semibold text-gray-900 text-xs sm:text-sm lg:text-base ml-2 text-right flex-shrink-0">{detail.value}</span>
                       </div>
-                      <span className="font-semibold text-gray-900 text-xs sm:text-sm lg:text-base ml-2 text-right flex-shrink-0">{detail.value}</span>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
+                  
+                  {/* Show More/Less button - only visible on mobile */}
+                  <div className="block sm:hidden">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setIsDetailsExpanded(!isDetailsExpanded)}
+                      className="text-terracotta hover:text-terracotta/80 hover:bg-terracotta/10 p-0 h-auto font-medium"
+                    >
+                      {isDetailsExpanded ? (
+                        <>
+                          <span className="mr-1">Show less</span>
+                          <ChevronUp className="h-4 w-4" />
+                        </>
+                      ) : (
+                        <>
+                          <span className="mr-1">Show more details</span>
+                          <ChevronDown className="h-4 w-4" />
+                        </>
+                      )}
+                    </Button>
+                  </div>
                 </div>
 
                 {/* Trust Badges */}
