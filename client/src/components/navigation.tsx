@@ -88,7 +88,7 @@ export function Navigation() {
               </Link>
 
               <Link href="/track" className={`text-gray-700 hover:text-terracotta transition-colors ${location === "/track" ? "text-terracotta font-medium" : ""}`}>
-                Track Order
+                Track
               </Link>
             </div>
 
