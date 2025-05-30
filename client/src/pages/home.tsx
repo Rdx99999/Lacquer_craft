@@ -8,6 +8,7 @@ import { ProductCard } from "@/components/product-card";
 import { getProducts, getCategories, getSettings } from "@/lib/api";
 import artisanImage from "@assets/image29.png";
 import craftWorkshopImage from "@assets/image30.png";
+import traditionalToolsImage from "@assets/image13.png";
 
 export default function Home() {
   const { data: featuredProducts = [] } = useQuery({
@@ -289,7 +290,7 @@ export default function Home() {
                       className="w-full h-32 sm:h-48 object-cover rounded-lg sm:rounded-xl shadow-lg"
                     />
                     <img
-                      src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200"
+                      src={traditionalToolsImage}
                       alt="Traditional tools"
                       className="w-full h-24 sm:h-32 object-cover rounded-lg sm:rounded-xl shadow-lg"
                     />
