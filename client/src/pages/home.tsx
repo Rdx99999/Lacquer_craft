@@ -241,21 +241,21 @@ export default function Home() {
       </section>
 
       {/* Featured Products */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-warm-cream via-soft-beige to-warm-cream">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 sm:mb-16">
-            <Badge className="bg-saffron/10 text-saffron border-saffron/20 px-3 py-1 sm:px-4 sm:py-2 mb-4 sm:mb-6 text-xs sm:text-sm">
+      <section className="py-8 sm:py-16 lg:py-20 bg-gradient-to-br from-warm-cream via-soft-beige to-warm-cream">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="text-center mb-8 sm:mb-16">
+            <Badge className="bg-saffron/10 text-saffron border-saffron/20 px-2 py-1 sm:px-4 sm:py-2 mb-3 sm:mb-6 text-xs sm:text-sm">
               Master Artisan Picks
             </Badge>
-            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
+            <h2 className="font-display text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-6">
               Featured <span className="text-saffron">Masterpieces</span>
             </h2>
-            <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-4">
+            <p className="text-sm sm:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-4 hidden sm:block">
               Handpicked treasures that showcase the pinnacle of traditional Indian craftsmanship, each piece telling a unique story of heritage and skill
             </p>
           </div>
           
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-8 mb-12 sm:mb-16">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-6 lg:gap-8 mb-8 sm:mb-16">
             {featuredProducts.map((product) => (
               <div key={product.id} className="transform hover:scale-105 transition-transform duration-300">
                 <ProductCard product={product} />
@@ -265,9 +265,9 @@ export default function Home() {
           
           <div className="text-center">
             <Link href="/products">
-              <Button size="lg" className="bg-terracotta hover:bg-terracotta/90 text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg shadow-lg hover:shadow-xl transition-shadow duration-300 w-full sm:w-auto">
+              <Button size="lg" className="bg-terracotta hover:bg-terracotta/90 text-white px-4 sm:px-8 py-2.5 sm:py-4 text-sm sm:text-lg shadow-lg hover:shadow-xl transition-shadow duration-300 w-full sm:w-auto">
                 Discover All Masterpieces
-                <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+                <ArrowRight className="ml-2 h-3 w-3 sm:h-5 sm:w-5" />
               </Button>
             </Link>
           </div>
