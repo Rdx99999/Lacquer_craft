@@ -47,8 +47,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-warm-cream">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden">
+      {/* Hero Section - Hidden on mobile, visible on desktop */}
+      <section className="relative overflow-hidden hidden lg:block">
         <div className="absolute inset-0 bg-gradient-to-br from-terracotta/20 via-saffron/10 to-warm-cream" />
         
         {/* Decorative Pattern Overlay */}
