@@ -230,7 +230,10 @@
       "name": "aman",
       "email": "aman@gmail.com",
       "passwordHash": "$2b$10$ctPoqAWnWfaU/dmT3XnrVOFMWr8BqHRDMjnWvFwjMbzMJwN5lIuTm",
-      "createdAt": "2025-05-29T22:30:34.176Z"
+      "createdAt": "2025-05-29T22:30:34.176Z",
+      "wishlist": [
+        10
+      ]
     }
   ],
   "sessions": [
