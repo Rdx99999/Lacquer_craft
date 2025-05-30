@@ -480,6 +480,38 @@ export default function ProductDetail() {
                 {product.name}
               </h1>
 
+              {/* Stock Status */}
+              <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 border border-green-200 mb-3 sm:mb-4">
+                {product.stock > 0 ? (
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className="flex items-center space-x-2">
+                        <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                        <Badge variant="outline" className="text-green-700 border-green-500 bg-green-50 font-medium">
+                          ✓ In Stock
+                        </Badge>
+                      </div>
+                      {product.stock <= 5 && (
+                        <div className="flex items-center space-x-2 text-orange-600 bg-orange-50 px-3 py-1 rounded-full">
+                          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.464 0L4.35 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                          </svg>
+                          <span className="text-sm font-medium">Only {product.stock} left!</span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="text-sm text-gray-600">
+                      Fast shipping available
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                    <Badge variant="destructive" className="font-medium">Out of Stock</Badge>
+                  </div>
+                )}
+              </div>
+
               {/* Compact Price Section */}
               <div className="flex items-center justify-between mb-3 sm:mb-4">
                 <div className="flex items-baseline gap-2">
@@ -673,39 +705,7 @@ export default function ProductDetail() {
               </div>
             )}
 
-            {/* Stock Status */}
-            <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 border border-green-200">
-              {product.stock > 0 ? (
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                      <Badge variant="outline" className="text-green-700 border-green-500 bg-green-50 font-medium">
-                        ✓ In Stock
-                      </Badge>
-                    </div>
-                    {product.stock <= 5 && (
-                      <div className="flex items-center space-x-2 text-orange-600 bg-orange-50 px-3 py-1 rounded-full">
-                        <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.464 0L4.35 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                        </svg>
-                        <span className="text-sm font-medium">Only {product.stock} left!</span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="text-sm text-gray-600">
-                    Fast shipping available
-                  </div>
-                </div>
-              ) : (
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                  <Badge variant="destructive" className="font-medium">Out of Stock</Badge>
-                </div>
-              )}
-            </div>
 
-            
 
             {/* Product Details */}
             <div className="bg-gradient-to-br from-white to-warm-cream/30 rounded-xl sm:rounded-2xl border border-gray-200 shadow-lg overflow-hidden">
