@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ProductCard } from "@/components/product-card";
 import { getProducts, getCategories, getSettings } from "@/lib/api";
+import artisanImage from "@assets/image29.png";
 
 export default function Home() {
   const { data: featuredProducts = [] } = useQuery({
@@ -282,7 +283,7 @@ export default function Home() {
                 <div className="grid grid-cols-2 gap-2 sm:gap-4">
                   <div className="space-y-2 sm:space-y-4">
                     <img
-                      src="https://images.unsplash.com/photo-1594736797933-d0da6ac65bce?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300"
+                      src={artisanImage}
                       alt="Artisan at work"
                       className="w-full h-32 sm:h-48 object-cover rounded-lg sm:rounded-xl shadow-lg"
                     />
