@@ -251,9 +251,9 @@ export default function ProductDetail() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-warm-cream via-soft-beige/30 to-sage/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-4 sm:py-8">
         {/* Breadcrumb */}
-        <div className="flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm text-gray-600 mb-4 sm:mb-8 animate-fade-in overflow-x-auto">
+        <div className="flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm text-gray-600 mb-2 sm:mb-8 animate-fade-in overflow-x-auto">
           <Link href="/" className="hover:text-terracotta transition-colors duration-200 flex items-center flex-shrink-0">
             <svg className="h-3 w-3 sm:h-4 sm:w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -270,9 +270,9 @@ export default function ProductDetail() {
           <span className="text-gray-900 font-medium truncate">{product.name}</span>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 animate-fade-in-up">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-8 lg:gap-12 animate-fade-in-up">
           {/* Product Images */}
-          <div className="space-y-4 sm:space-y-6">
+          <div className="space-y-2 sm:space-y-6">
             {/* Main Image Container */}
             <div className="relative bg-gradient-to-br from-white to-gray-50 rounded-xl sm:rounded-2xl overflow-hidden shadow-xl sm:shadow-2xl border border-gray-100/50 backdrop-blur-sm">
               {/* Image Counter */}
@@ -387,13 +387,13 @@ export default function ProductDetail() {
 
               {/* Thumbnail Navigation */}
               {product.images.length > 1 && (
-                <div className="bg-gradient-to-r from-white via-gray-50 to-white border-t border-gray-100 p-3 sm:p-6">
-                  <div className="flex space-x-2 sm:space-x-3 overflow-x-auto scrollbar-hide mobile-scroll">
+                <div className="bg-gradient-to-r from-white via-gray-50 to-white border-t border-gray-100 p-2 sm:p-6">
+                  <div className="flex space-x-1.5 sm:space-x-3 overflow-x-auto scrollbar-hide mobile-scroll">
                     {product.images.map((image, index) => (
                       <button
                         key={index}
                         onClick={() => setSelectedImageIndex(index)}
-                        className={`flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-lg sm:rounded-xl overflow-hidden border-2 sm:border-3 transition-all duration-300 transform hover:scale-105 hover:shadow-lg touch-target ${
+                        className={`flex-shrink-0 w-12 h-12 sm:w-20 sm:h-20 rounded-lg sm:rounded-xl overflow-hidden border-2 sm:border-3 transition-all duration-300 transform hover:scale-105 hover:shadow-lg touch-target ${
                           selectedImageIndex === index
                             ? "border-terracotta shadow-lg scale-105 ring-1 sm:ring-2 ring-terracotta/30"
                             : "border-gray-200 hover:border-gray-300"
@@ -412,8 +412,8 @@ export default function ProductDetail() {
             </div>
 
             {/* Action Buttons */}
-            <div className="bg-gradient-to-r from-white to-gray-50 rounded-xl p-3 sm:p-4 border border-gray-100">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
+            <div className="bg-gradient-to-r from-white to-gray-50 rounded-xl p-2 sm:p-4 border border-gray-100">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
                 <div className="flex items-center space-x-2 sm:space-x-3 overflow-x-auto">
                   <Button 
                     variant="outline" 
@@ -463,7 +463,7 @@ export default function ProductDetail() {
           </div>
 
           {/* Product Info */}
-          <div className="space-y-6 sm:space-y-8 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+          <div className="space-y-3 sm:space-y-8 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             <div className="bg-gradient-to-br from-white to-gray-50/50 rounded-xl sm:rounded-2xl p-3 sm:p-6 lg:p-8 border border-gray-100 shadow-lg backdrop-blur-sm">
               {/* Compact Header with Category and SKU */}
               <div className="flex items-center justify-between gap-2 mb-3 sm:mb-4">
@@ -481,26 +481,26 @@ export default function ProductDetail() {
               </h1>
 
               {/* Stock Status */}
-              <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 border border-green-200 mb-3 sm:mb-4">
+              <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-2 sm:p-4 border border-green-200 mb-2 sm:mb-4">
                 {product.stock > 0 ? (
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <div className="flex items-center space-x-2">
-                        <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                        <Badge variant="outline" className="text-green-700 border-green-500 bg-green-50 font-medium">
+                    <div className="flex items-center space-x-2 sm:space-x-3">
+                      <div className="flex items-center space-x-1 sm:space-x-2">
+                        <div className="w-2 h-2 sm:w-3 sm:h-3 bg-green-500 rounded-full animate-pulse"></div>
+                        <Badge variant="outline" className="text-green-700 border-green-500 bg-green-50 font-medium text-xs">
                           ✓ In Stock
                         </Badge>
                       </div>
                       {product.stock <= 5 && (
-                        <div className="flex items-center space-x-2 text-orange-600 bg-orange-50 px-3 py-1 rounded-full">
-                          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="flex items-center space-x-1 sm:space-x-2 text-orange-600 bg-orange-50 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full">
+                          <svg className="h-3 w-3 sm:h-4 sm:w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.464 0L4.35 16.5c-.77.833.192 2.5 1.732 2.5z" />
                           </svg>
-                          <span className="text-sm font-medium">Only {product.stock} left!</span>
+                          <span className="text-xs sm:text-sm font-medium">Only {product.stock} left!</span>
                         </div>
                       )}
                     </div>
-                    <div className="text-sm text-gray-600">
+                    <div className="text-xs sm:text-sm text-gray-600 hidden sm:block">
                       Fast shipping available
                     </div>
                   </div>
@@ -613,8 +613,8 @@ export default function ProductDetail() {
               )}
             </div>
 
-            <div className="bg-gradient-to-br from-white to-soft-beige/20 rounded-xl p-4 sm:p-6 border border-gray-100">
-              <h3 className="font-semibold text-gray-900 mb-3 sm:mb-4 flex items-center text-base sm:text-lg">
+            <div className="bg-gradient-to-br from-white to-soft-beige/20 rounded-xl p-3 sm:p-6 border border-gray-100">
+              <h3 className="font-semibold text-gray-900 mb-2 sm:mb-4 flex items-center text-sm sm:text-lg">
                 <svg className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-terracotta" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
@@ -657,8 +657,8 @@ export default function ProductDetail() {
 
             {/* Product Features */}
             {product.features && product.features.length > 0 && (
-              <div className="bg-gradient-to-br from-sage/10 to-soft-beige/30 rounded-xl p-4 sm:p-6 border border-sage/20 backdrop-blur-sm">
-                <h4 className="font-semibold text-gray-900 mb-3 sm:mb-4 flex items-center text-base sm:text-lg">
+              <div className="bg-gradient-to-br from-sage/10 to-soft-beige/30 rounded-xl p-3 sm:p-6 border border-sage/20 backdrop-blur-sm">
+                <h4 className="font-semibold text-gray-900 mb-2 sm:mb-4 flex items-center text-sm sm:text-lg">
                   <svg className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-sage" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
