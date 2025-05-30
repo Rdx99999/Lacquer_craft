@@ -1,55 +1,21 @@
 
-import { useState, useEffect } from "react";
+import { Heart, ArrowLeft, Trash2, ShoppingCart, Plus } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Heart, ShoppingCart, Trash2, ArrowLeft } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { useWishlist } from "@/hooks/use-wishlist";
 import { useCart } from "@/hooks/use-cart";
-
-interface WishlistItem {
-  id: number;
-  name: string;
-  price: string;
-  image: string;
-  addedAt: string;
-}
+import { useAuth } from "@/hooks/use-auth";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Wishlist() {
-  const [wishlistItems, setWishlistItems] = useState<WishlistItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { isAuthenticated } = useAuth();
+  const { wishlistItems, isLoading, toggleWishlist } = useWishlist();
   const { addToCart, isAddingToCart } = useCart();
   const { toast } = useToast();
 
-  useEffect(() => {
-    loadWishlist();
-  }, []);
-
-  const loadWishlist = () => {
-    try {
-      const savedWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
-      setWishlistItems(savedWishlist);
-    } catch (error) {
-      console.error('Error loading wishlist:', error);
-      setWishlistItems([]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const removeFromWishlist = (productId: number) => {
-    const updatedWishlist = wishlistItems.filter(item => item.id !== productId);
-    setWishlistItems(updatedWishlist);
-    localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
-    
-    toast({
-      title: "Removed from Wishlist",
-      description: "Item has been removed from your wishlist.",
-    });
-  };
-
-  const addToCartFromWishlist = (item: WishlistItem) => {
+  const addToCartFromWishlist = (item: any) => {
     addToCart({
       productId: item.id,
       quantity: 1,
@@ -62,14 +28,38 @@ export default function Wishlist() {
   };
 
   const clearWishlist = () => {
-    setWishlistItems([]);
-    localStorage.setItem('wishlist', JSON.stringify([]));
+    // Remove all items from wishlist
+    wishlistItems.forEach(item => {
+      toggleWishlist(item.id);
+    });
     
     toast({
       title: "Wishlist Cleared",
       description: "All items have been removed from your wishlist.",
     });
   };
+
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-warm-cream">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="text-center">
+            <h1 className="font-display text-3xl font-bold text-gray-900 mb-4">
+              Please Login
+            </h1>
+            <p className="text-gray-600 mb-8">
+              You need to be logged in to view your wishlist.
+            </p>
+            <Link href="/">
+              <Button size="lg" className="bg-terracotta hover:bg-terracotta/90">
+                Go to Home
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (
@@ -136,51 +126,44 @@ export default function Wishlist() {
               <Card key={item.id} className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
                 <div className="relative">
                   <img
-                    src={item.image}
+                    src={item.images?.[0] || '/placeholder-image.jpg'}
                     alt={item.name}
                     className="w-full h-48 object-cover"
                   />
                   <button
-                    onClick={() => removeFromWishlist(item.id)}
+                    onClick={() => toggleWishlist(item.id)}
                     className="absolute top-2 right-2 w-8 h-8 bg-white/80 hover:bg-white text-red-500 rounded-full flex items-center justify-center transition-colors duration-200"
                   >
                     <Trash2 className="h-4 w-4" />
                   </button>
                 </div>
-                
                 <CardContent className="p-4">
-                  <div className="space-y-3">
-                    <div>
-                      <h3 className="font-semibold text-gray-900 line-clamp-2">
-                        {item.name}
-                      </h3>
-                      <p className="text-sm text-gray-500 mt-1">
-                        Added {new Date(item.addedAt).toLocaleDateString()}
-                      </p>
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <span className="text-lg font-bold text-terracotta">
-                        ₹{parseFloat(item.price).toLocaleString()}
+                  <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">{item.name}</h3>
+                  <p className="text-gray-600 text-sm mb-3 line-clamp-2">{item.description}</p>
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-2xl font-bold text-terracotta">
+                      ₹{parseFloat(item.price).toLocaleString()}
+                    </span>
+                    {item.originalPrice && parseFloat(item.originalPrice) > parseFloat(item.price) && (
+                      <span className="text-sm text-gray-500 line-through">
+                        ₹{parseFloat(item.originalPrice).toLocaleString()}
                       </span>
-                    </div>
-                    
-                    <div className="flex space-x-2">
-                      <Button
-                        size="sm"
-                        onClick={() => addToCartFromWishlist(item)}
-                        disabled={isAddingToCart}
-                        className="flex-1 bg-terracotta hover:bg-terracotta/90 text-white"
-                      >
-                        <ShoppingCart className="h-4 w-4 mr-1" />
-                        Add to Cart
+                    )}
+                  </div>
+                  <div className="flex space-x-2">
+                    <Link href={`/products/${item.id}`} className="flex-1">
+                      <Button variant="outline" className="w-full border-terracotta text-terracotta hover:bg-terracotta hover:text-white">
+                        View Details
                       </Button>
-                      <Link href={`/products/${item.id}`}>
-                        <Button size="sm" variant="outline" className="flex-1">
-                          View Details
-                        </Button>
-                      </Link>
-                    </div>
+                    </Link>
+                    <Button
+                      onClick={() => addToCartFromWishlist(item)}
+                      disabled={isAddingToCart}
+                      className="flex-1 bg-terracotta hover:bg-terracotta/90 text-white"
+                    >
+                      <Plus className="h-4 w-4 mr-1" />
+                      Add to Cart
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
