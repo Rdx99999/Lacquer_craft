@@ -387,7 +387,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8">
             <div className="col-span-2 md:col-span-1">
-              <h4 className="font-display text-lg sm:text-xl font-semibold mb-2 sm:mb-4">Hastkala</h4>
+              <h4 className="font-display text-lg sm:text-xl font-semibold mb-2 sm:mb-4">Lacquer craft</h4>
               <p className="text-gray-300 mb-3 sm:mb-4 text-sm sm:text-base">
                 Preserving Indian craftsmanship traditions through authentic handmade products.
               </p>
@@ -435,7 +435,7 @@ export default function Home() {
           </div>
           
           <div className="border-t border-gray-800 mt-4 sm:mt-8 pt-4 sm:pt-8 text-center text-gray-300">
-            <p className="text-xs sm:text-sm">&copy; 2024 Hastkala. All rights reserved. Preserving tradition, embracing modernity.</p>
+            <p className="text-xs sm:text-sm">&copy; 2024 Lacquer craft. All rights reserved. Preserving tradition, embracing modernity.</p>
           </div>
         </div>
       </footer>
