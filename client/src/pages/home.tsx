@@ -372,18 +372,18 @@ export default function Home() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h3 className="font-display text-3xl font-bold text-gray-900 mb-4">
+      <section className="py-8 sm:py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="text-center mb-6 sm:mb-12">
+            <h3 className="font-display text-xl sm:text-3xl font-bold text-gray-900 mb-2 sm:mb-4">
               What Our Customers Say
             </h3>
-            <p className="text-gray-600">
+            <p className="text-sm sm:text-base text-gray-600 hidden sm:block">
               Authentic experiences from our valued customers
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8">
             {[
               {
                 name: "Priya Sharma",
@@ -402,22 +402,22 @@ export default function Home() {
               },
             ].map((testimonial, index) => (
               <Card key={index} className="bg-warm-cream">
-                <CardContent className="p-6">
-                  <div className="flex items-center mb-4">
+                <CardContent className="p-3 sm:p-6">
+                  <div className="flex items-center mb-2 sm:mb-4">
                     <div className="flex text-saffron">
                       {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="h-4 w-4 fill-current" />
+                        <Star key={i} className="h-3 w-3 sm:h-4 sm:w-4 fill-current" />
                       ))}
                     </div>
                   </div>
-                  <p className="text-gray-700 mb-4">"{testimonial.content}"</p>
+                  <p className="text-gray-700 mb-3 sm:mb-4 text-sm sm:text-base">"{testimonial.content}"</p>
                   <div className="flex items-center">
-                    <div className="w-10 h-10 bg-terracotta rounded-full flex items-center justify-center text-white font-semibold">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-terracotta rounded-full flex items-center justify-center text-white font-semibold text-sm sm:text-base">
                       {testimonial.name[0]}
                     </div>
-                    <div className="ml-3">
-                      <p className="font-semibold text-gray-900">{testimonial.name}</p>
-                      <p className="text-gray-600 text-sm">{testimonial.location}</p>
+                    <div className="ml-2 sm:ml-3">
+                      <p className="font-semibold text-gray-900 text-sm sm:text-base">{testimonial.name}</p>
+                      <p className="text-gray-600 text-xs sm:text-sm">{testimonial.location}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -428,22 +428,22 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <h4 className="font-display text-xl font-semibold mb-4">Hastkala</h4>
-              <p className="text-gray-300 mb-4">
+      <footer className="bg-gray-900 text-white py-8 sm:py-12">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8">
+            <div className="col-span-2 md:col-span-1">
+              <h4 className="font-display text-lg sm:text-xl font-semibold mb-2 sm:mb-4">Hastkala</h4>
+              <p className="text-gray-300 mb-3 sm:mb-4 text-sm sm:text-base">
                 Preserving Indian craftsmanship traditions through authentic handmade products.
               </p>
             </div>
             
             <div>
-              <h5 className="font-semibold mb-4">Categories</h5>
-              <ul className="space-y-2 text-gray-300">
+              <h5 className="font-semibold mb-2 sm:mb-4 text-sm sm:text-base">Categories</h5>
+              <ul className="space-y-1 sm:space-y-2 text-gray-300">
                 {categories.map((category) => (
                   <li key={category.id}>
-                    <Link href={`/products?category=${category.slug}`} className="hover:text-white">
+                    <Link href={`/products?category=${category.slug}`} className="hover:text-white text-xs sm:text-sm">
                       {category.name}
                     </Link>
                   </li>
@@ -452,35 +452,35 @@ export default function Home() {
             </div>
             
             <div>
-              <h5 className="font-semibold mb-4">Customer Service</h5>
-              <ul className="space-y-2 text-gray-300">
-                <li><a href="#" className="hover:text-white">Contact Us</a></li>
-                <li><a href="#" className="hover:text-white">Shipping Info</a></li>
-                <li><a href="#" className="hover:text-white">Returns</a></li>
-                <li><a href="#" className="hover:text-white">FAQ</a></li>
+              <h5 className="font-semibold mb-2 sm:mb-4 text-sm sm:text-base">Customer Service</h5>
+              <ul className="space-y-1 sm:space-y-2 text-gray-300">
+                <li><a href="#" className="hover:text-white text-xs sm:text-sm">Contact Us</a></li>
+                <li><a href="#" className="hover:text-white text-xs sm:text-sm">Shipping Info</a></li>
+                <li><a href="#" className="hover:text-white text-xs sm:text-sm">Returns</a></li>
+                <li><a href="#" className="hover:text-white text-xs sm:text-sm">FAQ</a></li>
               </ul>
             </div>
             
-            <div>
-              <h5 className="font-semibold mb-4">Newsletter</h5>
-              <p className="text-gray-300 mb-4">
+            <div className="col-span-2 md:col-span-1">
+              <h5 className="font-semibold mb-2 sm:mb-4 text-sm sm:text-base">Newsletter</h5>
+              <p className="text-gray-300 mb-2 sm:mb-4 text-xs sm:text-sm">
                 Subscribe for updates on new crafts and artisan stories.
               </p>
               <div className="flex">
                 <input
                   type="email"
                   placeholder="Your email"
-                  className="flex-1 px-3 py-2 bg-gray-800 border border-gray-700 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-terracotta"
+                  className="flex-1 px-2 py-1 sm:px-3 sm:py-2 bg-gray-800 border border-gray-700 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-terracotta text-xs sm:text-sm"
                 />
-                <Button className="bg-terracotta px-4 py-2 rounded-r-lg hover:bg-terracotta/90">
+                <Button className="bg-terracotta px-2 py-1 sm:px-4 sm:py-2 rounded-r-lg hover:bg-terracotta/90 text-xs sm:text-sm">
                   Subscribe
                 </Button>
               </div>
             </div>
           </div>
           
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-300">
-            <p>&copy; 2024 Hastkala. All rights reserved. Preserving tradition, embracing modernity.</p>
+          <div className="border-t border-gray-800 mt-4 sm:mt-8 pt-4 sm:pt-8 text-center text-gray-300">
+            <p className="text-xs sm:text-sm">&copy; 2024 Hastkala. All rights reserved. Preserving tradition, embracing modernity.</p>
           </div>
         </div>
       </footer>
