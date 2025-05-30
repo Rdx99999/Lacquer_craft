@@ -70,22 +70,22 @@ export default function Home() {
               <div className="space-y-4 lg:space-y-6">
                 <div className="flex items-center justify-center sm:justify-start">
                   <Badge className="bg-saffron/20 backdrop-blur-sm text-henna border-terracotta/30 px-4 py-2 text-sm font-serif traditional-shadow">
-                    <span className="hidden sm:inline">🏺 प्रामाणिक भारतीय शिल्प • Authentic Indian Crafts</span>
-                    <span className="sm:hidden">🏺 प्रामाणिक शिल्प</span>
+                    <span className="hidden sm:inline">🏺 Authentic Indian Crafts</span>
+                    <span className="sm:hidden">🏺 Indian Crafts</span>
                   </Badge>
                 </div>
                 
                 <div className="text-center sm:text-left">
                   <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight">
-                    <span className="text-henna block">भारतीय</span>
-                    <span className="text-terracotta block mt-2">हस्तकला</span>
+                    <span className="text-henna block">Indian</span>
+                    <span className="text-terracotta block mt-2">Handicrafts</span>
                     <span className="text-saffron block mt-2 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif italic">Heritage Collection</span>
                   </h1>
                 </div>
                 
                 <div className="text-center sm:text-left">
                   <p className="text-base sm:text-lg lg:text-xl text-henna leading-relaxed max-w-lg mx-auto sm:mx-0 font-serif">
-                    सदियों पुरानी परंपराओं का खजाना। प्रत्येक वस्तु में भारत की समृद्ध सांस्कृतिक विरासत की कहानी है।
+                    A treasury of centuries-old traditions. Each piece tells a story of India's rich cultural heritage.
                   </p>
                   <p className="text-sm sm:text-base lg:text-lg text-copper/80 leading-relaxed max-w-lg mx-auto sm:mx-0 mt-3">
                     {heroDescription}
@@ -96,7 +96,7 @@ export default function Home() {
               <div className="flex flex-col sm:flex-row gap-4 sm:gap-4 pt-4">
                 <Link href="/products" className="w-full sm:w-auto">
                   <Button className="bg-white hover:bg-gray-50 text-golden px-8 py-4 text-base font-serif font-semibold w-full sm:w-auto traditional-shadow hover:scale-105 transition-all duration-300 craft-border border-0">
-                    <span className="text-golden drop-shadow-lg">संग्रह देखें • {heroButtonText}</span>
+                    <span className="text-golden drop-shadow-lg">{heroButtonText}</span>
                     <ArrowRight className="ml-2 h-4 w-4 text-golden drop-shadow-lg" />
                   </Button>
                 </Link>
@@ -112,12 +112,51 @@ export default function Home() {
             
             {/* Enhanced Right Visual - Hidden on mobile, visible on desktop */}
             <div className="relative mt-6 lg:mt-0 order-first lg:order-last hidden lg:block">
-              
-              
-              {/* Floating Cards - Hidden on mobile for cleaner look */}
-              
-              
-              
+              {/* Main Image Container */}
+              <div className="relative w-full h-[600px] rounded-2xl overflow-hidden traditional-shadow">
+                {/* Main Large Image */}
+                <img
+                  src={artisanImage}
+                  alt="Master Artisan at Work"
+                  className="w-full h-full object-cover"
+                />
+                {/* Decorative Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-henna/40 via-transparent to-transparent" />
+              </div>
+
+              {/* Floating Cards */}
+              <div className="absolute -left-12 top-1/4 z-10 transform -translate-y-1/2">
+                <div className="bg-white/90 backdrop-blur-sm p-4 rounded-xl traditional-shadow craft-border w-48 hover:scale-105 transition-transform duration-300">
+                  <img
+                    src={traditionalToolsImage}
+                    alt="Traditional Tools"
+                    className="w-full h-24 object-cover rounded-lg mb-3"
+                  />
+                  <p className="text-sm font-serif text-henna">Traditional Crafting Tools</p>
+                </div>
+              </div>
+
+              <div className="absolute -right-8 top-1/2 z-10">
+                <div className="bg-white/90 backdrop-blur-sm p-4 rounded-xl traditional-shadow craft-border w-48 hover:scale-105 transition-transform duration-300">
+                  <img
+                    src={craftWorkshopImage}
+                    alt="Craft Workshop"
+                    className="w-full h-24 object-cover rounded-lg mb-3"
+                  />
+                  <p className="text-sm font-serif text-henna">Heritage Workshop</p>
+                </div>
+              </div>
+
+              <div className="absolute right-12 bottom-12 z-10">
+                <div className="bg-white/90 backdrop-blur-sm p-4 rounded-xl traditional-shadow craft-border w-48 hover:scale-105 transition-transform duration-300">
+                  <img
+                    src={handmadeCraftImage}
+                    alt="Handmade Craft"
+                    className="w-full h-24 object-cover rounded-lg mb-3"
+                  />
+                  <p className="text-sm font-serif text-henna">Handcrafted Excellence</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -130,13 +169,13 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-16">
             <Badge className="bg-terracotta/20 text-henna border-terracotta/30 px-4 py-2 mb-6 text-sm font-serif traditional-shadow">
-              🎨 पारंपरिक संग्रह • Traditional Collections
+              🎨 Traditional Collections
             </Badge>
             <h2 className="font-display text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-henna mb-6">
-              हमारी <span className="text-terracotta">विरासत</span> <span className="text-saffron">देखें</span>
+              Discover Our Collections
             </h2>
             <p className="text-base sm:text-lg lg:text-xl text-copper/80 max-w-4xl mx-auto leading-relaxed px-4 font-serif">
-              भारत के विविध सांस्कृतिक परिदृश्य की प्रत्येक परंपरा और क्षेत्र का प्रतिनिधित्व करने वाले हमारे सावधानीपूर्वक तैयार किए गए संग्रहों में गोता लगाएं
+              Explore our carefully curated collections representing each tradition and region of India's diverse cultural landscape
             </p>
           </div>
           
@@ -153,7 +192,7 @@ export default function Home() {
                     <div className="absolute inset-0 bg-gradient-to-t from-henna/80 via-terracotta/30 to-transparent" />
                     <div className="absolute top-2 sm:top-3 right-2 sm:right-3">
                       <Badge className="bg-saffron/90 text-white border-none backdrop-blur-sm text-xs font-serif">
-                        {index === 0 ? '🏆 लोकप्रिय' : index === 1 ? '⭐ ट्रेंडिंग' : index === 2 ? '💎 प्रीमियम' : '🎨 क्लासिक'}
+                        {index === 0 ? '🏆 Popular' : index === 1 ? '⭐ Trending' : index === 2 ? '💎 Premium' : '🎨 Classic'}
                       </Badge>
                     </div>
                     <div className="absolute bottom-1 sm:bottom-4 left-1 sm:left-4 text-white">
@@ -168,7 +207,7 @@ export default function Home() {
                   <CardContent className="p-2 sm:p-4 bg-gradient-to-br from-warm-cream to-soft-beige paisley-pattern">
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-serif font-medium text-henna">
-                        खोजें • Explore
+                        Explore Collection
                       </span>
                       <ArrowRight className="h-3 w-3 text-terracotta group-hover:translate-x-1 group-hover:text-saffron transition-all duration-300" />
                     </div>

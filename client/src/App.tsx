@@ -37,7 +37,9 @@ function App() {
       <TooltipProvider>
         <div className="min-h-screen bg-warm-cream">
           <Navigation />
-          <Router />
+          <main className="pt-16"> {/* Added padding-top equal to nav height */}
+            <Router />
+          </main>
         </div>
         <Toaster />
       </TooltipProvider>

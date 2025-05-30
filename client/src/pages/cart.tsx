@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Minus, Plus, Trash2, ArrowLeft, ShoppingBag, User } from "lucide-react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -14,56 +14,24 @@ import { createOrder } from "@/lib/api";
 import { AuthDialog } from "@/components/auth/auth-dialog";
 
 export default function Cart() {
-  const { cartItems, total, updateItem, removeItem, isUpdating, isRemoving } = useCart();
-  const { toast } = useToast();
-  const { user, isAuthenticated, login, logout, sessionId } = useAuth();
-  const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [location, navigate] = useLocation();
+  const { cartItems, removeFromCart, updateQuantity } = useCart();
+  const { isAuthenticated, user } = useAuth();
   const [showAuthDialog, setShowAuthDialog] = useState(false);
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const { toast } = useToast();
   const [customerInfo, setCustomerInfo] = useState({
     name: "",
     email: "",
     phone: "",
-    address: "",
+    address: ""
   });
-    const [autoCheckout, setAutoCheckout] = useState(false);
 
-
-  // Pre-fill customer info if user is logged in
-  React.useEffect(() => {
-    if (user) {
-      setCustomerInfo(prev => ({
-        ...prev,
-        name: user.name,
-        email: user.email,
-      }));
-    }
-  }, [user]);
-
-      useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('checkout') === 'true') {
-      setAutoCheckout(true);
-      // Remove the checkout parameter from URL
-      window.history.replaceState({}, '', '/cart');
-
-      toast({
-        title: "Ready for Checkout",
-        description: "Your item has been added to cart. Review and proceed to checkout.",
-      });
-    }
-  }, [toast]);
-
-
-  const handleQuantityChange = (productId: number, newQuantity: number) => {
-    if (newQuantity < 1) {
-      removeItem(productId);
-    } else {
-      updateItem({ productId, quantity: newQuantity });
-    }
-  };
+  const total = cartItems.reduce((acc, item) => 
+    acc + (parseFloat(item.product.price) * item.quantity), 0
+  );
 
   const handleCheckout = async () => {
-    // Check if user is authenticated
     if (!isAuthenticated) {
       setShowAuthDialog(true);
       return;
@@ -72,8 +40,8 @@ export default function Cart() {
     if (!customerInfo.name || !customerInfo.email || !customerInfo.address) {
       toast({
         title: "Missing Information",
-        description: "Please fill in all required fields.",
-        variant: "destructive",
+        description: "Please fill in all required fields",
+        variant: "destructive"
       });
       return;
     }
@@ -81,46 +49,33 @@ export default function Cart() {
     setIsCheckingOut(true);
 
     try {
-      // Calculate totals
-      const subtotal = total;
-      const tax = Math.round(total * 0.18);
-      const finalTotal = subtotal + tax;
-
-      // Create order data with all required fields
       const orderData = {
-        customerName: customerInfo.name.trim(),
-        customerEmail: customerInfo.email.trim(),
-        customerPhone: customerInfo.phone?.trim() || null,
-        shippingAddress: customerInfo.address.trim(),
-        total: finalTotal.toString(),
-        status: "pending" as const,
-        items: JSON.stringify(cartItems.map(item => ({
-          productId: item.productId,
-          quantity: item.quantity,
-          price: parseFloat(item.product.price).toString(),
-          name: item.product.name.trim(),
-          sku: item.product.sku
-        })))
+        userId: user?.id,
+        customerName: customerInfo.name,
+        customerEmail: customerInfo.email,
+        customerPhone: customerInfo.phone,
+        shippingAddress: customerInfo.address,
+        total: total.toString(),
+        status: "pending",
+        items: JSON.stringify(cartItems)
       };
 
-      console.log("Sending order data:", orderData);
-      const newOrder = await createOrder(orderData, sessionId!);
-
+      const newOrder = await createOrder(orderData);
+      
+      // Clear cart after successful order
+      cartItems.forEach(item => removeFromCart(item.productId));
+      
       toast({
-        title: "Order Placed Successfully!",
-        description: `Your tracking number is: ${newOrder.trackingNumber}. You will receive a confirmation email shortly.`,
-        duration: 8000,
+        title: "Order Placed!",
+        description: "Your order has been successfully placed.",
       });
 
-      // Clear the cart and reset form
-      clearCart();
-      setCustomerInfo({ name: "", email: "", phone: "", address: "" });
-    } catch (error: any) {
-      console.error("Checkout error:", error);
+      navigate("/profile");
+    } catch (error) {
       toast({
-        title: "Order Failed",
-        description: error.message || "There was an error processing your order. Please try again.",
-        variant: "destructive",
+        title: "Error",
+        description: "Something went wrong while placing your order.",
+        variant: "destructive"
       });
     } finally {
       setIsCheckingOut(false);
@@ -130,24 +85,14 @@ export default function Cart() {
   if (cartItems.length === 0) {
     return (
       <div className="min-h-screen bg-warm-cream">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="text-center">
-            <div className="text-gray-400 mb-8">
-              <ShoppingBag className="w-24 h-24 mx-auto" />
-            </div>
-            <h1 className="font-display text-3xl font-bold text-gray-900 mb-4">
-              Your Cart is Empty
-            </h1>
-            <p className="text-gray-600 mb-8 max-w-md mx-auto">
-              Looks like you haven't added any beautiful crafts to your cart yet. 
-              Explore our collection and discover amazing handmade products.
-            </p>
-            <Link href="/products">
-              <Button size="lg" className="bg-terracotta hover:bg-terracotta/90">
-                Start Shopping
-              </Button>
-            </Link>
-          </div>
+        <div className="max-w-7xl mx-auto px-4 py-16 text-center">
+          <h1 className="text-2xl font-semibold mb-4">Your Cart is Empty</h1>
+          <p className="text-gray-600 mb-8">Browse our collections to add items to your cart</p>
+          <Link href="/products">
+            <Button className="bg-terracotta hover:bg-terracotta/90">
+              Continue Shopping
+            </Button>
+          </Link>
         </div>
       </div>
     );
@@ -296,13 +241,19 @@ export default function Cart() {
                     <span>₹{Math.round(total * 0.18).toLocaleString()}</span>
                   </div>
                 </div>
+                
+                <Button 
+                  onClick={handleCheckout}
+                  disabled={isCheckingOut}
+                  className={`w-full bg-terracotta hover:bg-terracotta/90`}
+                  size="lg"
+                >
+                  {isCheckingOut ? "Processing..." : isAuthenticated ? "Place Order" : "Login to Place Order"}
+                </Button>
 
-                <Separator />
-
-                <div className="flex justify-between text-lg font-semibold">
-                  <span>Total</span>
-                  <span className="text-terracotta">₹{Math.round(total * 1.18).toLocaleString()}</span>
-                </div>
+                <p className="text-xs text-gray-500 text-center">
+                  By placing your order, you agree to our terms and conditions.
+                </p>
               </CardContent>
             </Card>
 
@@ -394,7 +345,7 @@ export default function Cart() {
                   />
                 </div>
 
-                                <Button 
+                <Button 
                   onClick={handleCheckout}
                   disabled={isCheckingOut}
                   className={`w-full bg-terracotta hover:bg-terracotta/90`}

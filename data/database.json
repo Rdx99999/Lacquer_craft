@@ -138,6 +138,25 @@
       ],
       "id": 13,
       "createdAt": "2025-05-29T22:05:15.358Z"
+    },
+    {
+      "name": "Ganesha",
+      "description": "Ganesha",
+      "price": "1200",
+      "categoryId": 8,
+      "stock": 5,
+      "images": [
+        "/images/products/2025/05/30/image15_1748580933711-82024656.png",
+        "/images/products/2025/05/30/image21_1748580940678-326343497.png",
+        "/images/products/2025/05/30/image16_1748580946599-788424678.png"
+      ],
+      "sku": "TRAD002",
+      "featured": true,
+      "features": [
+        "Ganesha"
+      ],
+      "id": 14,
+      "createdAt": "2025-05-30T04:56:07.808Z"
     }
   ],
   "cartItems": [
@@ -154,6 +173,13 @@
       "productId": 11,
       "quantity": 1,
       "createdAt": "2025-05-30T03:57:45.768Z"
+    },
+    {
+      "id": 7,
+      "sessionId": "session-1748576584578-mx4pplj94",
+      "productId": 10,
+      "quantity": 1,
+      "createdAt": "2025-05-30T04:53:30.458Z"
     }
   ],
   "orders": [
@@ -306,6 +332,11 @@
       "sessionId": "fjx76embaa0f4n",
       "userId": 1,
       "expiresAt": "2025-06-29T04:01:33.335Z"
+    },
+    {
+      "sessionId": "hfwa9mmbabvqom",
+      "userId": 1,
+      "expiresAt": "2025-06-29T04:53:54.262Z"
     }
   ],
   "reviews": [
@@ -323,8 +354,8 @@
   ],
   "counters": {
     "categoryId": 12,
-    "productId": 14,
-    "cartItemId": 7,
+    "productId": 15,
+    "cartItemId": 8,
     "orderId": 9,
     "userId": 2,
     "reviewId": 2

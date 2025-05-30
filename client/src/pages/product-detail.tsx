@@ -256,11 +256,11 @@ export default function ProductDetail() {
         <div className="flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm text-henna mb-2 sm:mb-8 animate-fade-in overflow-x-auto bg-sandalwood/10 rounded-lg px-3 py-2 craft-border">
           <Link href="/" className="hover:text-terracotta transition-colors duration-200 flex items-center flex-shrink-0 font-serif">
             <span className="text-saffron mr-1">🏠</span>
-            <span className="hidden sm:inline">गृह • Home</span>
-            <span className="sm:hidden">गृह</span>
+            <span className="hidden sm:inline">Home</span>
+            <span className="sm:hidden">Home</span>
           </Link>
           <span className="text-copper flex-shrink-0">▸</span>
-          <Link href="/products" className="hover:text-terracotta transition-colors duration-200 flex-shrink-0 hidden sm:inline font-serif">उत्पाद • Products</Link>
+          <Link href="/products" className="hover:text-terracotta transition-colors duration-200 flex-shrink-0 hidden sm:inline font-serif">Products</Link>
           <span className="text-copper flex-shrink-0 hidden sm:inline">▸</span>
           <Link href={`/products?category=${product.category.slug}`} className="hover:text-terracotta transition-colors duration-200 flex-shrink-0 truncate max-w-[100px] sm:max-w-none font-serif">
             {product.category.name}
@@ -512,7 +512,7 @@ export default function ProductDetail() {
               </div>
 
               {/* Traditional Price Section */}
-              <div className="flex items-center justify-between mb-4 sm:mb-6 bg-saffron/10 rounded-lg p-3 craft-border">
+              <div className="flex items-baseline justify-between mb-4 sm:mb-6 bg-saffron/10 rounded-lg p-3 craft-border">
                 <div className="flex items-baseline gap-2">
                   <span className="text-xl sm:text-3xl lg:text-4xl font-bold text-terracotta font-serif">
                     ₹{parseFloat(product.price).toLocaleString()}
@@ -530,7 +530,7 @@ export default function ProductDetail() {
               {product.stock > 0 && (
                 <div className="bg-gradient-to-r from-saffron/10 to-turmeric/10 rounded-lg p-3 sm:p-4 craft-border traditional-shadow mb-4 sm:mb-6">
                   <div className="flex items-center gap-3 mb-3">
-                    <span className="text-sm font-serif font-medium text-henna flex-shrink-0">मात्रा • Qty:</span>
+                    <span className="text-sm font-serif font-medium text-henna flex-shrink-0">Quantity:</span>
                     <div className="flex items-center bg-warm-cream rounded craft-border">
                       <Button
                         size="sm"
@@ -563,7 +563,7 @@ export default function ProductDetail() {
                       className="heritage-gradient hover:opacity-90 text-white text-xs py-2 h-8 sm:h-10 font-serif traditional-shadow"
                     >
                       <ShoppingCart className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
-                      {isAddingToCart ? "..." : "कार्ट"}
+                      {isAddingToCart ? "..." : "Add to Cart"}
                     </Button>
                     <Button
                       variant="outline"
@@ -581,7 +581,7 @@ export default function ProductDetail() {
                       disabled={isBuyingNow}
                       className="border-saffron text-saffron hover:bg-saffron hover:text-white text-xs py-2 h-8 sm:h-10 font-serif traditional-shadow"
                     >
-                      {isBuyingNow ? "..." : "खरीदें"}
+                      {isBuyingNow ? "..." : "Buy Now"}
                     </Button>
                   </div>
                 </div>
@@ -659,19 +659,20 @@ export default function ProductDetail() {
               <div className="bg-gradient-to-br from-sage/10 to-soft-beige/30 rounded-xl p-3 sm:p-6 border border-sage/20 backdrop-blur-sm">
                 <h4 className="font-semibold text-gray-900 mb-2 sm:mb-4 flex items-center text-sm sm:text-lg">
                   <svg className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-sage" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                   Key Features
                 </h4>
-                <div className="space-y-3">
-                  <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2 sm:gap-3 transition-all duration-300 ${
+
+                <div className="space-y-2">
+                  <div className={`space-y-1.5 transition-all duration-300 ${
                     isFeaturesExpanded 
                       ? '' 
                       : 'max-h-24 sm:max-h-none overflow-hidden'
                   }`}>
                     {product.features.map((feature, index) => (
-                      <div key={index} className="flex items-center text-xs sm:text-sm text-gray-700 bg-white/50 px-3 sm:px-4 py-2 rounded-lg border border-gray-100">
-                        <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-terracotta rounded-full mr-2 sm:mr-3 flex-shrink-0"></div>
+                      <div key={index} className="flex items-start text-sm">
+                        <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-terracotta rounded-full mr-2 sm:mr-3 flex-shrink-0 mt-1"></div>
                         <span className="leading-tight">{feature}</span>
                       </div>
                     ))}
@@ -703,8 +704,6 @@ export default function ProductDetail() {
                 </div>
               </div>
             )}
-
-
 
             {/* Product Details */}
             <div className="bg-gradient-to-br from-white to-warm-cream/30 rounded-xl sm:rounded-2xl border border-gray-200 shadow-lg overflow-hidden">

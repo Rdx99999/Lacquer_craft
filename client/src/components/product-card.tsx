@@ -79,17 +79,17 @@ export function ProductCard({
           <div className="absolute top-2 sm:top-3 left-2 sm:left-3 flex flex-col space-y-1 sm:space-y-2">
             {product.featured && (
               <Badge className="bg-saffron/90 text-white text-xs font-serif traditional-shadow">
-                ⭐ विशेष
+                ⭐ Featured
               </Badge>
             )}
             {product.stock === 0 && (
               <Badge variant="destructive" className="text-xs font-serif">
-                समाप्त
+                Out of Stock
               </Badge>
             )}
             {product.stock > 0 && product.stock <= 5 && (
               <Badge variant="outline" className="text-vermillion border-vermillion bg-warm-cream text-xs font-serif">
-                सीमित
+                Limited Stock
               </Badge>
             )}
           </div>
@@ -136,7 +136,7 @@ export function ProductCard({
             {/* Traditional Features */}
             {matchingFeatures.length > 0 && (
               <div className="space-y-1 hidden sm:block">
-                <div className="text-xs text-henna font-serif">विशेषताएं • Features:</div>
+                <div className="text-xs text-henna font-serif">Features:</div>
                 <div className="flex flex-wrap gap-1">
                   {matchingFeatures.map((feature, index) => (
                     <Badge 
@@ -165,7 +165,7 @@ export function ProductCard({
               
               <div className="flex items-center justify-between sm:justify-end space-x-1 sm:space-x-2 mt-1 sm:mt-0">
                 <div className="text-xs text-copper hidden sm:block font-serif">
-                  {product.stock > 0 ? `${product.stock} उपलब्ध` : 'स्टॉक समाप्त'}
+                  {product.stock > 0 ? `${product.stock} available` : 'Out of stock'}
                 </div>
                 <Button
                   variant="ghost"

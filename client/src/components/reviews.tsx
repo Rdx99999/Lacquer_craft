@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Star, Edit, Trash2, MessageSquare } from "lucide-react";
@@ -13,7 +12,6 @@ import { Progress } from "@/components/ui/progress";
 import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
 import { getProductReviews, getProductReviewStats, createReview, deleteReview } from "@/lib/api";
-import type { Review } from "@shared/schema";
 
 interface ReviewsProps {
   productId: number;
@@ -25,66 +23,79 @@ interface ReviewFormData {
   comment: string;
 }
 
+interface Review {
+  id: number;
+  userId: number;
+  userName: string;
+  rating: number;
+  title: string;
+  comment: string;
+  createdAt: string;
+}
+
+interface ReviewStats {
+  averageRating: number;
+  totalReviews: number;
+  ratingDistribution: { [key: number]: number };
+}
+
 export function Reviews({ productId }: ReviewsProps) {
+  const { user, isAuthenticated } = useAuth();
+  const { toast } = useToast();
   const [isReviewDialogOpen, setIsReviewDialogOpen] = useState(false);
   const [reviewForm, setReviewForm] = useState<ReviewFormData>({
     rating: 5,
     title: "",
     comment: "",
   });
-  const { user, isAuthenticated } = useAuth();
-  const { toast } = useToast();
+
   const queryClient = useQueryClient();
 
-  // Fetch reviews
   const { data: reviews = [], isLoading: reviewsLoading } = useQuery({
     queryKey: ["/api/products", productId, "reviews"],
     queryFn: () => getProductReviews(productId),
   });
 
-  // Fetch review stats
-  const { data: reviewStats } = useQuery({
+  const { data: reviewStats } = useQuery<ReviewStats>({
     queryKey: ["/api/products", productId, "review-stats"],
     queryFn: () => getProductReviewStats(productId),
   });
 
-  // Create review mutation
   const createReviewMutation = useMutation({
-    mutationFn: (data: ReviewFormData) => createReview({ ...data, productId }),
+    mutationFn: (data: ReviewFormData) => createReview(productId, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/products", productId, "reviews"] });
       queryClient.invalidateQueries({ queryKey: ["/api/products", productId, "review-stats"] });
       setIsReviewDialogOpen(false);
       setReviewForm({ rating: 5, title: "", comment: "" });
       toast({
-        title: "Review submitted",
+        title: "Review Submitted",
         description: "Thank you for your review!",
-      });
-    },
-    onError: (error: any) => {
-      toast({
-        title: "Error",
-        description: error.message || "Failed to submit review",
-        variant: "destructive",
-      });
-    },
-  });
-
-  // Delete review mutation
-  const deleteReviewMutation = useMutation({
-    mutationFn: deleteReview,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/products", productId, "reviews"] });
-      queryClient.invalidateQueries({ queryKey: ["/api/products", productId, "review-stats"] });
-      toast({
-        title: "Review deleted",
-        description: "Your review has been removed.",
       });
     },
     onError: () => {
       toast({
         title: "Error",
-        description: "Failed to delete review",
+        description: "Failed to submit review. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const deleteReviewMutation = useMutation({
+    mutationFn: (reviewId: number) => deleteReview(reviewId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/products", productId, "reviews"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/products", productId, "review-stats"] });
+      toast({
+        title: "Review Deleted",
+        description: "Your review has been deleted.",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to delete review. Please try again.",
         variant: "destructive",
       });
     },
@@ -92,22 +103,17 @@ export function Reviews({ productId }: ReviewsProps) {
 
   const renderStars = (rating: number, interactive = false, onRatingChange?: (rating: number) => void) => {
     return (
-      <div className="flex items-center space-x-1">
-        {[1, 2, 3, 4, 5].map((star) => (
+      <div className="flex space-x-0.5">
+        {[...Array(5)].map((_, i) => (
           <button
-            key={star}
-            type="button"
-            disabled={!interactive}
-            onClick={() => interactive && onRatingChange?.(star)}
-            className={`${interactive ? 'cursor-pointer hover:scale-110' : 'cursor-default'} transition-transform`}
+            key={i}
+            type={interactive ? "button" : undefined}
+            onClick={interactive ? () => onRatingChange?.(i + 1) : undefined}
+            className={interactive ? "cursor-pointer focus:outline-none" : undefined}
           >
-            <Star
-              className={`h-5 w-5 ${
-                star <= rating
-                  ? "fill-yellow-400 text-yellow-400"
-                  : "text-gray-300"
-              }`}
-            />
+            <Star className={`h-4 w-4 ${
+              i < rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"
+            }`} />
           </button>
         ))}
       </div>
@@ -139,10 +145,10 @@ export function Reviews({ productId }: ReviewsProps) {
           </CardHeader>
           <CardContent className="pt-0">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-6">
-              {/* Overall Rating - Compact */}
+              {/* Overall Rating */}
               <div className="text-center">
                 <div className="text-2xl sm:text-4xl font-bold text-gray-900 mb-1 sm:mb-2">
-                  {reviewStats.averageRating}
+                  {reviewStats.averageRating.toFixed(1)}
                 </div>
                 <div className="flex justify-center mb-1 sm:mb-2">
                   <div className="flex space-x-0.5">
@@ -150,11 +156,11 @@ export function Reviews({ productId }: ReviewsProps) {
                   </div>
                 </div>
                 <p className="text-gray-600 text-xs sm:text-sm">
-                  Based on {reviewStats.totalReviews} review{reviewStats.totalReviews !== 1 ? 's' : ''}
+                  Based on {reviewStats.totalReviews} {reviewStats.totalReviews === 1 ? 'review' : 'reviews'}
                 </p>
               </div>
 
-              {/* Rating Distribution - Compact */}
+              {/* Rating Distribution */}
               <div className="space-y-1 sm:space-y-2">
                 {[5, 4, 3, 2, 1].map((rating) => (
                   <div key={rating} className="flex items-center space-x-2 sm:space-x-3">

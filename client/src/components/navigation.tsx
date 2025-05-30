@@ -59,10 +59,10 @@ export function Navigation() {
                 </div>
                 <div className="flex flex-col">
                   <span className="font-display text-lg sm:text-xl md:text-2xl font-bold text-henna group-hover:text-terracotta transition-colors">
-                    Lacquer craft
+                    Lacquer Craft
                   </span>
                   <span className="text-xs sm:text-sm text-copper font-serif italic hidden sm:inline">
-                    Heritage Crafts
+                    Heritage Traditions
                   </span>
                 </div>
               </div>
@@ -71,14 +71,14 @@ export function Navigation() {
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
               <Link href="/" className={`font-serif text-henna hover:text-terracotta transition-colors ${location === "/" ? "text-terracotta font-semibold" : ""}`}>
-                गृह
+                Home
               </Link>
 
               <NavigationMenu>
                 <NavigationMenuList>
                   <NavigationMenuItem>
                     <NavigationMenuTrigger className="font-serif text-henna hover:text-terracotta transition-colors">
-                      श्रेणियाँ
+                      Categories
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
                       <div className="w-48 p-2 bg-warm-cream border border-terracotta/20">
@@ -98,11 +98,11 @@ export function Navigation() {
               </NavigationMenu>
 
               <Link href="/products" className={`font-serif text-henna hover:text-terracotta transition-colors ${location === "/products" ? "text-terracotta font-semibold" : ""}`}>
-                उत्पाद
+                Products
               </Link>
 
               <Link href="/track" className={`font-serif text-henna hover:text-terracotta transition-colors ${location === "/track" ? "text-terracotta font-semibold" : ""}`}>
-                ट्रैक
+                Track Order
               </Link>
             </div>
 

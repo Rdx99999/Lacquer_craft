@@ -99,16 +99,9 @@ export default function Products() {
                 placeholder="Search crafts..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pr-10 text-sm"
+                className="pl-10"
               />
-              <Button
-                type="submit"
-                size="sm"
-                variant="ghost"
-                className="absolute right-0 top-0 h-full px-3"
-              >
-                <Search className="h-4 w-4" />
-              </Button>
+              <Search className="h-4 w-4 text-gray-500 absolute left-3 top-1/2 -translate-y-1/2" />
             </form>
 
             {/* Filters Row - Category and Sort side by side */}
