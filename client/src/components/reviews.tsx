@@ -134,37 +134,39 @@ export function Reviews({ productId }: ReviewsProps) {
       {/* Review Stats */}
       {reviewStats && reviewStats.totalReviews > 0 && (
         <Card>
-          <CardHeader>
-            <h3 className="font-semibold text-lg">Customer Reviews</h3>
+          <CardHeader className="pb-3 sm:pb-6">
+            <h3 className="font-semibold text-base sm:text-lg">Customer Reviews</h3>
           </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Overall Rating */}
+          <CardContent className="pt-0">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-6">
+              {/* Overall Rating - Compact */}
               <div className="text-center">
-                <div className="text-4xl font-bold text-gray-900 mb-2">
+                <div className="text-2xl sm:text-4xl font-bold text-gray-900 mb-1 sm:mb-2">
                   {reviewStats.averageRating}
                 </div>
-                <div className="flex justify-center mb-2">
-                  {renderStars(Math.round(reviewStats.averageRating))}
+                <div className="flex justify-center mb-1 sm:mb-2">
+                  <div className="flex space-x-0.5">
+                    {renderStars(Math.round(reviewStats.averageRating))}
+                  </div>
                 </div>
-                <p className="text-gray-600">
+                <p className="text-gray-600 text-xs sm:text-sm">
                   Based on {reviewStats.totalReviews} review{reviewStats.totalReviews !== 1 ? 's' : ''}
                 </p>
               </div>
 
-              {/* Rating Distribution */}
-              <div className="space-y-2">
+              {/* Rating Distribution - Compact */}
+              <div className="space-y-1 sm:space-y-2">
                 {[5, 4, 3, 2, 1].map((rating) => (
-                  <div key={rating} className="flex items-center space-x-3">
-                    <div className="flex items-center space-x-1 w-16">
-                      <span className="text-sm">{rating}</span>
-                      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                  <div key={rating} className="flex items-center space-x-2 sm:space-x-3">
+                    <div className="flex items-center space-x-1 w-10 sm:w-16">
+                      <span className="text-xs sm:text-sm">{rating}</span>
+                      <Star className="h-3 w-3 sm:h-4 sm:w-4 fill-yellow-400 text-yellow-400" />
                     </div>
                     <Progress
                       value={(reviewStats.ratingDistribution[rating] / reviewStats.totalReviews) * 100}
-                      className="flex-1 h-2"
+                      className="flex-1 h-1.5 sm:h-2"
                     />
-                    <span className="text-sm text-gray-600 w-8">
+                    <span className="text-xs sm:text-sm text-gray-600 w-4 sm:w-8">
                       {reviewStats.ratingDistribution[rating]}
                     </span>
                   </div>
@@ -180,17 +182,19 @@ export function Reviews({ productId }: ReviewsProps) {
         <div className="text-center">
           <Button
             onClick={() => setIsReviewDialogOpen(true)}
-            className="bg-terracotta hover:bg-terracotta/90"
+            className="bg-terracotta hover:bg-terracotta/90 text-sm sm:text-base px-3 sm:px-4 py-2"
+            size="sm"
           >
-            <MessageSquare className="h-4 w-4 mr-2" />
-            Write a Review
+            <MessageSquare className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+            <span className="hidden sm:inline">Write a Review</span>
+            <span className="sm:hidden">Review</span>
           </Button>
         </div>
       )}
 
       {/* Reviews List */}
-      <div className="space-y-4">
-        <h3 className="font-semibold text-lg">
+      <div className="space-y-3 sm:space-y-4">
+        <h3 className="font-semibold text-base sm:text-lg">
           Reviews ({reviews.length})
         </h3>
 
@@ -216,22 +220,24 @@ export function Reviews({ productId }: ReviewsProps) {
             </CardContent>
           </Card>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-2 sm:space-y-4">
             {reviews.map((review: Review) => (
               <Card key={review.id}>
-                <CardContent className="pt-6">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-center space-x-3">
-                      <Avatar className="h-10 w-10 bg-terracotta text-white">
-                        <span className="text-sm font-semibold">
+                <CardContent className="pt-3 sm:pt-6 pb-3 sm:pb-6">
+                  <div className="flex items-start justify-between mb-2 sm:mb-4">
+                    <div className="flex items-center space-x-2 sm:space-x-3">
+                      <Avatar className="h-8 w-8 sm:h-10 sm:w-10 bg-terracotta text-white">
+                        <span className="text-xs sm:text-sm font-semibold">
                           {review.userName.charAt(0).toUpperCase()}
                         </span>
                       </Avatar>
                       <div>
-                        <p className="font-medium">{review.userName}</p>
-                        <div className="flex items-center space-x-2">
-                          {renderStars(review.rating)}
-                          <span className="text-sm text-gray-500">
+                        <p className="font-medium text-sm sm:text-base">{review.userName}</p>
+                        <div className="flex items-center space-x-1 sm:space-x-2">
+                          <div className="flex space-x-0.5">
+                            {renderStars(review.rating)}
+                          </div>
+                          <span className="text-xs sm:text-sm text-gray-500">
                             {new Date(review.createdAt).toLocaleDateString()}
                           </span>
                         </div>
@@ -242,14 +248,14 @@ export function Reviews({ productId }: ReviewsProps) {
                         variant="ghost"
                         size="sm"
                         onClick={() => deleteReviewMutation.mutate(review.id)}
-                        className="text-red-600 hover:text-red-700"
+                        className="text-red-600 hover:text-red-700 h-6 w-6 sm:h-8 sm:w-8 p-0"
                       >
-                        <Trash2 className="h-4 w-4" />
+                        <Trash2 className="h-3 w-3 sm:h-4 sm:w-4" />
                       </Button>
                     )}
                   </div>
-                  <h4 className="font-semibold mb-2">{review.title}</h4>
-                  <p className="text-gray-700 leading-relaxed">{review.comment}</p>
+                  <h4 className="font-semibold mb-1 sm:mb-2 text-sm sm:text-base">{review.title}</h4>
+                  <p className="text-gray-700 leading-relaxed text-sm sm:text-base">{review.comment}</p>
                 </CardContent>
               </Card>
             ))}
