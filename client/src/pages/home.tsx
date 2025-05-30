@@ -109,32 +109,7 @@ export default function Home() {
                 </Button>
               </div>
               
-              {/* Enhanced Stats */}
-              <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4 sm:p-6 border border-white/30">
-                <div className="grid grid-cols-3 gap-4">
-                  <div className="text-center">
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-2">
-                      <Users className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
-                    </div>
-                    <div className="text-lg sm:text-xl font-bold text-white">500+</div>
-                    <div className="text-xs text-gray-200">Artisans</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-2">
-                      <Heart className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
-                    </div>
-                    <div className="text-lg sm:text-xl font-bold text-white">15K+</div>
-                    <div className="text-xs text-gray-200">Customers</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-2">
-                      <Award className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
-                    </div>
-                    <div className="text-lg sm:text-xl font-bold text-white">25+</div>
-                    <div className="text-xs text-gray-200">States</div>
-                  </div>
-                </div>
-              </div>
+              
             </div>
             
             {/* Enhanced Right Visual - Hidden on mobile, visible on desktop */}
