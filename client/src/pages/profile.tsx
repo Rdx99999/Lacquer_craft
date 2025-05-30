@@ -140,112 +140,112 @@ export default function Profile() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-warm-cream to-sage/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero Header */}
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-terracotta to-saffron p-8 mb-8 text-white shadow-lg">
+        {/* Hero Header - Compact for Mobile */}
+        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-r from-terracotta to-saffron p-4 sm:p-8 mb-4 sm:mb-8 text-white shadow-lg">
           <div className="relative z-10">
-            <div className="flex items-center space-x-4 mb-4">
-              <div className="h-16 w-16 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
-                <User className="h-8 w-8" />
+            <div className="flex flex-col sm:flex-row sm:items-center space-y-3 sm:space-y-0 sm:space-x-4 mb-3 sm:mb-4">
+              <div className="h-12 w-12 sm:h-16 sm:w-16 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm flex-shrink-0">
+                <User className="h-6 w-6 sm:h-8 sm:w-8" />
               </div>
-              <div>
-                <h1 className="font-display text-4xl font-bold mb-2">
+              <div className="min-w-0 flex-1">
+                <h1 className="font-display text-2xl sm:text-4xl font-bold mb-1 sm:mb-2 leading-tight">
                   Welcome back, {user?.name}!
                 </h1>
-                <p className="text-white/90 text-lg">
+                <p className="text-white/90 text-sm sm:text-lg hidden sm:block">
                   Discover your journey with authentic Indian crafts
                 </p>
               </div>
             </div>
-            <div className="flex items-center space-x-6 text-sm">
+            <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-6 text-xs sm:text-sm">
               <div className="flex items-center space-x-2">
-                <Mail className="h-4 w-4" />
-                <span>{user?.email}</span>
+                <Mail className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+                <span className="truncate">{user?.email}</span>
               </div>
               <div className="flex items-center space-x-2">
-                <Award className="h-4 w-4" />
+                <Award className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
                 <span>{loyaltyLevel} Member</span>
               </div>
             </div>
           </div>
-          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16"></div>
-          <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full translate-y-12 -translate-x-12"></div>
+          <div className="absolute top-0 right-0 w-20 h-20 sm:w-32 sm:h-32 bg-white/10 rounded-full -translate-y-10 translate-x-10 sm:-translate-y-16 sm:translate-x-16"></div>
+          <div className="absolute bottom-0 left-0 w-16 h-16 sm:w-24 sm:h-24 bg-white/10 rounded-full translate-y-8 -translate-x-8 sm:translate-y-12 sm:-translate-x-12"></div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8">
           {/* Stats Cards */}
           <Card className="bg-gradient-to-br from-terracotta/10 to-terracotta/20 border-terracotta/30 shadow-lg">
-            <CardContent className="p-6">
+            <CardContent className="p-3 sm:p-6">
               <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-terracotta text-sm font-medium">Total Orders</p>
-                  <p className="text-3xl font-bold text-gray-900">{userOrders.length}</p>
+                <div className="min-w-0 flex-1">
+                  <p className="text-terracotta text-xs sm:text-sm font-medium truncate">Total Orders</p>
+                  <p className="text-xl sm:text-3xl font-bold text-gray-900">{userOrders.length}</p>
                 </div>
-                <ShoppingBag className="h-8 w-8 text-terracotta" />
+                <ShoppingBag className="h-5 w-5 sm:h-8 sm:w-8 text-terracotta flex-shrink-0" />
               </div>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-to-br from-saffron/10 to-saffron/20 border-saffron/30 shadow-lg">
-            <CardContent className="p-6">
+            <CardContent className="p-3 sm:p-6">
               <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-saffron text-sm font-medium">Total Spent</p>
-                  <p className="text-3xl font-bold text-gray-900">₹{totalSpent.toLocaleString()}</p>
+                <div className="min-w-0 flex-1">
+                  <p className="text-saffron text-xs sm:text-sm font-medium truncate">Total Spent</p>
+                  <p className="text-xl sm:text-3xl font-bold text-gray-900">₹{totalSpent.toLocaleString()}</p>
                 </div>
-                <TrendingUp className="h-8 w-8 text-saffron" />
+                <TrendingUp className="h-5 w-5 sm:h-8 sm:w-8 text-saffron flex-shrink-0" />
               </div>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-to-br from-warm-gold/20 to-warm-gold/30 border-warm-gold/40 shadow-lg">
-            <CardContent className="p-6">
+            <CardContent className="p-3 sm:p-6">
               <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-warm-gold text-sm font-medium">Completed</p>
-                  <p className="text-3xl font-bold text-gray-900">{completedOrders}</p>
+                <div className="min-w-0 flex-1">
+                  <p className="text-warm-gold text-xs sm:text-sm font-medium truncate">Completed</p>
+                  <p className="text-xl sm:text-3xl font-bold text-gray-900">{completedOrders}</p>
                 </div>
-                <CheckCircle className="h-8 w-8 text-warm-gold" />
+                <CheckCircle className="h-5 w-5 sm:h-8 sm:w-8 text-warm-gold flex-shrink-0" />
               </div>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-to-br from-terracotta/15 to-saffron/15 border-terracotta/25 shadow-lg">
-            <CardContent className="p-6">
+            <CardContent className="p-3 sm:p-6">
               <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-terracotta text-sm font-medium">Loyalty Level</p>
-                  <p className="text-2xl font-bold text-gray-900">{loyaltyLevel}</p>
+                <div className="min-w-0 flex-1">
+                  <p className="text-terracotta text-xs sm:text-sm font-medium truncate">Loyalty Level</p>
+                  <p className="text-lg sm:text-2xl font-bold text-gray-900">{loyaltyLevel}</p>
                 </div>
-                <Star className="h-8 w-8 text-saffron" />
+                <Star className="h-5 w-5 sm:h-8 sm:w-8 text-saffron flex-shrink-0" />
               </div>
             </CardContent>
           </Card>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8"></div>
           {/* Profile Information */}
-          <div className="lg:col-span-1 space-y-6">
+          <div className="lg:col-span-1 space-y-4 sm:space-y-6"></div>
             <Card className="border-terracotta/20 shadow-lg bg-white">
-              <CardHeader className="bg-gradient-to-r from-terracotta/10 to-saffron/10 rounded-t-lg border-b border-terracotta/20">
-                <CardTitle className="flex items-center space-x-2 text-terracotta font-display">
-                  <User className="h-5 w-5" />
+              <CardHeader className="bg-gradient-to-r from-terracotta/10 to-saffron/10 rounded-t-lg border-b border-terracotta/20 p-3 sm:p-6">
+                <CardTitle className="flex items-center space-x-2 text-terracotta font-display text-sm sm:text-base">
+                  <User className="h-4 w-4 sm:h-5 sm:w-5" />
                   <span>Profile Information</span>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="p-6 space-y-4">
-                <div className="space-y-3">
-                  <div className="flex items-center space-x-3 p-3 bg-soft-beige rounded-lg border border-terracotta/10">
-                    <User className="h-5 w-5 text-terracotta" />
-                    <div>
-                      <Label className="text-sm font-medium text-gray-600">Name</Label>
-                      <p className="text-lg font-semibold text-gray-900">{user?.name}</p>
+              <CardContent className="p-3 sm:p-6 space-y-3 sm:space-y-4">
+                <div className="space-y-2 sm:space-y-3">
+                  <div className="flex items-center space-x-2 sm:space-x-3 p-2 sm:p-3 bg-soft-beige rounded-lg border border-terracotta/10">
+                    <User className="h-4 w-4 sm:h-5 sm:w-5 text-terracotta flex-shrink-0" />
+                    <div className="min-w-0 flex-1">
+                      <Label className="text-xs sm:text-sm font-medium text-gray-600">Name</Label>
+                      <p className="text-sm sm:text-lg font-semibold text-gray-900 truncate">{user?.name}</p>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-3 p-3 bg-soft-beige rounded-lg border border-terracotta/10">
-                    <Mail className="h-5 w-5 text-terracotta" />
-                    <div>
-                      <Label className="text-sm font-medium text-gray-600">Email</Label>
-                      <p className="text-lg font-semibold text-gray-900">{user?.email}</p>
+                  <div className="flex items-center space-x-2 sm:space-x-3 p-2 sm:p-3 bg-soft-beige rounded-lg border border-terracotta/10">
+                    <Mail className="h-4 w-4 sm:h-5 sm:w-5 text-terracotta flex-shrink-0" />
+                    <div className="min-w-0 flex-1">
+                      <Label className="text-xs sm:text-sm font-medium text-gray-600">Email</Label>
+                      <p className="text-sm sm:text-lg font-semibold text-gray-900 truncate">{user?.email}</p>
                     </div>
                   </div>
                 </div>
@@ -253,13 +253,13 @@ export default function Profile() {
             </Card>
 
             <Card className="border-saffron/20 shadow-lg bg-white">
-              <CardHeader className="bg-gradient-to-r from-warm-gold/15 to-saffron/15 border-b border-saffron/20">
-                <CardTitle className="flex items-center space-x-2 text-warm-gold font-display">
-                  <Award className="h-5 w-5" />
+              <CardHeader className="bg-gradient-to-r from-warm-gold/15 to-saffron/15 border-b border-saffron/20 p-3 sm:p-6">
+                <CardTitle className="flex items-center space-x-2 text-warm-gold font-display text-sm sm:text-base">
+                  <Award className="h-4 w-4 sm:h-5 sm:w-5" />
                   <span>Loyalty Status</span>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="p-6">
+              <CardContent className="p-3 sm:p-6"></div>
                 <div className="text-center mb-4">
                   <div className="text-3xl font-bold text-warm-gold mb-2">{loyaltyLevel}</div>
                   <div className="text-sm text-gray-600">
@@ -378,21 +378,21 @@ export default function Profile() {
                         </Button>
                       </Link>
                     </div>
-                    <div className="space-y-3 max-h-64 overflow-y-auto">
+                    <div className="space-y-2 sm:space-y-3 max-h-48 sm:max-h-64 overflow-y-auto">
                       {wishlistItems.slice(0, 3).map((item) => (
-                        <div key={item.id} className="flex items-center space-x-3 p-3 bg-gradient-to-r from-saffron/5 to-warm-gold/5 rounded-lg border border-saffron/10 hover:border-saffron/20 transition-all duration-200">
+                        <div key={item.id} className="flex items-center space-x-2 sm:space-x-3 p-2 sm:p-3 bg-gradient-to-r from-saffron/5 to-warm-gold/5 rounded-lg border border-saffron/10 hover:border-saffron/20 transition-all duration-200">
                           <img
                             src={item.images?.[0] || '/placeholder-image.jpg'}
                             alt={item.name}
-                            className="w-12 h-12 object-cover rounded-lg border border-saffron/20"
+                            className="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded-lg border border-saffron/20 flex-shrink-0"
                           />
                           <div className="flex-1 min-w-0">
-                            <h4 className="font-medium text-gray-900 text-sm truncate">{item.name}</h4>
-                            <p className="text-terracotta font-semibold text-sm">₹{parseFloat(item.price).toLocaleString()}</p>
+                            <h4 className="font-medium text-gray-900 text-xs sm:text-sm truncate">{item.name}</h4>
+                            <p className="text-terracotta font-semibold text-xs sm:text-sm">₹{parseFloat(item.price).toLocaleString()}</p>
                           </div>
-                          <div className="flex items-center space-x-2">
+                          <div className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0">
                             <Link href={`/products/${item.id}`}>
-                              <Button variant="outline" size="sm" className="text-xs border-gray-300 hover:bg-gray-50">
+                              <Button variant="outline" size="sm" className="text-xs border-gray-300 hover:bg-gray-50 px-2 py-1">
                                 View
                               </Button>
                             </Link>
@@ -402,13 +402,13 @@ export default function Profile() {
                               onClick={() => toggleWishlist(item.id)}
                               className="text-red-500 hover:bg-red-50 p-1"
                             >
-                              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="h-3 w-3 sm:h-4 sm:w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                               </svg>
                             </Button>
                           </div>
                         </div>
-                      ))}
+                      ))}</div>
                     </div>
                     {wishlistItems.length > 3 && (
                       <div className="text-center pt-3 border-t border-saffron/10">
@@ -460,13 +460,13 @@ export default function Profile() {
                 ) : (
                   <div className="space-y-6">
                     {userOrders.map((order, index) => (
-                      <div key={order.id} className="relative overflow-hidden rounded-xl border border-terracotta/20 bg-white hover:shadow-xl transition-all duration-300 group hover:border-terracotta/40">
+                      <div key={order.id} className="relative overflow-hidden rounded-lg sm:rounded-xl border border-terracotta/20 bg-white hover:shadow-xl transition-all duration-300 group hover:border-terracotta/40">
                         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-terracotta to-saffron"></div>
-                        <div className="p-6">
-                          <div className="flex items-center justify-between mb-4">
-                            <div className="flex items-center space-x-4">
-                              <div className="flex items-center space-x-2">
-                                <div className={`p-2 rounded-full ${
+                        <div className="p-3 sm:p-6">
+                          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-3 sm:mb-4 space-y-2 sm:space-y-0">
+                            <div className="flex items-center space-x-2 sm:space-x-4 min-w-0 flex-1">
+                              <div className="flex items-center space-x-2 min-w-0 flex-1">
+                                <div className={`p-1.5 sm:p-2 rounded-full flex-shrink-0 ${
                                   order.status === "delivered" ? "bg-green-100 text-green-600" :
                                   order.status === "shipped" ? "bg-blue-100 text-blue-600" :
                                   order.status === "confirmed" ? "bg-purple-100 text-purple-600" :
@@ -474,18 +474,18 @@ export default function Profile() {
                                 }`}>
                                   {getStatusIcon(order.status)}
                                 </div>
-                                <div>
-                                  <h3 className="font-semibold text-gray-900 font-display">Order #{order.id}</h3>
-                                  <p className="text-sm text-gray-600">
-                                    Placed on {new Date(order.createdAt).toLocaleDateString()}
+                                <div className="min-w-0 flex-1">
+                                  <h3 className="font-semibold text-gray-900 font-display text-sm sm:text-base">Order #{order.id}</h3>
+                                  <p className="text-xs sm:text-sm text-gray-600">
+                                    {new Date(order.createdAt).toLocaleDateString()}
                                   </p>
                                 </div>
                               </div>
-                              <Badge className={`${getStatusColor(order.status)} px-3 py-1 text-xs font-medium rounded-full`}>
+                              <Badge className={`${getStatusColor(order.status)} px-2 sm:px-3 py-1 text-xs font-medium rounded-full flex-shrink-0`}>
                                 {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
                               </Badge>
                             </div>
-                            <Dialog>
+                            <Dialog></div>
                               <DialogTrigger asChild>
                                 <Button 
                                   variant="outline" 
@@ -581,20 +581,20 @@ export default function Profile() {
                             </Dialog>
                           </div>
                           
-                          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div className="bg-soft-beige rounded-lg p-4 border border-terracotta/10">
-                              <p className="text-sm font-medium text-gray-600 mb-1">Tracking Number</p>
-                              <p className="font-mono text-sm bg-white px-2 py-1 rounded border border-terracotta/20 text-terracotta">{order.trackingNumber}</p>
+                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6">
+                            <div className="bg-soft-beige rounded-lg p-2 sm:p-4 border border-terracotta/10">
+                              <p className="text-xs sm:text-sm font-medium text-gray-600 mb-1">Tracking Number</p>
+                              <p className="font-mono text-xs sm:text-sm bg-white px-2 py-1 rounded border border-terracotta/20 text-terracotta truncate">{order.trackingNumber}</p>
                             </div>
-                            <div className="bg-soft-beige rounded-lg p-4 border border-terracotta/10">
-                              <p className="text-sm font-medium text-gray-600 mb-1">Total Amount</p>
-                              <p className="text-xl font-bold text-terracotta">₹{parseFloat(order.total).toLocaleString()}</p>
+                            <div className="bg-soft-beige rounded-lg p-2 sm:p-4 border border-terracotta/10">
+                              <p className="text-xs sm:text-sm font-medium text-gray-600 mb-1">Total Amount</p>
+                              <p className="text-lg sm:text-xl font-bold text-terracotta">₹{parseFloat(order.total).toLocaleString()}</p>
                             </div>
-                            <div className="bg-soft-beige rounded-lg p-4 border border-terracotta/10">
-                              <p className="text-sm font-medium text-gray-600 mb-1">Order Date</p>
-                              <p className="font-medium text-gray-900">{new Date(order.createdAt).toLocaleDateString()}</p>
+                            <div className="bg-soft-beige rounded-lg p-2 sm:p-4 border border-terracotta/10">
+                              <p className="text-xs sm:text-sm font-medium text-gray-600 mb-1">Order Date</p>
+                              <p className="font-medium text-gray-900 text-sm sm:text-base">{new Date(order.createdAt).toLocaleDateString()}</p>
                             </div>
-                          </div>
+                          </div></div>
                         </div>
                       </div>
                     ))}
