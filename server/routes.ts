@@ -4,6 +4,7 @@ import { join } from "path";
 import fs from "fs";
 import express from "express";
 import multer from "multer";
+import crypto from "crypto";
 import { storage } from "./storage";
 import { insertProductSchema, insertOrderSchema, insertCartItemSchema, insertCategorySchema, insertSettingSchema, insertReviewSchema } from "@shared/schema";
 import { registerSchema, loginSchema } from "@shared/auth-schema";
@@ -251,7 +252,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin authentication route with session creation
   app.post("/api/admin/auth", requireAdminAuth, (req: any, res) => {
     // Generate session token
-    const sessionToken = require('crypto').randomBytes(32).toString('hex');
+    const sessionToken = crypto.randomBytes(32).toString('hex');
     const sessionTimeout = parseInt(process.env.ADMIN_SESSION_TIMEOUT_HOURS || '8') * 60 * 60 * 1000;
     
     adminSessions.set(sessionToken, {
