@@ -268,24 +268,39 @@ export default function Products() {
               ))}
             </div>
 
-            {/* Recommended Products Section */}
+            {/* Recommended Products Section - Compact for Mobile */}
             {!selectedCategory && !searchQuery && (
-              <div className="mt-16 border-t pt-12">
-                <div className="mb-8">
-                  <h2 className="font-display text-2xl font-bold text-gray-900 mb-2">
+              <div className="mt-8 sm:mt-16 border-t pt-6 sm:pt-12">
+                <div className="mb-4 sm:mb-8">
+                  <h2 className="font-display text-lg sm:text-2xl font-bold text-gray-900 mb-1 sm:mb-2">
                     You might also like
                   </h2>
-                  <p className="text-gray-600">
+                  <p className="text-sm sm:text-base text-gray-600 hidden sm:block">
                     Discover more handcrafted treasures from our artisans
                   </p>
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                {/* Mobile: Horizontal scroll, Desktop: Grid */}
+                <div className="sm:hidden">
+                  <div className="flex space-x-3 overflow-x-auto pb-4 scrollbar-hide">
+                    {products
+                      .filter(product => product.featured)
+                      .slice(0, 6)
+                      .map((product) => (
+                        <div key={`featured-mobile-${product.id}`} className="flex-shrink-0 w-40">
+                          <ProductCard product={product} showCategory />
+                        </div>
+                      ))}
+                  </div>
+                </div>
+                
+                {/* Desktop: Normal Grid */}
+                <div className="hidden sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
                   {products
                     .filter(product => product.featured)
                     .slice(0, 4)
                     .map((product) => (
-                      <ProductCard key={`featured-${product.id}`} product={product} showCategory />
+                      <ProductCard key={`featured-desktop-${product.id}`} product={product} showCategory />
                     ))}
                 </div>
               </div>
