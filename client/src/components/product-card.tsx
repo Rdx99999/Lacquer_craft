@@ -76,40 +76,40 @@ export function ProductCard({
           />
 
           {/* Badges */}
-          <div className="absolute top-3 left-3 flex flex-col space-y-2">
+          <div className="absolute top-2 sm:top-3 left-2 sm:left-3 flex flex-col space-y-1 sm:space-y-2">
             {product.featured && (
-              <Badge className="bg-saffron text-white">
+              <Badge className="bg-saffron text-white text-xs">
                 Featured
               </Badge>
             )}
             {product.stock === 0 && (
-              <Badge variant="destructive">
+              <Badge variant="destructive" className="text-xs">
                 Sold Out
               </Badge>
             )}
             {product.stock > 0 && product.stock <= 5 && (
-              <Badge variant="outline" className="text-orange-600 border-orange-600 bg-white">
+              <Badge variant="outline" className="text-orange-600 border-orange-600 bg-white text-xs">
                 Limited
               </Badge>
             )}
           </div>
 
-          {/* Add to Cart Button */}
+          {/* Add to Cart Button - More prominent on mobile */}
           {product.stock > 0 && (
-            <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="absolute bottom-2 sm:bottom-3 right-2 sm:right-3 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300">
               <Button
                 size="sm"
                 onClick={handleAddToCart}
                 disabled={isAddingToCart}
-                className="bg-terracotta hover:bg-terracotta/90 text-white shadow-lg"
+                className="bg-terracotta hover:bg-terracotta/90 text-white shadow-lg h-8 w-8 sm:h-9 sm:w-9 p-0"
               >
-                <ShoppingCart className="h-4 w-4" />
+                <ShoppingCart className="h-3 w-3 sm:h-4 sm:w-4" />
               </Button>
             </div>
           )}
         </div>
 
-        <CardContent className="p-4 flex-1 flex flex-col">
+        <CardContent className="p-3 sm:p-4 flex-1 flex flex-col">
           <div className="space-y-2 flex-1">
             <div className="flex items-center justify-between">
               {showCategory && category && (
@@ -125,17 +125,17 @@ export function ProductCard({
               </div>
             </div>
 
-            <h3 className="font-semibold text-gray-900 line-clamp-2 min-h-[2.5rem]">
+            <h3 className="font-semibold text-gray-900 line-clamp-2 min-h-[2.5rem] text-sm sm:text-base">
               {product.name}
             </h3>
 
-            <p className="text-sm text-gray-600 line-clamp-2 min-h-[2.5rem]">
+            <p className="text-xs sm:text-sm text-gray-600 line-clamp-2 min-h-[2rem] sm:min-h-[2.5rem]">
               {product.description}
             </p>
 
-            {/* Features */}
+            {/* Features - Simplified for mobile */}
             {matchingFeatures.length > 0 && (
-              <div className="space-y-1">
+              <div className="space-y-1 hidden sm:block">
                 <div className="text-xs text-gray-500">Features:</div>
                 <div className="flex flex-wrap gap-1">
                   {matchingFeatures.map((feature, index) => (
@@ -157,32 +157,34 @@ export function ProductCard({
             )}
           </div>
 
-          <div className="flex items-center justify-between pt-3 mt-auto">
-            <span className="text-lg font-bold text-terracotta">
+          <div className="flex items-center justify-between pt-2 sm:pt-3 mt-auto">
+            <span className="text-base sm:text-lg font-bold text-terracotta">
               ₹{parseFloat(product.price).toLocaleString()}
             </span>
 
-            <div className="text-right">
-              <div className="text-xs text-gray-500">
-                {product.stock > 0 ? `${product.stock} left` : 'Out of stock'}
+            <div className="flex items-center space-x-2">
+              <div className="text-right">
+                <div className="text-xs text-gray-500">
+                  {product.stock > 0 ? `${product.stock} left` : 'Out of stock'}
+                </div>
               </div>
-               <Button
-            variant="ghost"
-            size="sm"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              toggleWishlist(product.id);
-            }}
-            className={`p-2 transition-colors ${
-              isInWishlist(product.id) 
-                ? "bg-red-50 text-red-500 hover:bg-red-100" 
-                : "hover:bg-red-50 text-gray-400 hover:text-red-500"
-            }`}
-            aria-label={isInWishlist(product.id) ? "Remove from wishlist" : "Add to wishlist"}
-          >
-            <Heart className={`h-4 w-4 ${isInWishlist(product.id) ? "fill-current" : ""}`} />
-          </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  toggleWishlist(product.id);
+                }}
+                className={`p-1 sm:p-2 transition-colors h-8 w-8 ${
+                  isInWishlist(product.id) 
+                    ? "bg-red-50 text-red-500 hover:bg-red-100" 
+                    : "hover:bg-red-50 text-gray-400 hover:text-red-500"
+                }`}
+                aria-label={isInWishlist(product.id) ? "Remove from wishlist" : "Add to wishlist"}
+              >
+                <Heart className={`h-3 w-3 sm:h-4 sm:w-4 ${isInWishlist(product.id) ? "fill-current" : ""}`} />
+              </Button>
             </div>
           </div>
         </CardContent>

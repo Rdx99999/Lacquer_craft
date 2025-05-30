@@ -57,88 +57,90 @@ export default function Home() {
                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
              }} />
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-32">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Left Content */}
-            <div className="text-left space-y-8">
-              <div className="space-y-4">
-                <Badge className="bg-terracotta/10 text-terracotta border-terracotta/20 px-4 py-2">
-                  <Sparkles className="h-4 w-4 mr-2" />
-                  Handcrafted Excellence Since 1947
+            <div className="text-left space-y-6 lg:space-y-8">
+              <div className="space-y-4 lg:space-y-6">
+                <Badge className="bg-terracotta/10 text-terracotta border-terracotta/20 px-3 py-1 sm:px-4 sm:py-2 text-xs sm:text-sm">
+                  <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                  <span className="hidden sm:inline">Handcrafted Excellence Since 1947</span>
+                  <span className="sm:hidden">Since 1947</span>
                 </Badge>
-                <h1 className="font-display text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 leading-tight">
+                <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 leading-tight">
                   {heroTitle}
                   <span className="text-terracotta block">{heroSubtitle}</span>
                   <span className="text-gray-700">& Crafts</span>
                 </h1>
-                <p className="text-xl text-gray-600 leading-relaxed max-w-lg">
+                <p className="text-base sm:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-lg">
                   {heroDescription}
                 </p>
               </div>
               
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/products">
-                  <Button size="lg" className="bg-terracotta hover:bg-terracotta/90 text-white px-8 py-4 text-lg">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                <Link href="/products" className="w-full sm:w-auto">
+                  <Button size="lg" className="bg-terracotta hover:bg-terracotta/90 text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg w-full sm:w-auto">
                     {heroButtonText}
-                    <ArrowRight className="ml-2 h-5 w-5" />
+                    <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                   </Button>
                 </Link>
-                <Button size="lg" variant="outline" className="border-gray-300 text-gray-700 hover:bg-gray-50 px-8 py-4 text-lg">
-                  <Heart className="mr-2 h-5 w-5" />
-                  {heroButtonSecondaryText}
+                <Button size="lg" variant="outline" className="border-gray-300 text-gray-700 hover:bg-gray-50 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg w-full sm:w-auto">
+                  <Heart className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                  <span className="hidden sm:inline">{heroButtonSecondaryText}</span>
+                  <span className="sm:hidden">Story</span>
                 </Button>
               </div>
               
               {/* Stats */}
-              <div className="grid grid-cols-3 gap-6 pt-8 border-t border-gray-200">
+              <div className="grid grid-cols-3 gap-4 sm:gap-6 pt-6 sm:pt-8 border-t border-gray-200">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-terracotta">500+</div>
-                  <div className="text-sm text-gray-600">Artisan Partners</div>
+                  <div className="text-lg sm:text-xl lg:text-2xl font-bold text-terracotta">500+</div>
+                  <div className="text-xs sm:text-sm text-gray-600">Artisan Partners</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-terracotta">15K+</div>
-                  <div className="text-sm text-gray-600">Happy Customers</div>
+                  <div className="text-lg sm:text-xl lg:text-2xl font-bold text-terracotta">15K+</div>
+                  <div className="text-xs sm:text-sm text-gray-600">Happy Customers</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-terracotta">25+</div>
-                  <div className="text-sm text-gray-600">States Covered</div>
+                  <div className="text-lg sm:text-xl lg:text-2xl font-bold text-terracotta">25+</div>
+                  <div className="text-xs sm:text-sm text-gray-600">States Covered</div>
                 </div>
               </div>
             </div>
             
             {/* Right Visual */}
-            <div className="relative">
+            <div className="relative mt-8 lg:mt-0">
               {/* Main Image */}
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+              <div className="relative rounded-xl lg:rounded-2xl overflow-hidden shadow-xl lg:shadow-2xl">
                 <img
                   src={heroImage}
                   alt="Traditional Indian Craftsmanship"
-                  className="w-full h-[500px] object-cover"
+                  className="w-full h-[300px] sm:h-[400px] lg:h-[500px] object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
               </div>
               
-              {/* Floating Cards */}
-              <div className="absolute -top-6 -left-6 bg-white rounded-xl shadow-lg p-4 border border-gray-100">
-                <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 bg-saffron/10 rounded-full flex items-center justify-center">
-                    <Award className="h-6 w-6 text-saffron" />
+              {/* Floating Cards - Hidden on mobile for cleaner look */}
+              <div className="hidden sm:block absolute -top-4 lg:-top-6 -left-4 lg:-left-6 bg-white rounded-lg lg:rounded-xl shadow-lg p-3 lg:p-4 border border-gray-100">
+                <div className="flex items-center space-x-2 lg:space-x-3">
+                  <div className="w-8 h-8 lg:w-12 lg:h-12 bg-saffron/10 rounded-full flex items-center justify-center">
+                    <Award className="h-4 w-4 lg:h-6 lg:w-6 text-saffron" />
                   </div>
                   <div>
-                    <div className="font-semibold text-gray-900">Certified Authentic</div>
-                    <div className="text-sm text-gray-600">100% Handmade</div>
+                    <div className="font-semibold text-gray-900 text-sm lg:text-base">Certified Authentic</div>
+                    <div className="text-xs lg:text-sm text-gray-600">100% Handmade</div>
                   </div>
                 </div>
               </div>
               
-              <div className="absolute -bottom-6 -right-6 bg-white rounded-xl shadow-lg p-4 border border-gray-100">
-                <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 bg-terracotta/10 rounded-full flex items-center justify-center">
-                    <Shield className="h-6 w-6 text-terracotta" />
+              <div className="hidden sm:block absolute -bottom-4 lg:-bottom-6 -right-4 lg:-right-6 bg-white rounded-lg lg:rounded-xl shadow-lg p-3 lg:p-4 border border-gray-100">
+                <div className="flex items-center space-x-2 lg:space-x-3">
+                  <div className="w-8 h-8 lg:w-12 lg:h-12 bg-terracotta/10 rounded-full flex items-center justify-center">
+                    <Shield className="h-4 w-4 lg:h-6 lg:w-6 text-terracotta" />
                   </div>
                   <div>
-                    <div className="font-semibold text-gray-900">Lifetime Support</div>
-                    <div className="text-sm text-gray-600">Artisan Care</div>
+                    <div className="font-semibold text-gray-900 text-sm lg:text-base">Lifetime Support</div>
+                    <div className="text-xs lg:text-sm text-gray-600">Artisan Care</div>
                   </div>
                 </div>
               </div>
@@ -148,87 +150,87 @@ export default function Home() {
       </section>
 
       {/* Trust Indicators */}
-      <section className="py-12 bg-gray-50 border-t border-gray-200">
+      <section className="py-8 sm:py-12 bg-gray-50 border-t border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
             <div className="text-center">
-              <div className="w-12 h-12 bg-terracotta/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                <Truck className="h-6 w-6 text-terracotta" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-terracotta/10 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                <Truck className="h-5 w-5 sm:h-6 sm:w-6 text-terracotta" />
               </div>
-              <div className="font-semibold text-gray-900">Free Shipping</div>
-              <div className="text-sm text-gray-600">On orders above ₹2000</div>
+              <div className="font-semibold text-gray-900 text-sm sm:text-base">Free Shipping</div>
+              <div className="text-xs sm:text-sm text-gray-600">On orders above ₹2000</div>
             </div>
             <div className="text-center">
-              <div className="w-12 h-12 bg-saffron/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                <Award className="h-6 w-6 text-saffron" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-saffron/10 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                <Award className="h-5 w-5 sm:h-6 sm:w-6 text-saffron" />
               </div>
-              <div className="font-semibold text-gray-900">Authentic Guarantee</div>
-              <div className="text-sm text-gray-600">100% handmade crafts</div>
+              <div className="font-semibold text-gray-900 text-sm sm:text-base">Authentic Guarantee</div>
+              <div className="text-xs sm:text-sm text-gray-600">100% handmade crafts</div>
             </div>
             <div className="text-center">
-              <div className="w-12 h-12 bg-terracotta/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                <Shield className="h-6 w-6 text-terracotta" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-terracotta/10 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-terracotta" />
               </div>
-              <div className="font-semibold text-gray-900">Secure Payment</div>
-              <div className="text-sm text-gray-600">Safe & encrypted</div>
+              <div className="font-semibold text-gray-900 text-sm sm:text-base">Secure Payment</div>
+              <div className="text-xs sm:text-sm text-gray-600">Safe & encrypted</div>
             </div>
             <div className="text-center">
-              <div className="w-12 h-12 bg-saffron/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                <Users className="h-6 w-6 text-saffron" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-saffron/10 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                <Users className="h-5 w-5 sm:h-6 sm:w-6 text-saffron" />
               </div>
-              <div className="font-semibold text-gray-900">Artisan Support</div>
-              <div className="text-sm text-gray-600">Direct to craftsman</div>
+              <div className="font-semibold text-gray-900 text-sm sm:text-base">Artisan Support</div>
+              <div className="text-xs sm:text-sm text-gray-600">Direct to craftsman</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Categories Section */}
-      <section className="py-20 bg-white">
+      <section className="py-12 sm:py-16 lg:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <Badge className="bg-terracotta/10 text-terracotta border-terracotta/20 px-4 py-2 mb-6">
+          <div className="text-center mb-12 sm:mb-16">
+            <Badge className="bg-terracotta/10 text-terracotta border-terracotta/20 px-3 py-1 sm:px-4 sm:py-2 mb-4 sm:mb-6 text-xs sm:text-sm">
               Curated Collections
             </Badge>
-            <h2 className="font-display text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
               Explore Our <span className="text-terracotta">Craft Categories</span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-4">
               Each category represents centuries of artistic tradition, carefully preserved and passed down through generations of master craftspeople
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {categories.map((category, index) => (
               <Link key={category.id} href={`/products?category=${category.slug}`}>
-                <Card className="group cursor-pointer h-full overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
+                <Card className="group cursor-pointer h-full overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-1 sm:hover:-translate-y-2">
                   <div className="relative overflow-hidden">
                     <img
                       src={category.thumbnail || fallbackCategoryImages[category.slug as keyof typeof fallbackCategoryImages] || "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300"}
                       alt={`${category.name} Collection`}
-                      className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"
+                      className="w-full h-48 sm:h-56 lg:h-64 object-cover group-hover:scale-110 transition-transform duration-700"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                    <div className="absolute top-4 right-4">
-                      <Badge className="bg-white/20 text-white border-white/30 backdrop-blur-sm">
+                    <div className="absolute top-3 sm:top-4 right-3 sm:right-4">
+                      <Badge className="bg-white/20 text-white border-white/30 backdrop-blur-sm text-xs">
                         {index === 0 ? 'Most Popular' : index === 1 ? 'Trending' : index === 2 ? 'Premium' : 'Classic'}
                       </Badge>
                     </div>
-                    <div className="absolute bottom-6 left-6 text-white">
-                      <h3 className="font-display text-2xl font-bold mb-2 group-hover:text-saffron transition-colors duration-300">
+                    <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 text-white">
+                      <h3 className="font-display text-lg sm:text-xl lg:text-2xl font-bold mb-1 sm:mb-2 group-hover:text-saffron transition-colors duration-300">
                         {category.name}
                       </h3>
-                      <p className="text-sm opacity-90 leading-relaxed">
+                      <p className="text-xs sm:text-sm opacity-90 leading-relaxed line-clamp-2">
                         {category.description}
                       </p>
                     </div>
                   </div>
-                  <CardContent className="p-6 bg-gradient-to-br from-warm-cream to-white">
+                  <CardContent className="p-4 sm:p-6 bg-gradient-to-br from-warm-cream to-white">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-gray-600">
+                      <span className="text-xs sm:text-sm font-medium text-gray-600">
                         Explore Collection
                       </span>
-                      <ArrowRight className="h-4 w-4 text-terracotta group-hover:translate-x-1 transition-transform duration-300" />
+                      <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4 text-terracotta group-hover:translate-x-1 transition-transform duration-300" />
                     </div>
                   </CardContent>
                 </Card>
@@ -239,21 +241,21 @@ export default function Home() {
       </section>
 
       {/* Featured Products */}
-      <section className="py-20 bg-gradient-to-br from-warm-cream via-soft-beige to-warm-cream">
+      <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-warm-cream via-soft-beige to-warm-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <Badge className="bg-saffron/10 text-saffron border-saffron/20 px-4 py-2 mb-6">
+          <div className="text-center mb-12 sm:mb-16">
+            <Badge className="bg-saffron/10 text-saffron border-saffron/20 px-3 py-1 sm:px-4 sm:py-2 mb-4 sm:mb-6 text-xs sm:text-sm">
               Master Artisan Picks
             </Badge>
-            <h2 className="font-display text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
               Featured <span className="text-saffron">Masterpieces</span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-4">
               Handpicked treasures that showcase the pinnacle of traditional Indian craftsmanship, each piece telling a unique story of heritage and skill
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-12 sm:mb-16">
             {featuredProducts.map((product) => (
               <div key={product.id} className="transform hover:scale-105 transition-transform duration-300">
                 <ProductCard product={product} />
@@ -263,9 +265,9 @@ export default function Home() {
           
           <div className="text-center">
             <Link href="/products">
-              <Button size="lg" className="bg-terracotta hover:bg-terracotta/90 text-white px-8 py-4 text-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <Button size="lg" className="bg-terracotta hover:bg-terracotta/90 text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg shadow-lg hover:shadow-xl transition-shadow duration-300 w-full sm:w-auto">
                 Discover All Masterpieces
-                <ArrowRight className="ml-2 h-5 w-5" />
+                <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
               </Button>
             </Link>
           </div>
