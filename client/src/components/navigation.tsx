@@ -58,7 +58,7 @@ export function Navigation() {
                 </div>
                 <div className="flex flex-col">
                   <span className="font-display text-lg sm:text-xl md:text-2xl font-bold text-henna group-hover:text-terracotta transition-colors">
-                    हस्तकला
+                    Lacquer craft
                   </span>
                   <span className="text-xs sm:text-sm text-copper font-serif italic hidden sm:inline">
                     Heritage Crafts
