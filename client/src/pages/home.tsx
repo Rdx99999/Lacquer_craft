@@ -33,7 +33,7 @@ export default function Home() {
   const heroTitle = settingsMap.heroTitle || "Authentic";
   const heroSubtitle = settingsMap.heroSubtitle || "Indian Arts";
   const heroDescription = settingsMap.heroDescription || "Discover masterpieces created by skilled artisans who carry forward centuries-old traditions. Each piece is a testament to India's rich cultural heritage.";
-  const heroImage = settingsMap.heroImage || "/images/artisan-crafts.jpg";
+  const heroImage = settingsMap.heroImage || "/images/hero-banner.png";
   const heroButtonText = settingsMap.heroButtonText || "Explore Collection";
   const heroButtonSecondaryText = settingsMap.heroButtonSecondaryText || "Our Story";
 
