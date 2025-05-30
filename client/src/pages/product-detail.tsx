@@ -464,122 +464,121 @@ export default function ProductDetail() {
 
           {/* Product Info */}
           <div className="space-y-6 sm:space-y-8 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-            <div className="bg-gradient-to-br from-white to-gray-50/50 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 border border-gray-100 shadow-lg backdrop-blur-sm">
-              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-                <div className="flex items-center gap-2 sm:gap-3">
-                  <Badge variant="outline" className="bg-terracotta/10 text-terracotta border-terracotta/30 px-2 sm:px-3 py-1 text-xs sm:text-sm">
-                    {product.category.name}
-                  </Badge>
-                  <div className="h-4 w-px bg-gray-300 hidden sm:block"></div>
-                </div>
-                <span className="text-xs sm:text-sm text-gray-500 bg-gray-100 px-2 sm:px-3 py-1 rounded-full self-start">
-                  SKU: {product.sku}
+            <div className="bg-gradient-to-br from-white to-gray-50/50 rounded-xl sm:rounded-2xl p-3 sm:p-6 lg:p-8 border border-gray-100 shadow-lg backdrop-blur-sm">
+              {/* Compact Header with Category and SKU */}
+              <div className="flex items-center justify-between gap-2 mb-3 sm:mb-4">
+                <Badge variant="outline" className="bg-terracotta/10 text-terracotta border-terracotta/30 px-2 py-0.5 text-xs">
+                  {product.category.name}
+                </Badge>
+                <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
+                  {product.sku}
                 </span>
               </div>
 
-              <h1 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight mobile-text">
+              {/* Compact Title */}
+              <h1 className="font-display text-lg sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-6 leading-tight">
                 {product.name}
               </h1>
 
-              <div className="flex flex-col gap-4 sm:gap-6 mb-4 sm:mb-6">
-                <div className="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-3">
-                  <span className="text-2xl sm:text-3xl lg:text-4xl font-bold text-terracotta">
+              {/* Compact Price Section */}
+              <div className="flex items-center justify-between mb-3 sm:mb-4">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-xl sm:text-3xl lg:text-4xl font-bold text-terracotta">
                     ₹{parseFloat(product.price).toLocaleString()}
                   </span>
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm sm:text-base lg:text-lg text-gray-500 line-through">
-                      ₹{(parseFloat(product.price) * 1.2).toLocaleString()}
-                    </span>
-                    <Badge className="bg-green-100 text-green-700 hover:bg-green-100 text-xs sm:text-sm">
-                      Save 20%
-                    </Badge>
+                  <span className="text-sm text-gray-500 line-through">
+                    ₹{(parseFloat(product.price) * 1.2).toLocaleString()}
+                  </span>
+                </div>
+                <Badge className="bg-green-100 text-green-700 hover:bg-green-100 text-xs">
+                  Save 20%
+                </Badge>
+              </div>
+
+              {/* Ultra Compact Actions Section */}
+              {product.stock > 0 && (
+                <div className="bg-gradient-to-r from-terracotta/5 to-saffron/5 rounded-lg p-2 sm:p-3 border border-terracotta/20 mb-3 sm:mb-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-xs font-medium text-gray-700 flex-shrink-0">Qty:</span>
+                    <div className="flex items-center bg-white rounded border border-gray-200">
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => handleQuantityChange(quantity - 1)}
+                        disabled={quantity <= 1}
+                        className="h-6 w-6 p-0 hover:bg-terracotta hover:text-white rounded-l text-xs"
+                      >
+                        <Minus className="h-2.5 w-2.5" />
+                      </Button>
+                      <span className="font-medium w-8 text-center text-xs bg-gray-50 py-1 border-x">
+                        {quantity}
+                      </span>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => handleQuantityChange(quantity + 1)}
+                        disabled={quantity >= product.stock}
+                        className="h-6 w-6 p-0 hover:bg-terracotta hover:text-white rounded-r text-xs"
+                      >
+                        <Plus className="h-2.5 w-2.5" />
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
+                    <Button
+                      onClick={handleAddToCart}
+                      disabled={isAddingToCart}
+                      className="bg-terracotta hover:bg-terracotta/90 text-white text-xs py-1.5 h-7 sm:h-9"
+                    >
+                      <ShoppingCart className="h-2.5 w-2.5 sm:h-3 sm:w-3 mr-0.5 sm:mr-1" />
+                      {isAddingToCart ? "..." : "Add"}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={handleWishlist}
+                      className={`border-terracotta text-terracotta hover:bg-terracotta hover:text-white text-xs py-1.5 h-7 sm:h-9 ${
+                        isInWishlist(product.id) ? 'bg-terracotta text-white' : ''
+                      }`}
+                    >
+                      <Heart className={`h-2.5 w-2.5 sm:h-3 sm:w-3 mr-0.5 sm:mr-1 ${isInWishlist(product.id) ? 'fill-current' : ''}`} />
+                      {isInWishlist(product.id) ? "♥" : "♡"}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={handleBuyNow}
+                      disabled={isBuyingNow}
+                      className="border-saffron text-saffron hover:bg-saffron hover:text-white text-xs py-1.5 h-7 sm:h-9"
+                    >
+                      {isBuyingNow ? "..." : "Buy"}
+                    </Button>
                   </div>
                 </div>
+              )}
 
-                {/* Compact Quantity and Actions for Mobile */}
-                {product.stock > 0 && (
-                  <div className="bg-gradient-to-r from-terracotta/5 to-saffron/5 rounded-lg p-3 border border-terracotta/20">
-                    <div className="flex items-center justify-between gap-3 mb-3">
-                      <span className="text-sm font-medium text-gray-700">Qty:</span>
-                      <div className="flex items-center bg-white rounded-lg border border-gray-200">
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          onClick={() => handleQuantityChange(quantity - 1)}
-                          disabled={quantity <= 1}
-                          className="h-8 w-8 p-0 hover:bg-terracotta hover:text-white rounded-l-lg"
-                        >
-                          <Minus className="h-3 w-3" />
-                        </Button>
-                        <span className="font-medium min-w-[2.5rem] text-center text-sm bg-gray-50 px-2 py-1 border-x">
-                          {quantity}
-                        </span>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          onClick={() => handleQuantityChange(quantity + 1)}
-                          disabled={quantity >= product.stock}
-                          className="h-8 w-8 p-0 hover:bg-terracotta hover:text-white rounded-r-lg"
-                        >
-                          <Plus className="h-3 w-3" />
-                        </Button>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-3 gap-2">
-                      <Button
-                        onClick={handleAddToCart}
-                        disabled={isAddingToCart}
-                        className="bg-terracotta hover:bg-terracotta/90 text-white text-xs py-2 h-9"
-                      >
-                        <ShoppingCart className="h-3 w-3 mr-1" />
-                        {isAddingToCart ? "Adding..." : "Add"}
-                      </Button>
-                      <Button
-                        variant="outline"
-                        onClick={handleWishlist}
-                        className={`border-terracotta text-terracotta hover:bg-terracotta hover:text-white text-xs py-2 h-9 ${
-                          isInWishlist(product.id) ? 'bg-terracotta text-white' : ''
-                        }`}
-                      >
-                        <Heart className={`h-3 w-3 mr-1 ${isInWishlist(product.id) ? 'fill-current' : ''}`} />
-                        {isInWishlist(product.id) ? "Saved" : "Save"}
-                      </Button>
-                      <Button
-                        variant="outline"
-                        onClick={handleBuyNow}
-                        disabled={isBuyingNow}
-                        className="border-saffron text-saffron hover:bg-saffron hover:text-white text-xs py-2 h-9"
-                      >
-                        {isBuyingNow ? "..." : "Buy"}
-                      </Button>
-                    </div>
+              {/* Compact Reviews */}
+              {reviewStats && reviewStats.totalReviews > 0 && (
+                <div className="flex items-center space-x-2 bg-saffron/10 px-2 py-1 rounded-full self-start">
+                  <div className="flex items-center space-x-0.5">
+                    {[...Array(5)].map((_, i) => (
+                      <Star 
+                        key={i} 
+                        className={`h-3 w-3 sm:h-4 sm:w-4 ${
+                          i < Math.round(reviewStats.averageRating)
+                            ? "fill-saffron text-saffron"
+                            : "text-gray-300"
+                        }`} 
+                      />
+                    ))}
                   </div>
-                )}
-
-                {reviewStats && reviewStats.totalReviews > 0 && (
-                  <div className="flex items-center space-x-2 bg-saffron/10 px-3 sm:px-4 py-2 rounded-full self-start">
-                    <div className="flex items-center space-x-1">
-                      {[...Array(5)].map((_, i) => (
-                        <Star 
-                          key={i} 
-                          className={`h-4 w-4 sm:h-5 sm:w-5 ${
-                            i < Math.round(reviewStats.averageRating)
-                              ? "fill-saffron text-saffron"
-                              : "text-gray-300"
-                          }`} 
-                        />
-                      ))}
-                    </div>
-                    <span className="text-xs sm:text-sm font-medium text-gray-700">
-                      {reviewStats.averageRating}
-                    </span>
-                    <span className="text-xs sm:text-sm text-gray-500">
-                      ({reviewStats.totalReviews} review{reviewStats.totalReviews !== 1 ? 's' : ''})
-                    </span>
-                  </div>
-                )}
-              </div>
+                  <span className="text-xs font-medium text-gray-700">
+                    {reviewStats.averageRating}
+                  </span>
+                  <span className="text-xs text-gray-500">
+                    ({reviewStats.totalReviews})
+                  </span>
+                </div>
+              )}
             </div>
 
             <div className="bg-gradient-to-br from-white to-soft-beige/20 rounded-xl p-4 sm:p-6 border border-gray-100">
