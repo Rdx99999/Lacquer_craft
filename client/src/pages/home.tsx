@@ -57,65 +57,65 @@ export default function Home() {
                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
              }} />
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-32">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div className="relative max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 sm:py-16 lg:py-32">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center">
             {/* Left Content */}
-            <div className="text-left space-y-6 lg:space-y-8">
-              <div className="space-y-4 lg:space-y-6">
-                <Badge className="bg-terracotta/10 text-terracotta border-terracotta/20 px-3 py-1 sm:px-4 sm:py-2 text-xs sm:text-sm">
+            <div className="text-left space-y-4 lg:space-y-8">
+              <div className="space-y-3 lg:space-y-6">
+                <Badge className="bg-terracotta/10 text-terracotta border-terracotta/20 px-2 py-1 sm:px-4 sm:py-2 text-xs sm:text-sm">
                   <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                   <span className="hidden sm:inline">Handcrafted Excellence Since 1947</span>
                   <span className="sm:hidden">Since 1947</span>
                 </Badge>
-                <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 leading-tight">
+                <h1 className="font-display text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 leading-tight">
                   {heroTitle}
                   <span className="text-terracotta block">{heroSubtitle}</span>
                   <span className="text-gray-700">& Crafts</span>
                 </h1>
-                <p className="text-base sm:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-lg">
+                <p className="text-sm sm:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-lg">
                   {heroDescription}
                 </p>
               </div>
               
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
                 <Link href="/products" className="w-full sm:w-auto">
-                  <Button size="lg" className="bg-terracotta hover:bg-terracotta/90 text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg w-full sm:w-auto">
+                  <Button size="lg" className="bg-terracotta hover:bg-terracotta/90 text-white px-4 sm:px-8 py-2.5 sm:py-4 text-sm sm:text-lg w-full sm:w-auto">
                     {heroButtonText}
-                    <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+                    <ArrowRight className="ml-2 h-3 w-3 sm:h-5 sm:w-5" />
                   </Button>
                 </Link>
-                <Button size="lg" variant="outline" className="border-gray-300 text-gray-700 hover:bg-gray-50 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg w-full sm:w-auto">
-                  <Heart className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                <Button size="lg" variant="outline" className="border-gray-300 text-gray-700 hover:bg-gray-50 px-4 sm:px-8 py-2.5 sm:py-4 text-sm sm:text-lg w-full sm:w-auto">
+                  <Heart className="mr-2 h-3 w-3 sm:h-5 sm:w-5" />
                   <span className="hidden sm:inline">{heroButtonSecondaryText}</span>
                   <span className="sm:hidden">Story</span>
                 </Button>
               </div>
               
               {/* Stats */}
-              <div className="grid grid-cols-3 gap-4 sm:gap-6 pt-6 sm:pt-8 border-t border-gray-200">
+              <div className="grid grid-cols-3 gap-2 sm:gap-6 pt-4 sm:pt-8 border-t border-gray-200">
                 <div className="text-center">
-                  <div className="text-lg sm:text-xl lg:text-2xl font-bold text-terracotta">500+</div>
+                  <div className="text-base sm:text-xl lg:text-2xl font-bold text-terracotta">500+</div>
                   <div className="text-xs sm:text-sm text-gray-600">Artisan Partners</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-lg sm:text-xl lg:text-2xl font-bold text-terracotta">15K+</div>
+                  <div className="text-base sm:text-xl lg:text-2xl font-bold text-terracotta">15K+</div>
                   <div className="text-xs sm:text-sm text-gray-600">Happy Customers</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-lg sm:text-xl lg:text-2xl font-bold text-terracotta">25+</div>
+                  <div className="text-base sm:text-xl lg:text-2xl font-bold text-terracotta">25+</div>
                   <div className="text-xs sm:text-sm text-gray-600">States Covered</div>
                 </div>
               </div>
             </div>
             
             {/* Right Visual */}
-            <div className="relative mt-8 lg:mt-0">
+            <div className="relative mt-4 lg:mt-0">
               {/* Main Image */}
               <div className="relative rounded-xl lg:rounded-2xl overflow-hidden shadow-xl lg:shadow-2xl">
                 <img
                   src={heroImage}
                   alt="Traditional Indian Craftsmanship"
-                  className="w-full h-[300px] sm:h-[400px] lg:h-[500px] object-cover"
+                  className="w-full h-[250px] sm:h-[400px] lg:h-[500px] object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
               </div>
@@ -150,9 +150,9 @@ export default function Home() {
       </section>
 
       {/* Trust Indicators */}
-      <section className="py-8 sm:py-12 bg-gray-50 border-t border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+      <section className="py-6 sm:py-12 bg-gray-50 border-t border-gray-200">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
             <div className="text-center">
               <div className="w-10 h-10 sm:w-12 sm:h-12 bg-terracotta/10 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
                 <Truck className="h-5 w-5 sm:h-6 sm:w-6 text-terracotta" />
@@ -186,16 +186,16 @@ export default function Home() {
       </section>
 
       {/* Categories Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 sm:mb-16">
-            <Badge className="bg-terracotta/10 text-terracotta border-terracotta/20 px-3 py-1 sm:px-4 sm:py-2 mb-4 sm:mb-6 text-xs sm:text-sm">
+      <section className="py-8 sm:py-16 lg:py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="text-center mb-8 sm:mb-16">
+            <Badge className="bg-terracotta/10 text-terracotta border-terracotta/20 px-2 py-1 sm:px-4 sm:py-2 mb-3 sm:mb-6 text-xs sm:text-sm">
               Curated Collections
             </Badge>
-            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
+            <h2 className="font-display text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-6">
               Explore Our <span className="text-terracotta">Craft Categories</span>
             </h2>
-            <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-4">
+            <p className="text-sm sm:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-4 hidden sm:block">
               Each category represents centuries of artistic tradition, carefully preserved and passed down through generations of master craftspeople
             </p>
           </div>
@@ -208,7 +208,7 @@ export default function Home() {
                     <img
                       src={category.thumbnail || fallbackCategoryImages[category.slug as keyof typeof fallbackCategoryImages] || "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300"}
                       alt={`${category.name} Collection`}
-                      className="w-full h-48 sm:h-56 lg:h-64 object-cover group-hover:scale-110 transition-transform duration-700"
+                      className="w-full h-32 sm:h-56 lg:h-64 object-cover group-hover:scale-110 transition-transform duration-700"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                     <div className="absolute top-3 sm:top-4 right-3 sm:right-4">
@@ -216,16 +216,16 @@ export default function Home() {
                         {index === 0 ? 'Most Popular' : index === 1 ? 'Trending' : index === 2 ? 'Premium' : 'Classic'}
                       </Badge>
                     </div>
-                    <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 text-white">
-                      <h3 className="font-display text-lg sm:text-xl lg:text-2xl font-bold mb-1 sm:mb-2 group-hover:text-saffron transition-colors duration-300">
+                    <div className="absolute bottom-2 sm:bottom-6 left-2 sm:left-6 text-white">
+                      <h3 className="font-display text-sm sm:text-xl lg:text-2xl font-bold mb-1 sm:mb-2 group-hover:text-saffron transition-colors duration-300">
                         {category.name}
                       </h3>
-                      <p className="text-xs sm:text-sm opacity-90 leading-relaxed line-clamp-2">
+                      <p className="text-xs sm:text-sm opacity-90 leading-relaxed line-clamp-2 hidden sm:block">
                         {category.description}
                       </p>
                     </div>
                   </div>
-                  <CardContent className="p-4 sm:p-6 bg-gradient-to-br from-warm-cream to-white">
+                  <CardContent className="p-2 sm:p-6 bg-gradient-to-br from-warm-cream to-white">
                     <div className="flex items-center justify-between">
                       <span className="text-xs sm:text-sm font-medium text-gray-600">
                         Explore Collection
